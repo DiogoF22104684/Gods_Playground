@@ -21,17 +21,17 @@ public class BasicFunction : MoveFunction
     public override void Function(BattleEntity attacker, BattleEntity target)
     {
         float roll = attacker.GetRoll();
-
-        //attacker.properEntity.PlayAnimation(DefaultAnimations.BasicAttack);
+         
+        attacker.properEntity.PlayAnimation(DefaultAnimations.BasicAttack);
         //target.properEntity.PlayAnimation(DefaultAnimations.DamageTaken);
-
+        return;
         //Debug.Log(baseValue);
         //Debug.Log((float)secondParam.GetValue(attacker));
         //Debug.Log((float)thirdParam.GetValue(target));
-
+         
         float firstComp = baseValue +
             (baseValue * (float)secondParam.GetValue(attacker));
-
+         
         //Debug.Log(firstComp);
 
         float firstAndRoll = firstComp * roll;

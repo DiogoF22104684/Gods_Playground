@@ -20,14 +20,15 @@ public class BattleEntity
         return 5f / 6f;
     }
 
-    public BattleEntity(float hp)
+    public BattleEntity(float hp, BattleEntityProper proper)
     {
+        properEntity = proper;
         this.hp = hp;
         atk = 0.4f;
         def = 0.3f;
     }
 
-    public ProperBattleEntity properEntity { get; }
+    public BattleEntityProper properEntity { get; }
 
     public override string ToString()
     {

@@ -7,17 +7,25 @@ public class TesteAttack : MonoBehaviour
 {
     [SerializeField]
     private BattleMove move;
-    private BattleEntity battle;
-        
+    [SerializeField]
+    private BattleEntityProper battle;
+    [SerializeField]
+    private BattleEntityProper target;
+
 
     private void Start()
     {
-        battle = new BattleEntity(40);
+        battle.animTrigger += AnimationResponse;
     }
 
+    private void AnimationResponse(DefaultAnimations anim)
+    {
+        target.PlayAnimation(anim);
+    }
 
     public void Attack()
     {
-        move.Function(battle, battle);
+        
+        move.Function(battle.entityData, target.entityData);
     }
 }
