@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Reflection;
 using System;
+using System.Linq;
 
 
 //This needs a rework. It's mostly broken
@@ -28,6 +29,9 @@ public class BasicFunction : MoveFunction
 
     public override void Function(BattleEntity attacker, BattleEntity target)
     {
+
+        ValidateData();
+
         currentTargets = target;
         float roll = attacker.GetRoll();
          
@@ -44,6 +48,18 @@ public class BasicFunction : MoveFunction
         attacker.properEntity.PlayAnimation(DefaultAnimations.BasicAttack);
         target.properEntity.damageTrigger += Boop;
         
+    }
+
+
+    //Completly broken but it works
+    private void ValidateData()
+    {
+        PropertyInfo[] propInfo = typeof(BattleEntity).GetProperties()
+           .Where(prop => prop.IsDefined(typeof(MoveAffecterAttribute), false)).ToArray();
+
+        firstParam = propInfo[selected1];
+        secondParam = propInfo[selected2];
+        thirdParam = propInfo[selected3];
     }
 
     private void Boop()
