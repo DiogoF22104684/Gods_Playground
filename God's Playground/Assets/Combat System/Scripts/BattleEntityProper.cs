@@ -7,13 +7,36 @@ public class BattleEntityProper : MonoBehaviour
 {
     public BattleEntity entityData { get; private set; }
     private Animator anim;
-    public Action<DefaultAnimations> animTrigger;
+    public Action<DefaultAnimations> attackTrigger;
+    public Action damageTrigger;
 
-    // Start is called before the first frame update
-    void Start()
+    //A Entity devia instanciar o slider
+    [SerializeField]
+    private BattleSlider hpSlider;
+
+    internal void ChangeValue(string propName, float value)
+    {
+        switch (propName)
+        {
+            case "hp":
+                hpSlider.ChangeValue(value);
+                break;
+        }
+    }
+
+   
+
+
+    private void Awake()
     {
         anim = GetComponent<Animator>();
         entityData = new BattleEntity(30, this);
+    }
+
+    private void Start()
+    {
+        if(hpSlider != null)
+            hpSlider.Config(entityData.Hp);
     }
 
     // Update is called once per frame
@@ -23,7 +46,7 @@ public class BattleEntityProper : MonoBehaviour
     }
  
     public void PlayAnimation(DefaultAnimations animation)
-    {
+    {    
         switch (animation)
         {
             case DefaultAnimations.BasicAttack:
@@ -38,9 +61,15 @@ public class BattleEntityProper : MonoBehaviour
         }
     }
 
-    public void TriggerAnimation(DefaultAnimations animType)
+    public void AttackTriggerAnimation(DefaultAnimations animType)
     {
-        animTrigger?.Invoke(animType);
+        attackTrigger?.Invoke(animType);
+    }
+
+    public void DamageTakenTrigger()
+    {
+        damageTrigger?.Invoke();
+        damageTrigger = null;
     }
 
     private void AnimationStart(string name)

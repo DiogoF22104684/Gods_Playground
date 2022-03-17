@@ -17,6 +17,17 @@ public class BasicFunctionEditor : Editor
         selectedProp1 = serializedObject.FindProperty("selected1");
         selectedProp2 = serializedObject.FindProperty("selected2");
         selectedProp3 = serializedObject.FindProperty("selected3");
+
+
+        ////This totally needs a rework
+        //BasicFunction bF = target as BasicFunction;
+
+        //PropertyInfo[] propInfo = typeof(BattleEntity).GetProperties()
+        //    .Where(prop => prop.IsDefined(typeof(MoveAffecterAttribute), false)).ToArray();
+
+        //bF.firstParam = propInfo[selectedProp1.intValue];
+        //bF.secondParam = propInfo[selectedProp2.intValue];
+        //bF.thirdParam = propInfo[selectedProp3.intValue];
     }
 
 
@@ -57,7 +68,7 @@ public class BasicFunctionEditor : Editor
         
 
 
-        GUILayout.Label($"TARGET {valueToChange} =" +
+        GUILayout.Label($"TARGET {valueToChange} -=" +
             $" First Param - (FirstParam * TARGET {propNames[selectedProp3.intValue]})");
 
 
