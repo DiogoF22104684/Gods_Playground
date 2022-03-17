@@ -2,7 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Reflection;
+using System;
 
+
+//This needs a rework. It's mostly broken
 [CreateAssetMenu(menuName = "Scriptables/Moves/BasicFunction")]
 public class BasicFunction : MoveFunction
 {
@@ -18,36 +21,35 @@ public class BasicFunction : MoveFunction
     [SerializeField]
     private int baseValue;
 
+
+    private BattleEntity currentTargets;
+    private float valueToChange;
+
+
     public override void Function(BattleEntity attacker, BattleEntity target)
     {
+        currentTargets = target;
         float roll = attacker.GetRoll();
-         
-        attacker.properEntity.PlayAnimation(DefaultAnimations.BasicAttack);
-        //target.properEntity.PlayAnimation(DefaultAnimations.DamageTaken);
-        return;
-        //Debug.Log(baseValue);
-        //Debug.Log((float)secondParam.GetValue(attacker));
-        //Debug.Log((float)thirdParam.GetValue(target));
          
         float firstComp = baseValue +
             (baseValue * (float)secondParam.GetValue(attacker));
-         
-        //Debug.Log(firstComp);
 
         float firstAndRoll = firstComp * roll;
-
-        //Debug.Log(firstAndRoll);
 
         float totalValue = firstAndRoll - (firstAndRoll *
             (float)thirdParam.GetValue(target));
         
-        //Debug.Log(totalValue);
+        valueToChange = (float)firstParam.GetValue(target) - totalValue;
 
-        float newValue = (float)firstParam.GetValue(attacker) - totalValue;
+        attacker.properEntity.PlayAnimation(DefaultAnimations.BasicAttack);
+        target.properEntity.damageTrigger += Boop;
         
-        //Debug.Log(newValue);
-
-        firstParam.SetValue(target, newValue);
-        Debug.Log(target);
     }
+
+    private void Boop()
+    {
+        firstParam.SetValue(currentTargets, valueToChange);
+    }
+
+
 }

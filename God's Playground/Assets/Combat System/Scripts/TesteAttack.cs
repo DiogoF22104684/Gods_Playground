@@ -15,7 +15,7 @@ public class TesteAttack : MonoBehaviour
 
     private void Start()
     {
-        battle.animTrigger += AnimationResponse;
+        battle.attackTrigger += AnimationResponse;
     }
 
     private void AnimationResponse(DefaultAnimations anim)
