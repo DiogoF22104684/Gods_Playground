@@ -7,26 +7,15 @@ public class BattleEntityProper : MonoBehaviour
 {
     public BattleEntity entityData { get; private set; }
     private Animator anim;
+
     public Action<DefaultAnimations> attackTrigger;
     public Action damageTrigger;
+    public Action onDeath;
 
     //A Entity devia instanciar o slider
     [SerializeField]
     private BattleSlider hpSlider;
-
-    internal void ChangeValue(string propName, float value)
-    {
-        switch (propName)
-        {
-            case "hp":
-                hpSlider.ChangeValue(value);
-                break;
-        }
-    }
-
-   
-
-
+    
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -44,7 +33,17 @@ public class BattleEntityProper : MonoBehaviour
     {
         
     }
- 
+
+    internal void ChangeValue(string propName, float value)
+    {
+        switch (propName)
+        {
+            case "hp":
+                hpSlider.ChangeValue(value);
+                break;
+        }
+    }
+
     public void PlayAnimation(DefaultAnimations animation)
     {    
         switch (animation)
@@ -58,12 +57,22 @@ public class BattleEntityProper : MonoBehaviour
             case DefaultAnimations.DamageTaken:
                 AnimationStart("DamageTaken");
                 break;
+            case DefaultAnimations.Death:
+                AnimationStart("Death");
+                break;
         }
     }
 
     public void AttackTriggerAnimation(DefaultAnimations animType)
     {
         attackTrigger?.Invoke(animType);
+    }
+
+    public void Death()
+    {
+        onDeath?.Invoke();
+        Destroy(hpSlider.gameObject);
+        Destroy(gameObject);
     }
 
     public void DamageTakenTrigger()

@@ -18,7 +18,12 @@ public class BattleEntity
         set
         {
             hp = value;
-            properEntity.ChangeValue("hp", value);
+            if(value <= 0)
+            {
+                properEntity.PlayAnimation(DefaultAnimations.Death);
+                hp = 0;
+            }
+            properEntity.ChangeValue("hp", hp);
         } 
     }
 
