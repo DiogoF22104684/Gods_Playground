@@ -27,13 +27,12 @@ public class BasicFunction : MoveFunction
     private float valueToChange;
 
 
-    public override void Function(BattleEntity attacker, BattleEntity target)
+    public override void Function(BattleEntity attacker, BattleEntity target, float roll)
     {
 
         ValidateData();
 
         currentTargets = target;
-        float roll = attacker.GetRoll();
          
         float firstComp = baseValue +
             (baseValue * (float)secondParam.GetValue(attacker));

@@ -14,9 +14,9 @@ namespace CombatSystem
         private MoveConfig config;
 
 
-        public void Function(BattleEntity attacker, BattleEntity target)
+        public void Function(BattleEntity attacker, BattleEntity target, float roll)
         {
-            function.Function(attacker, target);
+            function.Function(attacker, target, roll);
         }
 
     }

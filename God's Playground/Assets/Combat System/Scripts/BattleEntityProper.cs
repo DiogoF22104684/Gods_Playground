@@ -16,6 +16,10 @@ public class BattleEntityProper : MonoBehaviour
     [SerializeField]
     private BattleSlider hpSlider;
     
+    [SerializeField]
+    private ActionPointProper actionPoints;
+    public ActionPointProper ActionPoints => actionPoints;
+
     private void Awake()
     {
         anim = GetComponent<Animator>();
