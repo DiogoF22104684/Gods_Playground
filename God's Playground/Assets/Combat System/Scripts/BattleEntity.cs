@@ -5,9 +5,27 @@ using UnityEngine;
 
 public class BattleEntity 
 {
-   
+
+    private float hp;
+
     [MoveAffecter]
-    public float hp { get; set; }
+    public float Hp 
+    {
+        get
+        {
+            return hp;
+        }
+        set
+        {
+            hp = value;
+            if(value <= 0)
+            {
+                properEntity.PlayAnimation(DefaultAnimations.Death);
+                hp = 0;
+            }
+            properEntity.ChangeValue("hp", hp);
+        } 
+    }
 
     [MoveAffecter]
     public float atk { get; set; }

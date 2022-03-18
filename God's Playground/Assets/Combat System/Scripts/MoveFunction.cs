@@ -4,5 +4,6 @@ using UnityEngine;
 
 public abstract class MoveFunction : ScriptableObject
 {
-    public abstract void Function(BattleEntity attacker, BattleEntity target);
+    public abstract void Function(BattleEntity attacker, BattleEntity target,
+        float roll);
 }
