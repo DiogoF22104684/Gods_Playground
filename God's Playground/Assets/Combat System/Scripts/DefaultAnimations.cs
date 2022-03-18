@@ -3,5 +3,6 @@
     BasicAttack,
     SpecialAttack,
     DamageTaken,
-    Defence
+    Defence,
+    Death
 }
