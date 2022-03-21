@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using CombatSystem;
 
-public class TesteAttack : MonoBehaviour
+public class BattleManager : MonoBehaviour
 {
     [SerializeField]
     private BattleMove move;
     [SerializeField]
     private BattleEntityProper battle;
     [SerializeField]
-    private BattleEntityProper target;
+    EntitySelector selector;
 
 
     private BattleCameraManager cameraManager;
@@ -28,7 +28,7 @@ public class TesteAttack : MonoBehaviour
 
     private void AnimationResponse(DefaultAnimations anim)
     {
-        target.PlayAnimation(anim);
+        selector.SelectedEntity.PlayAnimation(anim);
     }
 
 
@@ -47,13 +47,13 @@ public class TesteAttack : MonoBehaviour
     private void SwitchCamera()
     {
 
-        cameraManager.SwitchCameras(target.gameObject);  
+        cameraManager.SwitchCameras(selector.SelectedEntity.gameObject);  
         GameObject acTimer = 
             Instantiate(actionTimer,transform.position, 
                 Quaternion.identity, cameraManager.ActiveCanvas.transform);
         ActionPointManager acPointManager = 
             acTimer.GetComponent<ActionPointManager>();
-        acPointManager.Config(target, rollResult, Attack);
+        acPointManager.Config(selector.SelectedEntity, rollResult, Attack);
         
         //Spawn points
         //Add AttackFunction to spawnPoints event
@@ -63,6 +63,6 @@ public class TesteAttack : MonoBehaviour
     public void Attack(float roll)
     {
         cameraManager.SwitchCameras();
-        move.Function(battle.entityData, target.entityData, roll);
+        move.Function(battle.entityData, selector.SelectedEntity.entityData, roll);
     }
 }

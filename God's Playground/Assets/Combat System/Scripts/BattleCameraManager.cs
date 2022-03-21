@@ -13,6 +13,9 @@ public class BattleCameraManager : MonoBehaviour
 
     private GameObject target;
 
+    [SerializeField]
+    private float focusDistance;
+
     public void SwitchCameras(GameObject target = null)
     {
 
@@ -36,7 +39,12 @@ public class BattleCameraManager : MonoBehaviour
 
     private void FocusCamera()
     {
-        
+        focused.LookAt = target.transform;
+        Vector3 forwardVect = target.transform.forward.normalized;
+        focused.transform.position = new Vector3
+            (target.transform.position.x, focused.transform.position.y, target.transform.position.z) 
+            + forwardVect * focusDistance;
+
     }
 
 
