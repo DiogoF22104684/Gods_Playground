@@ -28,7 +28,7 @@ public class PlayerBattleEntityProper : BattleEntityProper
     public override void EndTurn()
     {
         battleMenu.SetActive(false);
-        Invoke("OnEndTurn", 3);
+        Invoke("OnEndTurn", 2);
         //battleMenu.Deactivate();
     }
 

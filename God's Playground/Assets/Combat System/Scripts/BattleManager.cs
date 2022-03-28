@@ -11,7 +11,8 @@ public class BattleManager : MonoBehaviour
 
     [SerializeField]
     EntitySelector selector;
-
+    [SerializeField]
+    BattleOrderDisplay orderDisplay;
 
     private BattleCameraManager cameraManager;
     [SerializeField]
@@ -43,7 +44,7 @@ public class BattleManager : MonoBehaviour
     [SerializeField]
     private BattleEntityProper playerProper;
 
-
+    [SerializeField]
     private List<BattleEntity> enemies;
 
 
@@ -70,9 +71,18 @@ public class BattleManager : MonoBehaviour
         PrepareTurnOrder();
     }
 
+    private void CleanEntityList()
+    {
+        for (int i = enemies.Count - 1; i >= 0; i--)
+        {
+            if (enemies[i].properEntity == null)
+                enemies.RemoveAt(i);
+        }
+    }
 
     private void PrepareTurnOrder()
     {
+        CleanEntityList();
         List<BattleEntity> turnEnt = new List<BattleEntity>(enemies);
         turnEnt.Add(playerData);
 
@@ -95,6 +105,8 @@ public class BattleManager : MonoBehaviour
             turnEnt = turnEnt.
                 Where(x => x.hadTurn == false).
                 OrderBy(x => -x.dex).ToList();
+
+        orderDisplay.UpdateDisplay(turnEnt);
 
         if (turnEnt.Count > 0)
         {
