@@ -3,40 +3,42 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class BattleEntityProper : MonoBehaviour
+public abstract class BattleEntityProper : MonoBehaviour
 {
-    public BattleEntity entityData { get; private set; }
+    public BattleEntity entityData { get; protected set; }
     private Animator anim;
 
     public Action<DefaultAnimations> attackTrigger;
     public Action damageTrigger;
     public Action onDeath;
+    public Action onEndTurn;
 
     //A Entity devia instanciar o slider
     [SerializeField]
-    private BattleSlider hpSlider;
-    
-    [SerializeField]
-    private ActionPointProper actionPoints;
-    public ActionPointProper ActionPoints => actionPoints;
+    protected BattleSlider hpSlider;
+
+
 
     private void Awake()
     {
         anim = GetComponent<Animator>();
-        entityData = new BattleEntity(30, this);
+        
+        
     }
 
-    private void Start()
+    public void Config(BattleEntity entityData)
     {
-        if(hpSlider != null)
-            hpSlider.Config(entityData.Hp);
+        this.entityData = entityData;
     }
 
+ 
     // Update is called once per frame
     void Update()
     {
         
     }
+
+
 
     internal void ChangeValue(string propName, float value)
     {
@@ -89,4 +91,14 @@ public class BattleEntityProper : MonoBehaviour
     {
         anim.Play(name);
     }
+
+    public abstract void StartTurn();
+    public abstract void EndTurn();
+
+    protected void OnEndTurn()
+    {
+        onEndTurn?.Invoke();
+    }
+
+
 }

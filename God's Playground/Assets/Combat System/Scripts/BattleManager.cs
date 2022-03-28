@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using CombatSystem;
+using System.Linq;
 
 public class BattleManager : MonoBehaviour
 {
     [SerializeField]
     private BattleMove move;
-    [SerializeField]
-    private BattleEntityProper battle;
+
     [SerializeField]
     EntitySelector selector;
 
@@ -18,17 +18,116 @@ public class BattleManager : MonoBehaviour
     private GameObject actionTimer;
     [SerializeField]
     private GameObject dice;
+
+    private BattleEntity inTurnEntity;
+
     private int rollResult;
 
-    private void Start()
+    private int turnnumb;
+
+
+    //Isto é para alterar
+    [SerializeField]
+    private BattleEntityProper[] soparaagoraEnemies;
+    //Isto é para alterar
+    [SerializeField]
+    private EnemiesTemplate[] enemiesTemplate;
+
+    //Isto nao
+    [SerializeField]
+    private PlayerTemplate playerTemplate;
+    [SerializeField]
+    private BattleEntity playerData;
+
+    //Not sure se isto fica aqui
+    [SerializeField]
+    private BattleEntityProper playerProper;
+
+
+    private List<BattleEntity> enemies;
+
+
+    private void Awake()
     {
-        battle.attackTrigger += AnimationResponse;
-        cameraManager = GetComponent<BattleCameraManager>();
+        enemies = new List<BattleEntity>{ };
+        //Instatiate things
+        playerData = new BattleEntity(playerTemplate.HP, playerProper, playerTemplate);
+        playerProper.Config(playerData);
+
+        playerProper.onEndTurn += NextTurn;
+
+        //mau
+        int index = 0;
+        foreach (EnemiesTemplate temp in enemiesTemplate)
+        {
+            BattleEntity enemyData = new BattleEntity(temp.HP, soparaagoraEnemies[index], temp);
+            soparaagoraEnemies[index].Config(enemyData);
+            soparaagoraEnemies[index].onEndTurn += NextTurn;
+            enemies.Add(enemyData);
+            index++;
+        }
+
+        PrepareTurnOrder();
     }
 
+
+    private void PrepareTurnOrder()
+    {
+        List<BattleEntity> turnEnt = new List<BattleEntity>(enemies);
+        turnEnt.Add(playerData);
+
+        bool endOfTurn = turnEnt.TrueForAll(x => x.hadTurn == true);
+
+        if (endOfTurn)
+        {
+
+           
+            foreach(BattleEntity be in turnEnt)
+            {
+                 be.hadTurn = false;
+            }
+
+            //TurnOrderUpdate
+        }
+
+
+       
+            turnEnt = turnEnt.
+                Where(x => x.hadTurn == false).
+                OrderBy(x => -x.dex).ToList();
+
+        if (turnEnt.Count > 0)
+        {
+            inTurnEntity = turnEnt[0];
+        }
+    }
+
+    private void NextTurn()
+    {
+        
+        //Teste
+        if (turnnumb <= 20)
+        {              
+            PrepareTurnOrder();
+            turnnumb++;
+            inTurnEntity.properEntity.StartTurn();           
+        }
+    }
+
+    private void Start()
+    {      
+        playerProper.attackTrigger += AnimationResponse;
+        cameraManager = GetComponent<BattleCameraManager>();
+        inTurnEntity.properEntity.StartTurn();
+       
+    }
+
+    
     private void AnimationResponse(DefaultAnimations anim)
     {
         selector.SelectedEntity.PlayAnimation(anim);
+        //Kinda scuffed 
+        inTurnEntity.properEntity.EndTurn();
     }
 
 
@@ -48,11 +147,14 @@ public class BattleManager : MonoBehaviour
     {
 
         cameraManager.SwitchCameras(selector.SelectedEntity.gameObject);  
+        
         GameObject acTimer = 
             Instantiate(actionTimer,transform.position, 
                 Quaternion.identity, cameraManager.ActiveCanvas.transform);
+        
         ActionPointManager acPointManager = 
             acTimer.GetComponent<ActionPointManager>();
+       
         acPointManager.Config(selector.SelectedEntity, rollResult, Attack);
         
         //Spawn points
@@ -63,6 +165,6 @@ public class BattleManager : MonoBehaviour
     public void Attack(float roll)
     {
         cameraManager.SwitchCameras();
-        move.Function(battle.entityData, selector.SelectedEntity.entityData, roll);
+        move.Function(playerProper.entityData, selector.SelectedEntity.entityData, roll);
     }
 }

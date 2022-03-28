@@ -36,6 +36,16 @@ public class ActionPointManager : MonoBehaviour
     public void Config(BattleEntityProper targetEntity, int rollResult,
         System.Action<float> completionFunc)
     {
+
+        
+        if(!(targetEntity is EnemyBattleEntityProper))
+        {
+            StartCoroutine("Timer");
+            return;
+        }
+
+        EnemyBattleEntityProper enemyentity = targetEntity as EnemyBattleEntityProper; 
+
         clickedPoints = 0;
         StartCoroutine(DelayBeforeBlend(0.1f, () =>
         { 
@@ -53,7 +63,7 @@ public class ActionPointManager : MonoBehaviour
             {
                 StartCoroutine("Timer");
                 IEnumerable<Vector3> points =
-                    targetEntity.ActionPoints.GetRandomPoints(rollResult);
+                    enemyentity.ActionPoints.GetRandomPoints(rollResult);
 
                 int i = 0;
                 foreach (Vector3 v in points)

@@ -38,7 +38,22 @@ public class EntitySelector : MonoBehaviour
 
     private void SpawnIcon()
     {
+        Vector3 center = SelectedEntity.transform.position;
+
+        Vector3 top = SelectedEntity.transform.position.y(
+            SelectedEntity.transform.position.y +
+            SelectedEntity.gameObject.GetComponent<Collider>().bounds.extents.y);
+
+
+        Vector3 screenCenter = Camera.main.WorldToScreenPoint(center);
+        Vector3 screenTop = Camera.main.WorldToScreenPoint(top);
+
+        float radius = (screenTop.y - screenCenter.y) / 2.5f;
+
+        iconSelector.GetComponent<RectTransform>().sizeDelta = new Vector2(radius,radius);
+   
+
         iconSelector.transform.position =  
-            Camera.main.WorldToScreenPoint(SelectedEntity.transform.position);
+            Camera.main.WorldToScreenPoint(center);
     }
 }

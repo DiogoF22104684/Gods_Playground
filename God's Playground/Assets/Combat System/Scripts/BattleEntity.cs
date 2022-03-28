@@ -33,38 +33,33 @@ public class BattleEntity
     [MoveAffecter]
     public float def { get; set; }
 
-    public float GetRoll()
-    {
-        return 5f / 6f;
-    }
+    [MoveAffecter]
+    public float dex { get; set; }
 
-    public BattleEntity(float hp, BattleEntityProper proper)
+
+    [MoveAffecter]
+    public bool hadTurn { get; set; }
+
+
+
+    public EntityTemplate template { get; }
+
+    public BattleEntity(float hp, BattleEntityProper proper, EntityTemplate template = null)
     {
         properEntity = proper;
         this.hp = hp;
         atk = 0.4f;
         def = 0.3f;
+        this.template = template;
+        dex = template.Dex;
     }
 
     public BattleEntityProper properEntity { get; }
+
 
     public override string ToString()
     {
         return $"Hp: {hp} \nAtk: {atk} \nDef:{def}";
     }
 
-
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
