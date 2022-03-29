@@ -8,17 +8,22 @@ using UnityEngine;
 public abstract class EntityTemplate: ScriptableObject
 {
     [SerializeField]
-    private int hp;
-    public int HP => hp;
+    private RangedInt hp;
+    public RangedInt HP => hp;
 
     [SerializeField]
-    private int mp;
-    public int Mp => mp;
+    private RangedInt mp;
+    public RangedInt Mp => mp;
 
 
     [SerializeField]
-    private int dex;
-    public int Dex => dex;
+    private RangedInt dex;
+    public RangedInt Dex => dex;
+
+    [SerializeField]
+    private RangedInt str;
+    public RangedInt Str => str;
+
 
     //str
     //def

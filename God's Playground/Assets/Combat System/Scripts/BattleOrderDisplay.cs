@@ -28,8 +28,9 @@ public class BattleOrderDisplay : MonoBehaviour
 
     public void UpdateDisplay(IEnumerable<BattleEntity> turnorder)
     {
-       
-        foreach(GameObject g in orderIcons)
+        
+     
+        foreach (GameObject g in orderIcons)
         {
             Destroy(g);
         }

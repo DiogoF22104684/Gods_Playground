@@ -71,7 +71,6 @@ public class BattleManager : MonoBehaviour
             index++;
         }
 
-        PrepareTurnOrder();
     }
 
     private void CleanEntityList()
@@ -89,26 +88,31 @@ public class BattleManager : MonoBehaviour
         List<BattleEntity> turnEnt = new List<BattleEntity>(enemies);
         turnEnt.Add(playerData);
 
+
+
         bool endOfTurn = turnEnt.TrueForAll(x => x.hadTurn == true);
 
         if (endOfTurn)
         {
 
-           
-            foreach(BattleEntity be in turnEnt)
+
+            foreach (BattleEntity be in turnEnt)
             {
-                 be.hadTurn = false;
+                be.hadTurn = false;
             }
 
             //TurnOrderUpdate
         }
 
 
-       
-            turnEnt = turnEnt.
-                Where(x => x.hadTurn == false).
-                OrderBy(x => -x.dex).ToList();
 
+
+        turnEnt = turnEnt.
+            Where(x => x.hadTurn == false).
+            OrderBy(x => -x.dex).ToList();
+
+        foreach (BattleEntity be in turnEnt)
+ 
         orderDisplay.UpdateDisplay(turnEnt);
 
         if (turnEnt.Count > 0)
@@ -119,19 +123,17 @@ public class BattleManager : MonoBehaviour
 
     private void NextTurn()
     {
-        
-        //Teste
-        if (turnnumb <= 20)
-        {              
-            PrepareTurnOrder();
-            Debug.Log(turnnumb);
-            turnnumb++;
-            inTurnEntity.properEntity.StartTurn();           
-        }
+        PrepareTurnOrder();
+        turnnumb++;
+        inTurnEntity.properEntity.StartTurn();
     }
 
     private void Start()
-    {      
+    {
+
+
+        PrepareTurnOrder();
+
         playerProper.attackTrigger += AnimationResponse;
         cameraManager = GetComponent<BattleCameraManager>();
         inTurnEntity.properEntity.StartTurn();

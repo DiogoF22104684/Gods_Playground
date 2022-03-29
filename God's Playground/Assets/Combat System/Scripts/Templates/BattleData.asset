@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5c4ae3d8ded5a840820a7f266f1283e, type: 3}
-  m_Name: _Player
+  m_Script: {fileID: 11500000, guid: 1cc413bac1656bf47b07e30ff83871d1, type: 3}
+  m_Name: BattleData
   m_EditorClassIdentifier: 
-  hp: 2000
-  mp: 30
-  dex: 5
+  enemies:
+  - {fileID: 11400000, guid: a5bdcb35f1a97e64f9d709a2eaa957cb, type: 2}
+  - {fileID: 11400000, guid: a5bdcb35f1a97e64f9d709a2eaa957cb, type: 2}

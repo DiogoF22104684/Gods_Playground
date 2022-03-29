@@ -49,7 +49,7 @@ public class BattleEntity
         properEntity = proper;
         this.hp = hp;
         atk = 0.4f;
-        def = 0.3f;
+        def = 0f;
         this.template = template;
         dex = template.Dex;
     }
