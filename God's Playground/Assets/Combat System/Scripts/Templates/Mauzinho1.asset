@@ -15,3 +15,5 @@ MonoBehaviour:
   hp: 34
   mp: 40
   dex: 3
+  moves:
+  - {fileID: 11400000, guid: 9a0d6840c4606364bbed53fc2b09c169, type: 2}

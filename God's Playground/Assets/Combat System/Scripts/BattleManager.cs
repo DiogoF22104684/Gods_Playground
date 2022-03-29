@@ -65,6 +65,9 @@ public class BattleManager : MonoBehaviour
             soparaagoraEnemies[index].Config(enemyData);
             soparaagoraEnemies[index].onEndTurn += NextTurn;
             enemies.Add(enemyData);
+            //MAU
+            (soparaagoraEnemies[index] as EnemyBattleEntityProper).SetPlayers(new List<BattleEntity> { playerData });
+            soparaagoraEnemies[index].attackTrigger += AnimationResponse;
             index++;
         }
 
@@ -121,6 +124,7 @@ public class BattleManager : MonoBehaviour
         if (turnnumb <= 20)
         {              
             PrepareTurnOrder();
+            Debug.Log(turnnumb);
             turnnumb++;
             inTurnEntity.properEntity.StartTurn();           
         }
@@ -135,10 +139,16 @@ public class BattleManager : MonoBehaviour
     }
 
     
-    private void AnimationResponse(DefaultAnimations anim)
+    private void AnimationResponse(DefaultAnimations anim, BattleEntity target = null)
     {
-        selector.SelectedEntity.PlayAnimation(anim);
-        //Kinda scuffed 
+        if(target == null)
+            selector.SelectedEntity.PlayAnimation(anim);
+        else
+        {
+            target.properEntity.PlayAnimation(anim);
+        }
+
+        //Kinda scuffed very scuffed
         inTurnEntity.properEntity.EndTurn();
     }
 

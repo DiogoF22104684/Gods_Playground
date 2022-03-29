@@ -8,7 +8,7 @@ public abstract class BattleEntityProper : MonoBehaviour
     public BattleEntity entityData { get; protected set; }
     private Animator anim;
 
-    public Action<DefaultAnimations> attackTrigger;
+    public Action<DefaultAnimations, BattleEntity> attackTrigger;
     public Action damageTrigger;
     public Action onDeath;
     public Action onEndTurn;
@@ -25,6 +25,12 @@ public abstract class BattleEntityProper : MonoBehaviour
         
         
     }
+    private void Start()
+    {
+        if (hpSlider != null)
+            hpSlider.Config(entityData.Hp);
+    }
+
 
     public void Config(BattleEntity entityData)
     {
@@ -69,10 +75,7 @@ public abstract class BattleEntityProper : MonoBehaviour
         }
     }
 
-    public void AttackTriggerAnimation(DefaultAnimations animType)
-    {
-        attackTrigger?.Invoke(animType);
-    }
+    public abstract void AttackTriggerAnimation(DefaultAnimations animType);
 
     public void Death()
     {

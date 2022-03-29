@@ -11,11 +11,16 @@ public class PlayerBattleEntityProper : BattleEntityProper
 
 
     // Start is called before the first frame update
-    void Start()
-    {
-        //Instance slider aqui vv
+    //void Start()
+    //{
+    //    //Instance slider aqui vv
 
-        //just for testing         
+    //    //just for testing         
+    //}
+
+    public override void AttackTriggerAnimation(DefaultAnimations animType)
+    {
+        attackTrigger?.Invoke(animType, null);
     }
 
     public override void StartTurn()
