@@ -12,6 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5c4ae3d8ded5a840820a7f266f1283e, type: 3}
   m_Name: _Player
   m_EditorClassIdentifier: 
-  hp: 2000
-  mp: 30
-  dex: 5
+  hp:
+    minV: 5000
+    maxV: 5000
+  mp:
+    minV: 100
+    maxV: 100
+  dex:
+    minV: 5
+    maxV: 5
+  str:
+    minV: 2
+    maxV: 2

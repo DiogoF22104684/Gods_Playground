@@ -13,11 +13,10 @@ public abstract class BattleEntityProper : MonoBehaviour
     public Action onDeath;
     public Action onEndTurn;
 
-    //A Entity devia instanciar o slider
+
     [SerializeField]
-    protected BattleSlider hpSlider;
-
-
+    private GameObject hpSliderPREFAB;
+    protected BattleSlider hpBattleSlider;
 
     private void Awake()
     {
@@ -27,14 +26,33 @@ public abstract class BattleEntityProper : MonoBehaviour
     }
     private void Start()
     {
-        if (hpSlider != null)
-            hpSlider.Config(entityData.Hp);
+       
     }
 
 
     public void Config(BattleEntity entityData)
     {
         this.entityData = entityData;
+
+        //Maybe try to find the canvas component and add to that gameObject instead
+        GameObject slider = Instantiate(hpSliderPREFAB, transform.position,         
+            Quaternion.identity, GameObject.Find("HealthBars").transform);
+
+        hpBattleSlider = slider.GetComponent<BattleSlider>();
+        hpBattleSlider.Config(entityData.Hp);
+        slider.transform.position = Camera.main.WorldToScreenPoint(transform.position);
+        RectTransform sliderRect = slider.GetComponent<RectTransform>();
+
+        sliderRect.ScaleWithTarget(transform, 1.7f);
+
+        Vector3 topPos = 
+            Camera.main.WorldToScreenPoint(
+                GetComponent<Collider>().bounds.center +
+                Vector3.zero.y(GetComponent<Collider>().bounds.extents.y + 0.3f));
+       
+
+        sliderRect.position = topPos; 
+
     }
 
  
@@ -51,7 +69,7 @@ public abstract class BattleEntityProper : MonoBehaviour
         switch (propName)
         {
             case "hp":
-                hpSlider.ChangeValue(value);
+                hpBattleSlider.ChangeValue(value);
                 break;
         }
     }
@@ -80,7 +98,7 @@ public abstract class BattleEntityProper : MonoBehaviour
     public void Death()
     {
         onDeath?.Invoke();
-        Destroy(hpSlider.gameObject);
+        Destroy(hpBattleSlider.gameObject);
         Destroy(gameObject);
     }
 

@@ -12,8 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc562e2d715ae5e4ca8e717294bd062e, type: 3}
   m_Name: Mauzinho1
   m_EditorClassIdentifier: 
-  hp: 34
-  mp: 40
-  dex: 3
+  hp:
+    minV: 5
+    maxV: 12
+  mp:
+    minV: 1
+    maxV: 100
+  dex:
+    minV: 1
+    maxV: 10
+  str:
+    minV: 1
+    maxV: 5
   moves:
   - {fileID: 11400000, guid: 9a0d6840c4606364bbed53fc2b09c169, type: 2}

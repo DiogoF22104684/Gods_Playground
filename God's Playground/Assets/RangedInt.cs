@@ -6,10 +6,10 @@ using UnityEngine;
 [System.Serializable]
 public struct RangedInt
 {
-    [SerializeField] [Tooltip("Minimum value of the range. Inclusive")]
+    [SerializeField] 
     private int minV;
     
-    [SerializeField] [Tooltip("Maximum value of the range. Inclusive")]
+    [SerializeField] 
     private int maxV;
 
     
