@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using CombatSystem;
-using Cinemachine;
 
 public class TesteAttack : MonoBehaviour
 {
@@ -13,10 +12,8 @@ public class TesteAttack : MonoBehaviour
     [SerializeField]
     private BattleEntityProper target;
 
-    [SerializeField]
-    private CinemachineVirtualCamera geralCamera;
-    [SerializeField]
-    private GameObject canvas, canvasFocus;
+
+    private BattleCameraManager cameraManager;
     [SerializeField]
     private GameObject actionTimer;
     [SerializeField]
@@ -26,6 +23,7 @@ public class TesteAttack : MonoBehaviour
     private void Start()
     {
         battle.attackTrigger += AnimationResponse;
+        cameraManager = GetComponent<BattleCameraManager>();
     }
 
     private void AnimationResponse(DefaultAnimations anim)
@@ -48,12 +46,11 @@ public class TesteAttack : MonoBehaviour
 
     private void SwitchCamera()
     {
-        canvas.SetActive(false);
-        canvasFocus.SetActive(true);
-        geralCamera.enabled = false;
+
+        cameraManager.SwitchCameras(target.gameObject);  
         GameObject acTimer = 
             Instantiate(actionTimer,transform.position, 
-                Quaternion.identity, canvasFocus.transform);
+                Quaternion.identity, cameraManager.ActiveCanvas.transform);
         ActionPointManager acPointManager = 
             acTimer.GetComponent<ActionPointManager>();
         acPointManager.Config(target, rollResult, Attack);
@@ -65,9 +62,7 @@ public class TesteAttack : MonoBehaviour
 
     public void Attack(float roll)
     {
-        canvas.SetActive(true);
-        canvasFocus.SetActive(false);
-        geralCamera.enabled = true;
+        cameraManager.SwitchCameras();
         move.Function(battle.entityData, target.entityData, roll);
     }
 }
