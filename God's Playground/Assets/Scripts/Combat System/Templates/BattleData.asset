@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14ba4eb3cc534d648bfda78caa74ccf4, type: 3}
-  m_Name: Hp_Atk_Def
+  m_Script: {fileID: 11500000, guid: 1cc413bac1656bf47b07e30ff83871d1, type: 3}
+  m_Name: BattleData
   m_EditorClassIdentifier: 
-  selected1: 0
-  selected2: 1
-  selected3: 2
-  baseValue: 8
+  enemies:
+  - {fileID: 11400000, guid: a5bdcb35f1a97e64f9d709a2eaa957cb, type: 2}
+  - {fileID: 11400000, guid: a5bdcb35f1a97e64f9d709a2eaa957cb, type: 2}

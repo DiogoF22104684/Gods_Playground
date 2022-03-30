@@ -3,47 +3,57 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class BattleEntityProper : MonoBehaviour
+public abstract class BattleEntityProper : MonoBehaviour
 {
-    public BattleEntity entityData { get; private set; }
+    public BattleEntity entityData { get; protected set; }
     private Animator anim;
 
-    public Action<DefaultAnimations> attackTrigger;
+    public Action<DefaultAnimations, BattleEntity> attackTrigger;
     public Action damageTrigger;
     public Action onDeath;
+    public Action onEndTurn;
 
-    //A Entity devia instanciar o slider
+
     [SerializeField]
-    private BattleSlider hpSlider;
-    
-    [SerializeField]
-    private ActionPointProper actionPoints;
-    public ActionPointProper ActionPoints => actionPoints;
+    protected GameObject hpSliderPREFAB;
+    protected BattleSlider hpBattleSlider;
 
     private void Awake()
     {
         anim = GetComponent<Animator>();
-        entityData = new BattleEntity(30, this);
+        
+        
     }
-
     private void Start()
     {
-        if(hpSlider != null)
-            hpSlider.Config(entityData.Hp);
+       
     }
 
+
+    public void Config(BattleEntity entityData)
+    {
+        this.entityData = entityData;
+        ConfingBars();
+        
+    }
+
+    protected abstract void ConfingBars();
+
+ 
     // Update is called once per frame
     void Update()
     {
         
     }
 
+
+
     internal void ChangeValue(string propName, float value)
     {
         switch (propName)
         {
             case "hp":
-                hpSlider.ChangeValue(value);
+                hpBattleSlider.ChangeValue(value);
                 break;
         }
     }
@@ -67,15 +77,12 @@ public class BattleEntityProper : MonoBehaviour
         }
     }
 
-    public void AttackTriggerAnimation(DefaultAnimations animType)
-    {
-        attackTrigger?.Invoke(animType);
-    }
+    public abstract void AttackTriggerAnimation(DefaultAnimations animType);
 
     public void Death()
     {
         onDeath?.Invoke();
-        Destroy(hpSlider.gameObject);
+        Destroy(hpBattleSlider.gameObject);
         Destroy(gameObject);
     }
 
@@ -89,4 +96,14 @@ public class BattleEntityProper : MonoBehaviour
     {
         anim.Play(name);
     }
+
+    public abstract void StartTurn();
+    public abstract void EndTurn();
+
+    protected void OnEndTurn()
+    {
+        onEndTurn?.Invoke();
+    }
+
+
 }

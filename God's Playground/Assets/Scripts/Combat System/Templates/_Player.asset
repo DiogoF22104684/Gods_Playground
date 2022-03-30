@@ -9,10 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14ba4eb3cc534d648bfda78caa74ccf4, type: 3}
-  m_Name: Hp_Atk_Def
+  m_Script: {fileID: 11500000, guid: c5c4ae3d8ded5a840820a7f266f1283e, type: 3}
+  m_Name: _Player
   m_EditorClassIdentifier: 
-  selected1: 0
-  selected2: 1
-  selected3: 2
-  baseValue: 8
+  hp:
+    minV: 300
+    maxV: 300
+  mp:
+    minV: 100
+    maxV: 100
+  dex:
+    minV: 5
+    maxV: 5
+  str:
+    minV: 2
+    maxV: 2
