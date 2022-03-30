@@ -44,11 +44,11 @@ public class BattleEntity
 
     public EntityTemplate template { get; }
 
-    public BattleEntity(float hp, BattleEntityProper proper, EntityTemplate template = null)
+    public BattleEntity(BattleEntityProper proper,  EntityTemplate template)
     {
         properEntity = proper;
-        this.hp = hp;
-        atk = 0.4f;
+        this.hp = template.HP;
+        atk = (template.Str * 2) /100;
         def = 0f;
         this.template = template;
         dex = template.Dex;

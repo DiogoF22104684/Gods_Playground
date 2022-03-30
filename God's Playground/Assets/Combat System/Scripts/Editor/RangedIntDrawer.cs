@@ -6,12 +6,14 @@ using UnityEditor;
 [CustomPropertyDrawer(typeof(RangedInt))]
 public class RangedIntDrawer : PropertyDrawer
 {
-    public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+    public override float GetPropertyHeight(SerializedProperty property,
+        GUIContent label)
     {
         return 47;
     }
 
-    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+    public override void OnGUI(Rect position, SerializedProperty property,
+        GUIContent label)
     {
         EditorGUI.BeginProperty(position, label, property);
 

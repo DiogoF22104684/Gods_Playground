@@ -44,24 +44,29 @@ public class BattleManager : MonoBehaviour
     [SerializeField]
     private BattleEntityProper playerProper;
 
-    [SerializeField]
     private List<BattleEntity> enemies;
 
+    //Maybe criar outro componente q trate disto e do resto dos menus
+    [SerializeField]
+    private GameObject deathPanel;
 
     private void Awake()
     {
         enemies = new List<BattleEntity>{ };
         //Instatiate things
-        playerData = new BattleEntity(playerTemplate.HP, playerProper, playerTemplate);
+        playerData = new BattleEntity(playerProper, playerTemplate);
         playerProper.Config(playerData);
 
         playerProper.onEndTurn += NextTurn;
+
+        //Bue simplificado 
+        playerProper.onDeath += ()=> { deathPanel.SetActive(true); } ; 
 
         //mau
         int index = 0;
         foreach (EnemiesTemplate temp in enemiesTemplate)
         {
-            BattleEntity enemyData = new BattleEntity(temp.HP, soparaagoraEnemies[index], temp);
+            BattleEntity enemyData = new BattleEntity(soparaagoraEnemies[index], temp);
             soparaagoraEnemies[index].Config(enemyData);
             soparaagoraEnemies[index].onEndTurn += NextTurn;
             enemies.Add(enemyData);
@@ -72,6 +77,9 @@ public class BattleManager : MonoBehaviour
         }
 
     }
+
+
+
 
     private void CleanEntityList()
     {

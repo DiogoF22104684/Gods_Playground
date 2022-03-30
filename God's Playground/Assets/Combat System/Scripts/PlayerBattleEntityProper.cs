@@ -37,5 +37,11 @@ public class PlayerBattleEntityProper : BattleEntityProper
         //battleMenu.Deactivate();
     }
 
+    protected override void ConfingBars()
+    {
+        //Dumb and bad and dumb(just for now)
+        hpBattleSlider = hpSliderPREFAB.GetComponent<BattleSlider>();
+        hpBattleSlider.Config(entityData.Hp);
 
+    }
 }

@@ -17,5 +17,4 @@ public struct RangedInt
     {
         return Random.Range(self.minV, self.maxV + 1);
     }
-
 }

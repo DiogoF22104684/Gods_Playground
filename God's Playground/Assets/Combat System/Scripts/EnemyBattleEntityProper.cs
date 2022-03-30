@@ -23,7 +23,7 @@ public class EnemyBattleEntityProper : BattleEntityProper
 
     //    //just for testing 
     //    //entityData = new BattleEntity(30, this);
-       
+                                                                                                                       
     //}
 
     public override void StartTurn()
@@ -52,5 +52,28 @@ public class EnemyBattleEntityProper : BattleEntityProper
     public override void AttackTriggerAnimation(DefaultAnimations animType)
     {
         attackTrigger?.Invoke(animType, players.First(x => x.Hp > 0));
+    }
+
+    protected override void ConfingBars()
+    {
+        //Maybe try to find the canvas component and add to that gameObject instead
+        GameObject slider = Instantiate(hpSliderPREFAB, transform.position,
+            Quaternion.identity, GameObject.Find("HealthBars").transform);
+
+        hpBattleSlider = slider.GetComponent<BattleSlider>();
+        hpBattleSlider.Config(entityData.Hp);
+        slider.transform.position = Camera.main.WorldToScreenPoint(transform.position);
+        RectTransform sliderRect = slider.GetComponent<RectTransform>();
+
+        sliderRect.ScaleWithTarget(transform, 1.7f);
+
+        Vector3 topPos =
+            Camera.main.WorldToScreenPoint(
+                GetComponent<Collider>().bounds.center +
+                Vector3.zero.y(GetComponent<Collider>().bounds.extents.y + 0.3f));
+
+
+        sliderRect.position = topPos;
+
     }
 }

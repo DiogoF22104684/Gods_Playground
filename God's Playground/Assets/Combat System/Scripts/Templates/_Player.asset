@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: _Player
   m_EditorClassIdentifier: 
   hp:
-    minV: 5000
-    maxV: 5000
+    minV: 300
+    maxV: 300
   mp:
     minV: 100
     maxV: 100
