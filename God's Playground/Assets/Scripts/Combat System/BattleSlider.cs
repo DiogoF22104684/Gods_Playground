@@ -15,7 +15,6 @@ public class BattleSlider : MonoBehaviour
 
     private void Awake()
     {
-        slider = GetComponent<Slider>();
     }
 
     // Start is called before the first frame update
@@ -37,6 +36,7 @@ public class BattleSlider : MonoBehaviour
 
     public void Config(float maxValue)
     {
+        if (slider == null) slider = GetComponent<Slider>();
         slider.maxValue = maxValue;
         slider.value = maxValue;
     }

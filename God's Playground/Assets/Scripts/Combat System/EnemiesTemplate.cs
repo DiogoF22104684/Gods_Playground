@@ -6,9 +6,14 @@ using CombatSystem;
 [CreateAssetMenu(menuName = "Scriptables/EntitiesTemplates/Enemy")]
 public class EnemiesTemplate : EntityTemplate
 {
-    //Behavior Tree?
+    //Decision Tree?
     [SerializeField]
     List<BattleMove> moves;
+
+    [SerializeField]
+    GameObject prefab;
+    public GameObject Prefab => prefab;
+    
 
     public BattleMove ResolveAction()
     {

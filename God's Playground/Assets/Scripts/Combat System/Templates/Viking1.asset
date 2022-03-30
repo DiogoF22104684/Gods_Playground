@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc562e2d715ae5e4ca8e717294bd062e, type: 3}
+  m_Name: Viking1
+  m_EditorClassIdentifier: 
+  hp:
+    minV: 5
+    maxV: 12
+  mp:
+    minV: 1
+    maxV: 100
+  dex:
+    minV: 1
+    maxV: 10
+  str:
+    minV: 1
+    maxV: 5
+  moves:
+  - {fileID: 11400000, guid: 9a0d6840c4606364bbed53fc2b09c169, type: 2}
+  prefab: {fileID: 180720735727198813, guid: 6184c0706f056d344b97e0dfaa802ec6, type: 3}

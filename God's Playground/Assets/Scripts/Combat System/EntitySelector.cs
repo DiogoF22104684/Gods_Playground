@@ -38,9 +38,13 @@ public class EntitySelector : MonoBehaviour
 
     private void SpawnIcon()
     {        
-        iconSelector.GetComponent<RectTransform>().ScaleWithTarget(SelectedEntity.transform, 0.5f);
+        iconSelector.GetComponent<RectTransform>().ScaleWithTarget(
+            SelectedEntity.transform, 0.5f);
+
+        //I use GetComponent<Collider> To much
         iconSelector.transform.position =
-           Camera.main.WorldToScreenPoint(SelectedEntity.transform.position);
+           Camera.main.WorldToScreenPoint( SelectedEntity.transform.position
+               /*SelectedEntity.GetComponent<Collider>().bounds.center*/);
     }
 
 

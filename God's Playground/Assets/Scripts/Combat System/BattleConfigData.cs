@@ -6,10 +6,12 @@ using UnityEngine;
 public class BattleConfigData : ScriptableObject
 {
     [SerializeField]
+    PlayerTemplate playerTemplate;
+    public PlayerTemplate PlayerTemplate => playerTemplate;
+
+    [SerializeField]
     List<EnemiesTemplate> enemies;
-    List<EnemiesTemplate> Enemies => enemies;
-
-
+    public List<EnemiesTemplate> Enemies => enemies;
 
     //Other things
 }

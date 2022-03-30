@@ -27,18 +27,20 @@ public class BattleManager : MonoBehaviour
     private int turnnumb;
 
 
-    //Isto é para alterar
+   
+    
     [SerializeField]
-    private BattleEntityProper[] soparaagoraEnemies;
-    //Isto é para alterar
-    [SerializeField]
-    private EnemiesTemplate[] enemiesTemplate;
+    private BattleConfigData battleConfig;
 
-    //Isto nao
-    [SerializeField]
-    private PlayerTemplate playerTemplate;
-    [SerializeField]
     private BattleEntity playerData;
+
+    //Isto é para alterar / Se calhar ate deixo
+    //[SerializeField]
+    //private BattleEntityProper[] soparaagoraEnemies;
+    [SerializeField]
+    private Transform[] enemiesSlots;
+
+
 
     //Not sure se isto fica aqui
     [SerializeField]
@@ -54,7 +56,7 @@ public class BattleManager : MonoBehaviour
     {
         enemies = new List<BattleEntity>{ };
         //Instatiate things
-        playerData = new BattleEntity(playerProper, playerTemplate);
+        playerData = new BattleEntity(playerProper, battleConfig.PlayerTemplate);
         playerProper.Config(playerData);
 
         playerProper.onEndTurn += NextTurn;
@@ -64,15 +66,26 @@ public class BattleManager : MonoBehaviour
 
         //mau
         int index = 0;
-        foreach (EnemiesTemplate temp in enemiesTemplate)
+        foreach (EnemiesTemplate enTemp in battleConfig.Enemies)
         {
-            BattleEntity enemyData = new BattleEntity(soparaagoraEnemies[index], temp);
-            soparaagoraEnemies[index].Config(enemyData);
-            soparaagoraEnemies[index].onEndTurn += NextTurn;
+            //Ainda mau mas melhor
+            //soparaagoraEnemies[index].gameObject.SetActive(true);
+            GameObject bep = Instantiate(enTemp.Prefab,
+                enemiesSlots[index].transform.position,
+                enemiesSlots[index].transform.rotation);
+
+            BattleEntityProper crtProper = 
+                bep.GetComponent<BattleEntityProper>();
+
+            BattleEntity enemyData = new BattleEntity(crtProper, enTemp);
+
+            crtProper.Config(enemyData);
+            crtProper.onEndTurn += NextTurn;
             enemies.Add(enemyData);
-            //MAU
-            (soparaagoraEnemies[index] as EnemyBattleEntityProper).SetPlayers(new List<BattleEntity> { playerData });
-            soparaagoraEnemies[index].attackTrigger += AnimationResponse;
+            (crtProper as EnemyBattleEntityProper).SetPlayers(
+                new List<BattleEntity> { playerData });
+            crtProper.attackTrigger += AnimationResponse;
+            
             index++;
         }
 
