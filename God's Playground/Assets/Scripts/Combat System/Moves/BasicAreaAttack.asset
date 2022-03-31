@@ -22,5 +22,11 @@ MonoBehaviour:
       selected: 1
     param3:
       selected: 2
-    baseValue: 7
+    baseValue: 40
+  basicIgnoreDef:
+    param1:
+      selected: 0
+    param2:
+      selected: 1
+    baseValue: 0
   function: 0

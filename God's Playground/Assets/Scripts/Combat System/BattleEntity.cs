@@ -48,10 +48,10 @@ public class BattleEntity
     {
         properEntity = proper;
         this.hp = template.HP;
-        atk = (template.Str * 2) /100;
-        def = 0f;
-        this.template = template;
+        atk = (template.Str * 2) /100f;
+        def = (template.Def * 2) / 100f;       
         dex = template.Dex;
+        this.template = template;
     }
 
     public BattleEntityProper properEntity { get; }

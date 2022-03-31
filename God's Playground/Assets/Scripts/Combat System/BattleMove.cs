@@ -18,6 +18,10 @@ namespace CombatSystem
         private BasicAffect basicFunc;
 
         [SerializeField]
+        private BasicIgnoreDef basicIgnoreDef;
+
+
+        [SerializeField]
         private FuncType function;
 
         public void Function(BattleEntity attacker, IEnumerable<BattleEntity> target, float roll)
@@ -37,6 +41,9 @@ namespace CombatSystem
                 case 0:
                     functionProp = basicFunc;
                     break;
+                case 1:
+                    functionProp = basicIgnoreDef;
+                    break;
             }
         }
       
@@ -45,7 +52,8 @@ namespace CombatSystem
 
     public enum FuncType
     {
-        Basic
+        Basic,
+        BasicIgnoreDef
     }
 }
 

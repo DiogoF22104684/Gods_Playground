@@ -8,6 +8,9 @@ public class EntitySelector : MonoBehaviour
 
     [SerializeField]
     private GameObject iconSelector;
+
+    [SerializeField]
+    private BattleInfoPanel infoPanel;
     public BattleEntityProper SelectedEntity { get; private set; }
 
     public List<BattleEntityProper> SelectedEntities { get; private set; }
@@ -22,19 +25,41 @@ public class EntitySelector : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-          
-            RaycastHit hit = new RaycastHit();
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition),
-                hitInfo: out hit))
-            {
-                BattleEntityProper selectedEntity =
-                    hit.collider.gameObject.GetComponent<BattleEntityProper>();
+            SelectEntity(x => {
+                this.SelectedEntity = x;
+                SpawnIcon();
+            });
+        }
+
+        if (Input.GetMouseButton(1))
+        {
+            SelectEntity(x => {
                 
-                if (selectedEntity != null && selectedEntity != SelectedEntity)
-                {
-                    this.SelectedEntity = selectedEntity;
-                    SpawnIcon();      
-                }
+                infoPanel.transform.position = 
+                    Camera.main.WorldToScreenPoint(x.transform.position);
+                infoPanel.gameObject.SetActive(true);
+                infoPanel.Display(x);
+            });
+        }
+        else
+        {
+            infoPanel.gameObject.SetActive(false);
+        }
+    }
+
+
+    private void SelectEntity(Action<BattleEntityProper> onSelect)
+    {
+        RaycastHit hit = new RaycastHit();
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition),
+            hitInfo: out hit))
+        {
+            BattleEntityProper selectedEntity =
+                hit.collider.gameObject.GetComponent<BattleEntityProper>();
+
+            if (selectedEntity != null && selectedEntity != SelectedEntity)
+            {
+                onSelect?.Invoke(selectedEntity);
             }
         }
     }
@@ -65,7 +90,7 @@ public class EntitySelector : MonoBehaviour
                 returnlist = GetAllAdjacent().ToList();
                 break;
             case CombatSystem.SelectorType.All:
-
+                returnlist = enemiesEntity;
                 break;
 
 

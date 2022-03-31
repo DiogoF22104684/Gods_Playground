@@ -12,6 +12,7 @@ public class BattleMoveEditor : Editor
 
     SerializedProperty config;
     SerializedProperty funcBas;
+    SerializedProperty funcIgDef;
     SerializedProperty function;
     int selectedFunc;
 
@@ -19,6 +20,7 @@ public class BattleMoveEditor : Editor
     {
         config = serializedObject.FindProperty("config");
         funcBas = serializedObject.FindProperty("basicFunc");
+        funcIgDef = serializedObject.FindProperty("basicIgnoreDef");
         function = serializedObject.FindProperty("function");
     }
     public override void OnInspectorGUI()
@@ -37,10 +39,15 @@ public class BattleMoveEditor : Editor
         switch (selectedFunc) 
         {
             case 0:
-                (target as BattleMove).SelectFunc(selectedFunc);
+               
                 EditorGUILayout.PropertyField(funcBas);
                 break;
+            case 1:                
+                EditorGUILayout.PropertyField(funcIgDef);
+                break;
         }
+
+         (target as BattleMove).SelectFunc(selectedFunc);
 
         serializedObject.ApplyModifiedProperties();
     }

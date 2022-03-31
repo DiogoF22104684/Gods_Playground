@@ -46,6 +46,10 @@ public abstract class BattleEntityProper : MonoBehaviour
         
     }
 
+    public override string ToString()
+    {
+        return entityData.ToString();
+    }
 
 
     internal void ChangeValue(string propName, float value)
