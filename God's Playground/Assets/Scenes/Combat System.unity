@@ -817,6 +817,7 @@ GameObject:
   - component: {fileID: 596196626}
   - component: {fileID: 596196625}
   - component: {fileID: 596196624}
+  - component: {fileID: 596196627}
   m_Layer: 5
   m_Name: SkillSlot_4
   m_TagString: Untagged
@@ -838,10 +839,10 @@ RectTransform:
   m_Father: {fileID: 1424561388}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 820.96, y: -108.2399}
-  m_SizeDelta: {x: 194.16, y: 190}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &596196624
 MonoBehaviour:
@@ -900,15 +901,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.79384273, g: 0.27942324, b: 0.8867924, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 27eddc6ac8fa83540b85456451b60dc8, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -925,6 +926,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 596196622}
   m_CullTransparentMesh: 1
+--- !u!114 &596196627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 596196622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0586fe413703c964ea3d1b80822beb54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  manager: {fileID: 1320977172}
+  isLocked: 0
 --- !u!1 &670635718
 GameObject:
   m_ObjectHideFlags: 0
@@ -2002,6 +2017,7 @@ GameObject:
   - component: {fileID: 1204906070}
   - component: {fileID: 1204906069}
   - component: {fileID: 1204906068}
+  - component: {fileID: 1204906071}
   m_Layer: 5
   m_Name: SkillSlot_2
   m_TagString: Untagged
@@ -2023,10 +2039,10 @@ RectTransform:
   m_Father: {fileID: 1424561388}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 371.03998, y: -108.2399}
-  m_SizeDelta: {x: 194.16, y: 190}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1204906068
 MonoBehaviour:
@@ -2071,19 +2087,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1204906069}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1320977172}
-        m_TargetAssemblyTypeName: BattleManager, Assembly-CSharp
-        m_MethodName: ResolvePlayerAttack
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: a6e2bee665ef1894e826f52da8b0479c, type: 2}
-          m_ObjectArgumentAssemblyTypeName: CombatSystem.BattleMove, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1204906069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2122,6 +2126,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1204906066}
   m_CullTransparentMesh: 1
+--- !u!114 &1204906071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1204906066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0586fe413703c964ea3d1b80822beb54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  manager: {fileID: 1320977172}
+  isLocked: 0
 --- !u!1 &1214983477
 GameObject:
   m_ObjectHideFlags: 0
@@ -3002,6 +3020,7 @@ GameObject:
   - component: {fileID: 1455342853}
   - component: {fileID: 1455342852}
   - component: {fileID: 1455342851}
+  - component: {fileID: 1455342854}
   m_Layer: 5
   m_Name: SkillSlot_3
   m_TagString: Untagged
@@ -3023,10 +3042,10 @@ RectTransform:
   m_Father: {fileID: 1424561388}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 596, y: -108.2399}
-  m_SizeDelta: {x: 194.16, y: 190}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1455342851
 MonoBehaviour:
@@ -3085,15 +3104,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.46269724, g: 0.83137256, b: 0.36470592, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 27eddc6ac8fa83540b85456451b60dc8, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -3110,6 +3129,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1455342849}
   m_CullTransparentMesh: 1
+--- !u!114 &1455342854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1455342849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0586fe413703c964ea3d1b80822beb54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  manager: {fileID: 1320977172}
+  isLocked: 0
 --- !u!1 &1536512618
 GameObject:
   m_ObjectHideFlags: 0
@@ -3316,6 +3349,7 @@ GameObject:
   - component: {fileID: 1568460231}
   - component: {fileID: 1568460230}
   - component: {fileID: 1568460229}
+  - component: {fileID: 1568460232}
   m_Layer: 5
   m_Name: SkillSlot_1
   m_TagString: Untagged
@@ -3337,10 +3371,10 @@ RectTransform:
   m_Father: {fileID: 1424561388}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 146.08, y: -108.2399}
-  m_SizeDelta: {x: 194.16, y: 190}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1568460229
 MonoBehaviour:
@@ -3385,19 +3419,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1568460230}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1320977172}
-        m_TargetAssemblyTypeName: BattleManager, Assembly-CSharp
-        m_MethodName: ResolvePlayerAttack
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: 9a0d6840c4606364bbed53fc2b09c169, type: 2}
-          m_ObjectArgumentAssemblyTypeName: CombatSystem.BattleMove, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1568460230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3418,7 +3440,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 60d3f2d6a250c02499d6a6583e8858a3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 27eddc6ac8fa83540b85456451b60dc8, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -3436,6 +3458,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1568460227}
   m_CullTransparentMesh: 1
+--- !u!114 &1568460232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1568460227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0586fe413703c964ea3d1b80822beb54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  manager: {fileID: 1320977172}
+  isLocked: 0
 --- !u!1 &1597706652
 GameObject:
   m_ObjectHideFlags: 0
@@ -3917,13 +3953,14 @@ GameObject:
   - component: {fileID: 1973239372}
   - component: {fileID: 1973239374}
   - component: {fileID: 1973239373}
+  - component: {fileID: 1973239375}
   m_Layer: 5
   m_Name: BattleMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1973239372
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3982,6 +4019,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1973239371}
   m_CullTransparentMesh: 1
+--- !u!114 &1973239375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1973239371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac2f3c897e72e7c48a8ee5410a6e246f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillSlot:
+  - {fileID: 1568460232}
+  - {fileID: 1204906071}
+  - {fileID: 1455342854}
+  - {fileID: 596196627}
+  template: {fileID: 11400000, guid: 7f25d388dfc82504caad2ea8bc894dfe, type: 2}
+  selector: {fileID: 39514033}
 --- !u!1 &2022497285
 GameObject:
   m_ObjectHideFlags: 0

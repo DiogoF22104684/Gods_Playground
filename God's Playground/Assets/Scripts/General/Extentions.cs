@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class Vector3Extension
+public static class Extentions
 {
     public static Vector3 x(this Vector3 vec, float value)
     {
@@ -63,5 +63,11 @@ public static class Vector3Extension
                 String.Substring(1, String.Length - 1);
     }
 
+    public static Sprite ToSprite(this Texture2D texture)
+    {
+        return Sprite.Create(texture,
+            new Rect(0, 0, texture.width, texture.height),
+            new Vector2(0.5f, 0.5f));
+    }
 
 }

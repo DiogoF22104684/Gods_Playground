@@ -18,7 +18,6 @@ public class BasicAffect : BattleAffects
 
 
     private IEnumerable<BattleEntity> currentTargets;
-    private float valueToChange;
 
 
     public override void Function(BattleEntity attacker, IEnumerable<BattleEntity> target, float roll)
@@ -31,26 +30,24 @@ public class BasicAffect : BattleAffects
         float firstAndRoll = firstComp * roll;
 
 
-
         attacker.properEntity.PlayAnimation(DefaultAnimations.BasicAttack);
 
         foreach (BattleEntity be in target)
         {
             float totalValue = firstAndRoll - (firstAndRoll *
-            (float)param3.param.GetValue(be));
+                       (float)param3.param.GetValue(be));
 
-            valueToChange = (float)param1.param.GetValue(be) - totalValue;
+            //Make sure the damage is never 0
+            totalValue = totalValue == 0 ? 1 : totalValue;
 
-            be.properEntity.damageTrigger += Resolve;
+            float valueToChange = (float)param1.param.GetValue(be) - totalValue;
+
+            be.properEntity.damageTrigger += ()=> 
+            {
+                param1.param.SetValue(be, valueToChange);        
+            };
+
         }
 
     }
-
-
-    private void Resolve(BattleEntity target)
-    {
-        param1.param.SetValue(target, valueToChange);
-    }
-
-
 }

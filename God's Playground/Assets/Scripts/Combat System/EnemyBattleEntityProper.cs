@@ -29,7 +29,7 @@ public class EnemyBattleEntityProper : BattleEntityProper
     public override void StartTurn()
     {
         BattleMove mo = (entityData.template as EnemiesTemplate).ResolveAction();
-        mo.Function(entityData, players.Where(x => x.Hp > 0), Random.Range(1,7));
+        mo.Function(entityData, players.Where(x => x.Hp > 0), Random.Range(1,7) / 6f);
         entityData.hadTurn = true;
         
 

@@ -188,7 +188,7 @@ public class BattleManager : MonoBehaviour
 
         DiceScript diceS = diceTemp.GetComponent<DiceScript>();
 
-        if (move.Config.Type == SelectorType.Solo)
+        if (move.Config.Mechanic == MechanicType.ActionPoints)
         {
             diceS.onResult -= SwitchCamera;
             diceS.onResult += SwitchCamera;
@@ -222,8 +222,8 @@ public class BattleManager : MonoBehaviour
     {
         IEnumerable<BattleEntity> enemiesSelected = new List<BattleEntity>() { };
 
-        switch (move.Config.Type) {
-            case SelectorType.Solo:
+        switch (move.Config.Mechanic) {
+            case MechanicType.ActionPoints:
                 cameraManager.SwitchCameras();
                 break;
         }

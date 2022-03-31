@@ -4,16 +4,13 @@ using UnityEngine;
 
 
 [System.Serializable]
-public class BasicIgnoreDef : BattleAffects
+public class BasicFlat : BattleAffects
 {
     [SerializeField]
     private BattlePropertyInfo param1;
-    [SerializeField]
-    private BattlePropertyInfo param2;
-
+  
     [SerializeField]
     private int baseValue;
-
 
     private IEnumerable<BattleEntity> currentTargets;
 
@@ -22,8 +19,7 @@ public class BasicIgnoreDef : BattleAffects
     {
         currentTargets = target;
 
-        float firstComp = baseValue +
-            (baseValue * (float)param2.param.GetValue(attacker));
+        float firstComp = baseValue;
 
         float firstAndRoll = firstComp * roll;
 

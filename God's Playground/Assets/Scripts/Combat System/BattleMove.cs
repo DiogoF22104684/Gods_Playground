@@ -8,10 +8,15 @@ namespace CombatSystem
     public class BattleMove : ScriptableObject
     {
         [SerializeField]
+        private Texture2D icon;
+
+        //N devia ser feito todas as calls, so qd muda a property
+        public Sprite Icon => icon.ToSprite();
+
+        [SerializeField]
         private MoveConfig config;
         public MoveConfig Config => config;
-
-        
+ 
         private BattleAffects functionProp;
 
         [SerializeField]
@@ -20,9 +25,14 @@ namespace CombatSystem
         [SerializeField]
         private BasicIgnoreDef basicIgnoreDef;
 
+        [SerializeField]
+        private BasicFlat basicFlat;
+
 
         [SerializeField]
         private FuncType function;
+
+      
 
         public void Function(BattleEntity attacker, IEnumerable<BattleEntity> target, float roll)
         {
@@ -44,6 +54,9 @@ namespace CombatSystem
                 case 1:
                     functionProp = basicIgnoreDef;
                     break;
+                case 2:
+                    functionProp = basicFlat;
+                    break;
             }
         }
       
@@ -53,8 +66,15 @@ namespace CombatSystem
     public enum FuncType
     {
         Basic,
-        BasicIgnoreDef
+        BasicIgnoreDef,
+        BasicFlat
     }
+    public enum MechanicType
+    {
+        None,
+        ActionPoints
+    }
+
 }
 
 

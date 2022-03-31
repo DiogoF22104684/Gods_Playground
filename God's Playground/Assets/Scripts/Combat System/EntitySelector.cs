@@ -15,6 +15,7 @@ public class EntitySelector : MonoBehaviour
 
     public List<BattleEntityProper> SelectedEntities { get; private set; }
 
+    public System.Action onSelect;
 
     private List<BattleEntityProper> enemiesEntity;
     private BattleEntityProper playerEntity;
@@ -28,6 +29,7 @@ public class EntitySelector : MonoBehaviour
             SelectEntity(x => {
                 this.SelectedEntity = x;
                 SpawnIcon();
+                onSelect?.Invoke();
             });
         }
 

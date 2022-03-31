@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Woman
   m_EditorClassIdentifier: 
   hp:
-    minV: 300
-    maxV: 300
+    minV: 1
+    maxV: 10
   mp:
     minV: 1
     maxV: 100
@@ -22,11 +22,11 @@ MonoBehaviour:
     minV: 1
     maxV: 10
   str:
-    minV: 1
-    maxV: 5
+    minV: 4
+    maxV: 4
   def:
-    minV: 0
-    maxV: 0
+    minV: 4
+    maxV: 9
   moves:
   - {fileID: 11400000, guid: 9a0d6840c4606364bbed53fc2b09c169, type: 2}
   prefab: {fileID: 4471665455336808292, guid: 6383a7dcc55104944a0c97abfb4b5343, type: 3}

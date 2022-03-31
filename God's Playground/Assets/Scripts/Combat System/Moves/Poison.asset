@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bdd81a4266a235745a0860053e1ba1c1, type: 3}
-  m_Name: BasicAreaAttack
+  m_Name: Poison
   m_EditorClassIdentifier: 
-  icon: {fileID: 2800000, guid: 27eddc6ac8fa83540b85456451b60dc8, type: 3}
+  icon: {fileID: 2800000, guid: 8055b16d0dd81014093c6dca94994bac, type: 3}
   config:
     mode: 1
-    type: 1
-    mechanic: 1
+    type: 0
+    mechanic: 0
   basicFunc:
     param1:
       selected: 0
@@ -24,15 +24,15 @@ MonoBehaviour:
       selected: 1
     param3:
       selected: 2
-    baseValue: 5
+    baseValue: -10
   basicIgnoreDef:
     param1:
       selected: 0
     param2:
       selected: 1
-    baseValue: 0
+    baseValue: 20
   basicFlat:
     param1:
       selected: 0
     baseValue: 0
-  function: 0
+  function: 2

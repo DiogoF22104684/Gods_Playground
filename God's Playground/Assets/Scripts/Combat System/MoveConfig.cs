@@ -14,8 +14,11 @@ namespace CombatSystem
         SelectorMode mode;
         [SerializeField]
         SelectorType type;
-
+        [SerializeField]
+        MechanicType mechanic;
         public SelectorMode Mode => mode;
         public SelectorType Type => type;
+
+        public MechanicType Mechanic => mechanic;
     }
 }
