@@ -15,7 +15,7 @@ namespace CombatSystem
         [SerializeField]
         SelectorType type;
 
-        SelectorMode Mode => mode;
-        SelectorType Type => type;
+        public SelectorMode Mode => mode;
+        public SelectorType Type => type;
     }
 }

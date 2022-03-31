@@ -12,7 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd81a4266a235745a0860053e1ba1c1, type: 3}
   m_Name: BasicAttack
   m_EditorClassIdentifier: 
-  function: {fileID: 11400000, guid: 76bf7febd5447c447b75a2ed1280854b, type: 2}
   config:
     mode: 1
     type: 0
+  basicFunc:
+    param1:
+      selected: 0
+    param2:
+      selected: 1
+    param3:
+      selected: 2
+    baseValue: 5
+  function: 0

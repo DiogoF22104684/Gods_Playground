@@ -6,7 +6,6 @@ using System.Linq;
 
 public class BattleManager : MonoBehaviour
 {
-    [SerializeField]
     private BattleMove move;
 
     [SerializeField]
@@ -27,16 +26,13 @@ public class BattleManager : MonoBehaviour
     private int turnnumb;
 
 
-   
-    
+      
     [SerializeField]
     private BattleConfigData battleConfig;
 
+
     private BattleEntity playerData;
 
-    //Isto é para alterar / Se calhar ate deixo
-    //[SerializeField]
-    //private BattleEntityProper[] soparaagoraEnemies;
     [SerializeField]
     private Transform[] enemiesSlots;
 
@@ -55,6 +51,7 @@ public class BattleManager : MonoBehaviour
     private void Awake()
     {
         enemies = new List<BattleEntity>{ };
+        
         //Instatiate things
         playerData = new BattleEntity(playerProper, battleConfig.PlayerTemplate);
         playerProper.Config(playerData);
@@ -88,10 +85,7 @@ public class BattleManager : MonoBehaviour
             
             index++;
         }
-
     }
-
-
 
 
     private void CleanEntityList()
@@ -140,6 +134,8 @@ public class BattleManager : MonoBehaviour
         {
             inTurnEntity = turnEnt[0];
         }
+
+        selector.Config(playerProper, enemies.Select(x => x.properEntity).ToList());
     }
 
     private void NextTurn()
@@ -151,21 +147,23 @@ public class BattleManager : MonoBehaviour
 
     private void Start()
     {
-
-
         PrepareTurnOrder();
-
+       
         playerProper.attackTrigger += AnimationResponse;
         cameraManager = GetComponent<BattleCameraManager>();
-        inTurnEntity.properEntity.StartTurn();
-       
+        inTurnEntity.properEntity.StartTurn();      
     }
 
     
     private void AnimationResponse(DefaultAnimations anim, BattleEntity target = null)
     {
-        if(target == null)
-            selector.SelectedEntity.PlayAnimation(anim);
+        if (target == null)
+        {
+            foreach (BattleEntityProper bep in selector.SelectedEntities)
+            {
+                bep.PlayAnimation(anim);
+            }
+        }
         else
         {
             target.properEntity.PlayAnimation(anim);
@@ -176,16 +174,29 @@ public class BattleManager : MonoBehaviour
     }
 
 
+    public void ResolvePlayerAttack(BattleMove move)
+    {
+        this.move = move;
+        Roll();
+    }
 
-    public void Roll()
+    private void Roll()
     {
         rollResult = Random.Range(1,7);
         GameObject diceTemp = 
             Instantiate(dice, transform.position, Quaternion.identity);
 
         DiceScript diceS = diceTemp.GetComponent<DiceScript>();
-        diceS.onResult -= SwitchCamera;
-        diceS.onResult += SwitchCamera; 
+
+        if (move.Config.Type == SelectorType.Solo)
+        {
+            diceS.onResult -= SwitchCamera;
+            diceS.onResult += SwitchCamera;
+        }
+        else
+        {
+            Attack(rollResult / 6f);
+        }
     }
 
     private void SwitchCamera()
@@ -209,7 +220,19 @@ public class BattleManager : MonoBehaviour
 
     public void Attack(float roll)
     {
-        cameraManager.SwitchCameras();
-        move.Function(playerProper.entityData, selector.SelectedEntity.entityData, roll);
+        IEnumerable<BattleEntity> enemiesSelected = new List<BattleEntity>() { };
+
+        switch (move.Config.Type) {
+            case SelectorType.Solo:
+                cameraManager.SwitchCameras();
+                break;
+        }
+
+        enemiesSelected = selector.GetTargets(move.Config.Type).Select(x => x.entityData);
+
+        //KindaDumbMasPorAgora
+        
+
+        move.Function(playerProper.entityData, enemiesSelected, roll);
     }
 }

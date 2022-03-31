@@ -57,5 +57,11 @@ public static class Vector3Extension
     }
 
 
+    public static string CapFirst(this string String)
+    {
+        return String[0].ToString().ToUpper() + 
+                String.Substring(1, String.Length - 1);
+    }
+
 
 }

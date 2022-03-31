@@ -51,8 +51,7 @@ public class RangedIntDrawer : PropertyDrawer
             rectY, labelSize, sizeY);
 
 
-        string pName = property.name[0].ToString().ToUpper() + 
-            property.name.Substring(1,property.name.Length - 1);
+        string pName = property.name.CapFirst();
 
 
         EditorGUI.LabelField(nameRect,

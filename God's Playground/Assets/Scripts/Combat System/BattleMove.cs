@@ -8,16 +8,48 @@ namespace CombatSystem
     public class BattleMove : ScriptableObject
     {
         [SerializeField]
-        private MoveFunction function;
+        private MoveConfig config;
+        public MoveConfig Config => config;
+
+        
+        private BattleAffects functionProp;
 
         [SerializeField]
-        private MoveConfig config;
+        private BasicAffect basicFunc;
 
+        [SerializeField]
+        private FuncType function;
 
-        public void Function(BattleEntity attacker, BattleEntity target, float roll)
+        public void Function(BattleEntity attacker, IEnumerable<BattleEntity> target, float roll)
         {
-            function.Function(attacker, target, roll);
+            if(functionProp == null)
+            {
+                SelectFunc((int)function);
+            }
+
+            functionProp.Function(attacker, target, roll);
         }
 
+        public void SelectFunc(int selected)
+        {
+            switch (selected)
+            {
+                case 0:
+                    functionProp = basicFunc;
+                    break;
+            }
+        }
+      
+
+    }
+
+    public enum FuncType
+    {
+        Basic
     }
 }
+
+
+
+
+

@@ -4,6 +4,6 @@ using UnityEngine;
 
 public abstract class MoveFunction : ScriptableObject
 {
-    public abstract void Function(BattleEntity attacker, BattleEntity target,
+    public abstract void Function(BattleEntity attacker, IEnumerable<BattleEntity> target,
         float roll);
 }

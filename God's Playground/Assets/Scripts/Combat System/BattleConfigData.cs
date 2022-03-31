@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Scriptables/BattleConfigData")]
+[CreateAssetMenu(menuName = "Scriptables/BattleConfig")]
 public class BattleConfigData : ScriptableObject
 {
     [SerializeField]

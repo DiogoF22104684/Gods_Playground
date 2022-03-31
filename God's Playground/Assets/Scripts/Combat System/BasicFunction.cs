@@ -23,12 +23,13 @@ public class BasicFunction : MoveFunction
     private int baseValue;
 
 
-    private BattleEntity currentTargets;
+    private IEnumerable<BattleEntity> currentTargets;
     private float valueToChange;
 
 
-    public override void Function(BattleEntity attacker, BattleEntity target, float roll)
+    public override void Function(BattleEntity attacker, IEnumerable<BattleEntity> target, float roll)
     {
+
 
         ValidateData();
 
@@ -39,13 +40,19 @@ public class BasicFunction : MoveFunction
 
         float firstAndRoll = firstComp * roll;
 
-        float totalValue = firstAndRoll - (firstAndRoll *
-            (float)thirdParam.GetValue(target));
         
-        valueToChange = (float)firstParam.GetValue(target) - totalValue;
 
         attacker.properEntity.PlayAnimation(DefaultAnimations.BasicAttack);
-        target.properEntity.damageTrigger += Boop;
+
+        foreach (BattleEntity be in target)
+        {
+            float totalValue = firstAndRoll - (firstAndRoll *
+            (float)thirdParam.GetValue(be));
+
+            valueToChange = (float)firstParam.GetValue(be) - totalValue;
+
+            be.properEntity.damageTrigger += Boop;
+        }
         
     }
 
@@ -61,9 +68,9 @@ public class BasicFunction : MoveFunction
         thirdParam = propInfo[selected3];
     }
 
-    private void Boop()
+    private void Boop(BattleEntity target)
     {
-        firstParam.SetValue(currentTargets, valueToChange);
+        firstParam.SetValue(target, valueToChange);
     }
 
 

@@ -19,8 +19,8 @@ MonoBehaviour:
     minV: 100
     maxV: 100
   dex:
-    minV: 5
-    maxV: 5
+    minV: 11
+    maxV: 11
   str:
     minV: 2
     maxV: 2

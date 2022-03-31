@@ -24,6 +24,10 @@ public abstract class EntityTemplate: ScriptableObject
     private RangedInt str;
     public RangedInt Str => str;
 
+    [SerializeField]
+    private RangedInt def;
+    public RangedInt Def => def;
+
 
     //str
     //def

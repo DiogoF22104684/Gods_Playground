@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1cc413bac1656bf47b07e30ff83871d1, type: 3}
-  m_Name: BattleData
+  m_Name: BattleConfig
   m_EditorClassIdentifier: 
   playerTemplate: {fileID: 11400000, guid: 7f25d388dfc82504caad2ea8bc894dfe, type: 2}
   enemies:
   - {fileID: 11400000, guid: 3163d925f242c6f47bd6aea6313437a6, type: 2}
+  - {fileID: 11400000, guid: a5bdcb35f1a97e64f9d709a2eaa957cb, type: 2}
   - {fileID: 11400000, guid: a5bdcb35f1a97e64f9d709a2eaa957cb, type: 2}
