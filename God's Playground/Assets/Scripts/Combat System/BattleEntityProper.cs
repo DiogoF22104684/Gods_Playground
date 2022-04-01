@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public abstract class BattleEntityProper : MonoBehaviour
+public abstract class BattleEntityProper : MonoBehaviour, IConfigurable
 {
     public BattleEntity entityData { get; protected set; }
     private Animator anim;
@@ -17,6 +17,12 @@ public abstract class BattleEntityProper : MonoBehaviour
     [SerializeField]
     protected GameObject hpSliderPREFAB;
     protected BattleSlider hpBattleSlider;
+    [SerializeField]
+    protected GameObject statusEffectDisplayPREFAB;
+    protected StatusEffectDisplay statusEffectDisplay;
+
+    protected bool isDead;
+
 
     private void Awake()
     {
@@ -26,15 +32,17 @@ public abstract class BattleEntityProper : MonoBehaviour
     }
     private void Start()
     {
-       
+        entityData.onStatusEffectUpdate += () =>
+        {
+            statusEffectDisplay.Config(entityData);
+        };
     }
 
 
     public void Config(BattleEntity entityData)
     {
         this.entityData = entityData;
-        ConfingBars();
-        
+        ConfingBars();      
     }
 
     protected abstract void ConfingBars();
@@ -76,6 +84,7 @@ public abstract class BattleEntityProper : MonoBehaviour
                 AnimationStart("DamageTaken");
                 break;
             case DefaultAnimations.Death:
+                isDead = true;
                 AnimationStart("Death");
                 break;
         }
@@ -103,7 +112,9 @@ public abstract class BattleEntityProper : MonoBehaviour
 
     public virtual void StartTurn()
     {
-        entityData.ResolveDebuffs(); 
+        //statusEffectDisplay.Config(entityData);
+        entityData.ResolveDebuffs();
+        statusEffectDisplay.Config(entityData);
     }
 
     public abstract void EndTurn();

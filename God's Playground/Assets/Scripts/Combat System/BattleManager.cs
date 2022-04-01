@@ -124,7 +124,7 @@ public class BattleManager : MonoBehaviour
 
         turnEnt = turnEnt.
             Where(x => x.hadTurn == false).
-            OrderBy(x => -x.dex).ToList();
+            OrderBy(x => -x.dex.Stat).ToList();
 
         foreach (BattleEntity be in turnEnt)
  

@@ -26,6 +26,7 @@ public class PlayerBattleEntityProper : BattleEntityProper
     public override void StartTurn()
     {
         base.StartTurn();
+        if (isDead) return;
         entityData.hadTurn = true;
         battleMenu.SetActive(true);
         //Invoke("EndTurn", 1);
@@ -43,7 +44,10 @@ public class PlayerBattleEntityProper : BattleEntityProper
     {
         //Dumb and bad and dumb(just for now)
         hpBattleSlider = hpSliderPREFAB.GetComponent<BattleSlider>();
-        hpBattleSlider.Config(entityData.Hp);
+
+        hpBattleSlider.Config(entityData);
+        statusEffectDisplay = statusEffectDisplayPREFAB.GetComponent<StatusEffectDisplay>();
+        statusEffectDisplay.Config(entityData);
 
     }
 }

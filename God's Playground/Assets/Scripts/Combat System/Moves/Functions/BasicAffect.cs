@@ -24,27 +24,37 @@ public class BasicAffect : BattleAffects
     {
         currentTargets = target;
 
-        float firstComp = baseValue +
-            (baseValue * (float)param2.param.GetValue(attacker));
-
-        float firstAndRoll = firstComp * roll;
+        float stat2 = (param2.param.GetValue(attacker) as BattleStat).Stat;
+        
 
 
+        float firstComp = baseValue + 
+            (baseValue * stat2) * roll;
+
+
+   
         attacker.properEntity.PlayAnimation(DefaultAnimations.BasicAttack);
 
         foreach (BattleEntity be in target)
         {
-            float totalValue = firstAndRoll - (firstAndRoll *
-                       (float)param3.param.GetValue(be));
+            float stat3 = (param3.param.GetValue(be) as BattleStat).Stat;
+            BattleStat stat = (param1.param.GetValue(be) as BattleStat);
+            float stat1 = stat.Stat;
+
+            float totalValue = firstComp - (firstComp * stat3);
 
             //Make sure the damage is never 0
             totalValue = totalValue == 0 ? 1 : totalValue;
 
-            float valueToChange = (float)param1.param.GetValue(be) - totalValue;
+
+
+            float valueToChange = stat1 - totalValue;
 
             be.properEntity.damageTrigger += ()=> 
             {
-                param1.param.SetValue(be, valueToChange);        
+                BattleStat value = 
+                       new BattleStat(valueToChange, stat.MaxStat, stat.FlatStat);
+                param1.param.SetValue(be, value);        
             };
 
         }

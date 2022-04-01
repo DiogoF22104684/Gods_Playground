@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &3429942972319588613
+--- !u!1001 &1901449140528176085
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -53,11 +53,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 180720735727198813, guid: 6184c0706f056d344b97e0dfaa802ec6, type: 3}
       propertyPath: m_Name
-      value: Enemy_Viking1
+      value: Enemy_Dancer
       objectReference: {fileID: 0}
     - target: {fileID: 4774144073913141119, guid: 6184c0706f056d344b97e0dfaa802ec6, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: -4118499694822942183, guid: f512048db64c373499fc73a8f30ed3e4, type: 3}
+      objectReference: {fileID: -7641260644589999176, guid: 9107e77e129e0cc4482517c7b037473d, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6184c0706f056d344b97e0dfaa802ec6, type: 3}

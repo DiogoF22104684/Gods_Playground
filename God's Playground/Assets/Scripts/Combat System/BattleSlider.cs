@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Slider))]
-public class BattleSlider : MonoBehaviour
+public class BattleSlider : MonoBehaviour, IConfigurable
 {
 
     private Slider slider;
@@ -34,18 +34,17 @@ public class BattleSlider : MonoBehaviour
         }
     }
 
-    public void Config(float maxValue)
-    {
-        if (slider == null) slider = GetComponent<Slider>();
-        slider.maxValue = maxValue;
-        slider.value = maxValue;
-    }
-
-    public void ChangeValue(float value, bool animated = true)
+    public void ChangeValue(float value)
     {
         inValueChange = true;
         valueToChange = value;
         //ActivateAnimation
     }
 
+    public void Config(BattleEntity entity)
+    {
+        if (slider == null) slider = GetComponent<Slider>();
+        slider.maxValue = entity.Hp;
+        slider.value = entity.Hp;
+    }
 }

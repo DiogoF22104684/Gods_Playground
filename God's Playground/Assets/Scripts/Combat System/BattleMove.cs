@@ -19,8 +19,8 @@ namespace CombatSystem
         public MoveConfig Config => config;
 
         [SerializeField]
-        private BattleDebuff debuffs;
-        public BattleDebuff Debuffs => debuffs;
+        private BattleEffects debuffs;
+        public BattleEffects Debuffs => debuffs;
 
 
         private BattleAffects functionProp;
@@ -39,7 +39,7 @@ namespace CombatSystem
         private FuncType function;
 
         [SerializeField]
-        private BattleDebuff Debuff;
+        private BattleEffects Debuff;
 
         public void Function(BattleEntity attacker, IEnumerable<BattleEntity> target, float roll)
         {
@@ -52,7 +52,7 @@ namespace CombatSystem
 
             foreach (BattleEntity be in target)
             {
-                foreach(Debuff d in debuffs.Debuffs.Select(x => BattleDebuff.GetDebuff(x)))
+                foreach(StatusEffect d in debuffs.Debuffs)
                 {
                     be.AddDebuff(d);
                 }

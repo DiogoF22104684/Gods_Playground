@@ -23,7 +23,7 @@ public class BasicIgnoreDef : BattleAffects
         currentTargets = target;
 
         float firstComp = baseValue +
-            (baseValue * (float)param2.param.GetValue(attacker));
+            (baseValue * param2.GetValue(attacker).Stat);
 
         float firstAndRoll = firstComp * roll;
 
@@ -33,13 +33,18 @@ public class BasicIgnoreDef : BattleAffects
 
         foreach (BattleEntity be in target)
         {
+            BattleStat stat = param1.GetValue(be);
+            float stat1 = stat.Stat;
+
             float totalValue = firstAndRoll;
 
-            float valueToChange = (float)param1.param.GetValue(be) - totalValue;
+            float valueToChange = stat1 - totalValue;
 
             be.properEntity.damageTrigger += () =>
             {
-                param1.param.SetValue(be, valueToChange);
+                BattleStat value =
+                       new BattleStat(valueToChange, stat.MaxStat, stat.FlatStat);
+                param1.param.SetValue(be, value);
             };
         }
 

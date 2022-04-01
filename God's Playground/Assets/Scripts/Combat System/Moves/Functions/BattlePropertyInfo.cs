@@ -34,4 +34,10 @@ public class BattlePropertyInfo: ISerializationCallbackReceiver
 
         param = propInfo[selected];
     }
+
+    public BattleStat GetValue(BattleEntity entity)
+    {
+        return (param.GetValue(entity) as BattleStat);
+    }
+
 }

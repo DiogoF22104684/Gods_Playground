@@ -7,10 +7,10 @@ using UnityEngine;
 public class BattleEntity 
 {
 
-    private float hp;
+    private BattleStat hp;
 
     [MoveAffecter]
-    public float Hp 
+    public BattleStat Hp 
     {
         get
         {
@@ -19,71 +19,79 @@ public class BattleEntity
         set
         {
             hp = value;
-            if(value <= 0)
+            
+            if(value.Stat <= 0)
             {
                 properEntity.PlayAnimation(DefaultAnimations.Death);
-                hp = 0;
+                value.Stat = 0;
             }
-            properEntity.ChangeValue("hp", hp);
+            properEntity.ChangeValue("hp", hp.Stat);
         } 
     }
 
     [MoveAffecter]
-    public float atk { get; set; }
+    public BattleStat str { get; set; }
 
     [MoveAffecter]
-    public float def { get; set; }
+    public BattleStat def { get; set; }
 
     [MoveAffecter]
-    public float dex { get; set; }
-
+    public BattleStat dex { get; set; }
 
     [MoveAffecter]
     public bool hadTurn { get; set; }
 
-    private List<Debuff> debuffList;
-
+    public List<StatusEffect> statusEffects { get; private set; }
 
     public EntityTemplate template { get; }
 
- 
     public BattleEntityProper properEntity { get; }
+
+    public System.Action onStatusEffectUpdate;
 
     public BattleEntity(BattleEntityProper proper, EntityTemplate template)
     {
         properEntity = proper;
-        this.hp = template.HP;
-        atk = (template.Str * 2) / 100f;
-        def = (template.Def * 2) / 100f;
-        dex = template.Dex;
+        this.hp = new BattleStat(template.HP, template.HP, 0);
+
+        float strTemp = (template.Str * 2) / 100f;
+        str = new BattleStat (strTemp, strTemp, 0);
+
+        float defTemp = (template.Def * 2) / 100f;
+        def = new BattleStat(defTemp, defTemp, 0);
+
+        float dextemp = (template.Dex * 2) / 100f;
+        dex = new BattleStat(template.Dex, template.Dex, 0);
+
         this.template = template;
-        debuffList = new List<Debuff> { };
+        statusEffects = new List<StatusEffect> { };
     }
 
 
     public override string ToString()
     {
-        return $"Hp: {hp} \nAtk: {atk} \nDef:{def}";
+        return $"Hp: {hp.Stat} \nAtk: {str.Stat} \nDef:{def.Stat}";
     }
 
-    internal void AddDebuff(Debuff d)
-    {    
-        debuffList.Add(d);
+    internal void AddDebuff(StatusEffect d)
+    { 
+        statusEffects.Add(d);
+        onStatusEffectUpdate?.Invoke();
     }
 
     internal void ResolveDebuffs()
     {
-        for (int i = debuffList.Count - 1; i >= 0; i--)
+        for (int i = statusEffects.Count - 1; i >= 0; i--)
         {
-            Debuff d = debuffList[i];
+            StatusEffect d = statusEffects[i];
             d.ResolveDebuff(this);
 
-            d.timePasse++;
+            d.timePassed++;
 
-            if(d.timePasse >= d.CoolDown)
+            if(d.timePassed >= d.CoolDown)
             {
-                debuffList.RemoveAt(i);
+                statusEffects.RemoveAt(i);
             }
-        }
+        }  
     }
 }
