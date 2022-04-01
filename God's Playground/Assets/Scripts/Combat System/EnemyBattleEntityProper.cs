@@ -16,18 +16,14 @@ public class EnemyBattleEntityProper : BattleEntityProper
     public ActionPointProper ActionPoints => actionPoints;
 
 
-    public override void StartTurn()
+    public override bool StartTurn()
     {
-        base.StartTurn();
-        if (isDead) return;
-        
+        if (!base.StartTurn()) return false;
+       
 
         BattleMove mo = (entityData.template as EnemiesTemplate).ResolveAction();
         mo.Function(entityData, players.Where(x => x.Hp > 0), Random.Range(1,7) / 6f);
-        entityData.hadTurn = true;
-        
-
-
+        return true;
         //Animate things probably
         
        // Invoke("EndTurn", 1);

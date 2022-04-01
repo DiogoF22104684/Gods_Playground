@@ -23,12 +23,13 @@ public class PlayerBattleEntityProper : BattleEntityProper
         attackTrigger?.Invoke(animType, null);
     }
 
-    public override void StartTurn()
+    public override bool StartTurn()
     {
-        base.StartTurn();
-        if (isDead) return;
-        entityData.hadTurn = true;
+        if (!base.StartTurn()) return false;
+      
+
         battleMenu.SetActive(true);
+        return true;
         //Invoke("EndTurn", 1);
     }
 

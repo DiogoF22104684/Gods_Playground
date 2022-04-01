@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 2800000, guid: ae57769162f70124a8f80daad532a38e, type: 3}
   coolDown: 2
-  effectType: 1
+  effectType: 0
   param:
-    selected: 0
-  value: 3
+    selected: 4
+  value: -1

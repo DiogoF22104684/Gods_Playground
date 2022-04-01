@@ -21,14 +21,18 @@ public class OneVarStatusEffet : StatusEffect
         }
     }
 
-    public override void ResolveStatusEffect(BattleEntity entity)
+    public override void ResolveStatusEffect(BattleEntity entity, int timer)
     {
-        if (EffectType == StatusEffectType.TemporaryEffect)
+        
+        if (EffectType == StatusEffectType.TemporaryEffect && timer > 0)
         {
             EndStatusEffect(entity);
         }
 
         BattleStat var = param.GetValue(entity);
+
+        Debug.Log($"Value: {value} Stat: {var.Stat}");
+
         BattleStat newValue = 
                 new BattleStat(var.Stat - value,var.MaxStat,var.FlatStat);
 

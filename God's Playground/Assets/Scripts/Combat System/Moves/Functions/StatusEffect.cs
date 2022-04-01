@@ -16,7 +16,7 @@ public abstract class StatusEffect: ScriptableObject
     [SerializeField]
     private StatusEffectType effectType;
 
-    public abstract void ResolveStatusEffect(BattleEntity entity);
+    public abstract void ResolveStatusEffect(BattleEntity entity, int timer);
     public abstract void EndStatusEffect(BattleEntity entity);
 }
 

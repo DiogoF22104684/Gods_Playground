@@ -110,11 +110,22 @@ public abstract class BattleEntityProper : MonoBehaviour, IConfigurable
         anim.Play(name);
     }
 
-    public virtual void StartTurn()
+    public virtual bool StartTurn()
     {
-        //statusEffectDisplay.Config(entityData);
+
         entityData.ResolveDebuffs();
+
         statusEffectDisplay.Config(entityData);
+        
+
+        if (isDead) return false;
+        if (entityData.turns < 1)
+        {
+            EndTurn();
+            return false;
+        }
+        entityData.turns.Stat--;
+        return true;
     }
 
     public abstract void EndTurn();

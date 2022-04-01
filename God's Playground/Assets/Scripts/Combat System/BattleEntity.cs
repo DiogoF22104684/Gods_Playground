@@ -39,7 +39,7 @@ public class BattleEntity
     public BattleStat dex { get; set; }
 
     [MoveAffecter]
-    public bool hadTurn { get; set; }
+    public BattleStat turns { get; set; }
 
     public List<StatusEffectTimer> statusEffects { get; private set; }
 
@@ -53,6 +53,8 @@ public class BattleEntity
     {
         properEntity = proper;
         this.hp = new BattleStat(template.HP, template.HP, 0);
+
+        turns = new BattleStat(1,1,0);
 
         float strTemp = (template.Str * 2) / 100f;
         str = new BattleStat (strTemp, strTemp, 0);
@@ -86,7 +88,7 @@ public class BattleEntity
             StatusEffectTimer d = statusEffects[i];
             StatusEffect effect = d.Effect;
 
-            effect.ResolveStatusEffect(this);
+            effect.ResolveStatusEffect(this, d.Timer);
 
             //Debug.Log("TimePassed: " + d.Timer + "Duration:" + effect.CoolDown);
 

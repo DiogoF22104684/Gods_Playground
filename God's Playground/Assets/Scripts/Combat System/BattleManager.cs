@@ -105,7 +105,7 @@ public class BattleManager : MonoBehaviour
 
 
 
-        bool endOfTurn = turnEnt.TrueForAll(x => x.hadTurn == true);
+        bool endOfTurn = turnEnt.TrueForAll(x => x.turns.Stat < 1);
 
         if (endOfTurn)
         {
@@ -113,17 +113,14 @@ public class BattleManager : MonoBehaviour
 
             foreach (BattleEntity be in turnEnt)
             {
-                be.hadTurn = false;
+                be.turns.Stat = be.turns.MaxStat;
             }
 
             //TurnOrderUpdate
         }
 
-
-
-
         turnEnt = turnEnt.
-            Where(x => x.hadTurn == false).
+            Where(x => x.turns.Stat > 0).
             OrderBy(x => -x.dex.Stat).ToList();
 
         foreach (BattleEntity be in turnEnt)
