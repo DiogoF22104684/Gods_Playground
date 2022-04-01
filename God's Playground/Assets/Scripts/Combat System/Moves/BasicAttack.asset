@@ -14,6 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 2800000, guid: 60d3f2d6a250c02499d6a6583e8858a3, type: 3}
   config:
+    costStat:
+      selected: 0
+    costValue: 10
     mode: 1
     type: 0
     mechanic: 1

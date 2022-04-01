@@ -19,6 +19,7 @@ public class EntitySelector : MonoBehaviour
 
     private List<BattleEntityProper> enemiesEntity;
     private BattleEntityProper playerEntity;
+    public BattleEntityProper PlayerEntity => playerEntity;
 
    
     // Update is called once per frame

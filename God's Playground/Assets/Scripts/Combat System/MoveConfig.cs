@@ -11,6 +11,11 @@ namespace CombatSystem
     public struct MoveConfig
     {
         [SerializeField]
+        BattlePropertyInfo costStat;
+        [SerializeField]
+        int costValue;
+
+        [SerializeField]
         SelectorMode mode;
         [SerializeField]
         SelectorType type;
@@ -18,6 +23,9 @@ namespace CombatSystem
         MechanicType mechanic;
         public SelectorMode Mode => mode;
         public SelectorType Type => type;
+
+        public BattlePropertyInfo CostStat => costStat;
+        public int CostValue => costValue;
 
         public MechanicType Mechanic => mechanic;
     }

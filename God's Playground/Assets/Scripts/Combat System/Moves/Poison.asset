@@ -14,12 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 2800000, guid: 8055b16d0dd81014093c6dca94994bac, type: 3}
   config:
+    costStat:
+      selected: 0
+    costValue: 300
     mode: 3
     type: 0
     mechanic: 0
   debuffs:
     debuffs:
     - {fileID: 11400000, guid: 5990e1a8f571a6a448292ef76b886e48, type: 2}
+    - {fileID: 11400000, guid: dbc52e8fdc6d8a84cae36ba0f52bdc86, type: 2}
   basicFunc:
     param1:
       selected: 0

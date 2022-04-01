@@ -33,34 +33,16 @@ public class BattleSkillMenu : MonoBehaviour
 
         foreach (BattleSkillSlot slot in skillSlot)
         {
-            //Isto ta feito para so 1 player. Se tiver mais membros de equipa 
-            //tem de ter um rework
-            if (selector.SelectedEntity is EnemyBattleEntityProper)
+            if (slot.Move.IsUsable(selector.PlayerEntity,selector.SelectedEntity))
             {
-
-                if (slot.Move.Config.Mode == SelectorMode.All
-                    || slot.Move.Config.Mode == SelectorMode.Adversary)
-                {
-                    slot.Unlock();
-                }
-                else
-                {
-                    slot.Lock();
-                }
+                slot.Unlock();
             }
             else
             {
-                if (slot.Move.Config.Mode == SelectorMode.All
-                    || slot.Move.Config.Mode == SelectorMode.Team
-                    || slot.Move.Config.Mode == SelectorMode.Self)
-                {
-                    slot.Unlock();
-                }
-                else
-                {
-                    slot.Lock();
-                }
+                slot.Lock();
             }
+
+            
         }
     }
 

@@ -31,8 +31,6 @@ public class OneVarStatusEffet : StatusEffect
 
         BattleStat var = param.GetValue(entity);
 
-        Debug.Log($"Value: {value} Stat: {var.Stat}");
-
         BattleStat newValue = 
                 new BattleStat(var.Stat - value,var.MaxStat,var.FlatStat);
 

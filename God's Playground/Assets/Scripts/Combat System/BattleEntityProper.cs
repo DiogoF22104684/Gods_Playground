@@ -117,9 +117,7 @@ public abstract class BattleEntityProper : MonoBehaviour, IConfigurable
 
         statusEffectDisplay.Config(entityData);
         
-
-        if (isDead) return false;
-        if (entityData.turns < 1)
+        if (entityData.turns < 1 || isDead)
         {
             EndTurn();
             return false;

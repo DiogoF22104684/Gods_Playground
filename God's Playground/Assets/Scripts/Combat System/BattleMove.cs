@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,7 @@ namespace CombatSystem
         private BattleEffects debuffs;
         public BattleEffects Debuffs => debuffs;
 
+       
 
         private BattleAffects functionProp;
 
@@ -31,10 +33,35 @@ namespace CombatSystem
         [SerializeField]
         private BasicIgnoreDef basicIgnoreDef;
 
+        public bool IsUsable(BattleEntityProper playerEntity,
+            BattleEntityProper selectedEntity)
+        {
+            BattleEntity player = playerEntity.entityData;
+            BattleEntity target = selectedEntity.entityData;
+
+            if(selectedEntity is EnemyBattleEntityProper)
+            {
+                if (config.Mode == SelectorMode.Self || config.Mode == SelectorMode.Team)
+                    return false;
+            }
+            else
+            {
+                if (config.Mode == SelectorMode.Adversary)
+                    return false;
+            }
+            
+            BattleStat stat = config.CostStat.GetValue(player);
+
+            if (stat.Stat < config.CostValue)
+                return false;
+
+            return true;
+        }
+
         [SerializeField]
         private BasicFlat basicFlat;
 
-
+      
         [SerializeField]
         private FuncType function;
 
@@ -57,6 +84,11 @@ namespace CombatSystem
                     be.AddDebuff(d);
                 }
             }
+
+            BattleStat stat = config.CostStat.GetValue(attacker);
+            BattleStat newStat = 
+                new BattleStat(stat.Stat - Config.CostValue, stat.MaxStat, stat.FlatStat);
+            config.CostStat.param.SetValue(attacker, newStat);
 
         }
 
