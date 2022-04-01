@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace CombatSystem
@@ -16,7 +17,12 @@ namespace CombatSystem
         [SerializeField]
         private MoveConfig config;
         public MoveConfig Config => config;
- 
+
+        [SerializeField]
+        private BattleDebuff debuffs;
+        public BattleDebuff Debuffs => debuffs;
+
+
         private BattleAffects functionProp;
 
         [SerializeField]
@@ -32,7 +38,8 @@ namespace CombatSystem
         [SerializeField]
         private FuncType function;
 
-      
+        [SerializeField]
+        private BattleDebuff Debuff;
 
         public void Function(BattleEntity attacker, IEnumerable<BattleEntity> target, float roll)
         {
@@ -42,6 +49,15 @@ namespace CombatSystem
             }
 
             functionProp.Function(attacker, target, roll);
+
+            foreach (BattleEntity be in target)
+            {
+                foreach(Debuff d in debuffs.Debuffs.Select(x => BattleDebuff.GetDebuff(x)))
+                {
+                    be.AddDebuff(d);
+                }
+            }
+
         }
 
         public void SelectFunc(int selected)

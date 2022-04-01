@@ -101,7 +101,11 @@ public abstract class BattleEntityProper : MonoBehaviour
         anim.Play(name);
     }
 
-    public abstract void StartTurn();
+    public virtual void StartTurn()
+    {
+        entityData.ResolveDebuffs(); 
+    }
+
     public abstract void EndTurn();
 
     protected void OnEndTurn()

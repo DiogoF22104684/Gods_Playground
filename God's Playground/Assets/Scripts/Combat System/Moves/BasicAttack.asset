@@ -17,6 +17,8 @@ MonoBehaviour:
     mode: 1
     type: 0
     mechanic: 1
+  debuffs:
+    debuffs: 
   basicFunc:
     param1:
       selected: 0
@@ -36,3 +38,5 @@ MonoBehaviour:
       selected: 0
     baseValue: 0
   function: 0
+  Debuff:
+    debuffs: 

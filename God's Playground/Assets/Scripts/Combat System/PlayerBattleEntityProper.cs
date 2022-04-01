@@ -25,6 +25,7 @@ public class PlayerBattleEntityProper : BattleEntityProper
 
     public override void StartTurn()
     {
+        base.StartTurn();
         entityData.hadTurn = true;
         battleMenu.SetActive(true);
         //Invoke("EndTurn", 1);
@@ -32,6 +33,7 @@ public class PlayerBattleEntityProper : BattleEntityProper
 
     public override void EndTurn()
     {
+       
         battleMenu.SetActive(false);
         Invoke("OnEndTurn", 2);
         //battleMenu.Deactivate();

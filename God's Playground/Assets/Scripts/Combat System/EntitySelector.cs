@@ -20,7 +20,7 @@ public class EntitySelector : MonoBehaviour
     private List<BattleEntityProper> enemiesEntity;
     private BattleEntityProper playerEntity;
 
-
+   
     // Update is called once per frame
     void Update()
     {
@@ -125,5 +125,9 @@ public class EntitySelector : MonoBehaviour
     {
         playerEntity = playerProper;
         enemiesEntity = enemies;
+
+        this.SelectedEntity = enemiesEntity[0];
+        SpawnIcon();
+        onSelect?.Invoke();
     }
 }

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp:
     minV: 30
-    maxV: 100
+    maxV: 30
   mp:
     minV: 100
     maxV: 100

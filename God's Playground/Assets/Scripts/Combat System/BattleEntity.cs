@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -40,21 +41,24 @@ public class BattleEntity
     [MoveAffecter]
     public bool hadTurn { get; set; }
 
+    private List<Debuff> debuffList;
 
 
     public EntityTemplate template { get; }
 
-    public BattleEntity(BattleEntityProper proper,  EntityTemplate template)
+ 
+    public BattleEntityProper properEntity { get; }
+
+    public BattleEntity(BattleEntityProper proper, EntityTemplate template)
     {
         properEntity = proper;
         this.hp = template.HP;
-        atk = (template.Str * 2) /100f;
-        def = (template.Def * 2) / 100f;       
+        atk = (template.Str * 2) / 100f;
+        def = (template.Def * 2) / 100f;
         dex = template.Dex;
         this.template = template;
+        debuffList = new List<Debuff> { };
     }
-
-    public BattleEntityProper properEntity { get; }
 
 
     public override string ToString()
@@ -62,4 +66,24 @@ public class BattleEntity
         return $"Hp: {hp} \nAtk: {atk} \nDef:{def}";
     }
 
+    internal void AddDebuff(Debuff d)
+    {    
+        debuffList.Add(d);
+    }
+
+    internal void ResolveDebuffs()
+    {
+        for (int i = debuffList.Count - 1; i >= 0; i--)
+        {
+            Debuff d = debuffList[i];
+            d.ResolveDebuff(this);
+
+            d.timePasse++;
+
+            if(d.timePasse >= d.CoolDown)
+            {
+                debuffList.RemoveAt(i);
+            }
+        }
+    }
 }

@@ -15,15 +15,19 @@ public class BattleMoveEditor : Editor
     SerializedProperty funcIgDef;
     SerializedProperty function;
     SerializedProperty basicFlat;
+    SerializedProperty debuffs;
 
     private void OnEnable()
     {
+        //Isto n é muito scalable  
         icon = serializedObject.FindProperty("icon");
         config = serializedObject.FindProperty("config");
         funcBas = serializedObject.FindProperty("basicFunc");
         funcIgDef = serializedObject.FindProperty("basicIgnoreDef");
         basicFlat = serializedObject.FindProperty("basicFlat");
         function = serializedObject.FindProperty("function");
+        debuffs = serializedObject.FindProperty("debuffs").
+            FindPropertyRelative("debuffs");
     }
     public override void OnInspectorGUI()
     {
@@ -34,6 +38,11 @@ public class BattleMoveEditor : Editor
         GUILayout.Space(10);
 
         EditorGUILayout.PropertyField(config);
+
+        GUILayout.Space(10);
+
+        EditorGUILayout.PropertyField(debuffs);
+
         string[] values =
             System.Enum.GetValues(typeof(FuncType))
                 .Cast<FuncType>().Select(x => x.ToString()).ToArray();
