@@ -51,13 +51,14 @@ public class BattleSkillMenu : MonoBehaviour
             else
             {
                 if (slot.Move.Config.Mode == SelectorMode.All
-                    || slot.Move.Config.Mode == SelectorMode.Adversary)
+                    || slot.Move.Config.Mode == SelectorMode.Team
+                    || slot.Move.Config.Mode == SelectorMode.Self)
                 {
-                    slot.Lock();
+                    slot.Unlock();
                 }
                 else
                 {
-                    slot.Unlock();
+                    slot.Lock();
                 }
             }
         }

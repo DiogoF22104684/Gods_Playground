@@ -41,7 +41,7 @@ public class BattleEntity
     [MoveAffecter]
     public bool hadTurn { get; set; }
 
-    public List<StatusEffect> statusEffects { get; private set; }
+    public List<StatusEffectTimer> statusEffects { get; private set; }
 
     public EntityTemplate template { get; }
 
@@ -64,7 +64,7 @@ public class BattleEntity
         dex = new BattleStat(template.Dex, template.Dex, 0);
 
         this.template = template;
-        statusEffects = new List<StatusEffect> { };
+        statusEffects = new List<StatusEffectTimer> { };
     }
 
 
@@ -75,7 +75,7 @@ public class BattleEntity
 
     internal void AddDebuff(StatusEffect d)
     { 
-        statusEffects.Add(d);
+        statusEffects.Add(new StatusEffectTimer(d));
         onStatusEffectUpdate?.Invoke();
     }
 
@@ -83,13 +83,18 @@ public class BattleEntity
     {
         for (int i = statusEffects.Count - 1; i >= 0; i--)
         {
-            StatusEffect d = statusEffects[i];
-            d.ResolveDebuff(this);
+            StatusEffectTimer d = statusEffects[i];
+            StatusEffect effect = d.Effect;
 
-            d.timePassed++;
+            effect.ResolveStatusEffect(this);
 
-            if(d.timePassed >= d.CoolDown)
+            //Debug.Log("TimePassed: " + d.Timer + "Duration:" + effect.CoolDown);
+
+            d.Timer++;
+
+            if(d.Timer >= effect.CoolDown)
             {
+                effect.EndStatusEffect(this);
                 statusEffects.RemoveAt(i);
             }
         }  

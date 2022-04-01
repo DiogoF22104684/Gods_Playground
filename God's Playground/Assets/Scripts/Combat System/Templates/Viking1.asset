@@ -22,7 +22,7 @@ MonoBehaviour:
     minV: 1
     maxV: 10
   str:
-    minV: 4
+    minV: 1
     maxV: 5
   def:
     minV: 3

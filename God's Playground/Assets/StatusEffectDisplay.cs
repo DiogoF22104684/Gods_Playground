@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class StatusEffectDisplay : MonoBehaviour, IConfigurable
 {
     [SerializeField]
-    List<StatusEffect> statusEffects;
+    List<StatusEffectTimer> statusEffects;
 
     [SerializeField]
     GameObject iconPREFAB;
@@ -27,7 +27,7 @@ public class StatusEffectDisplay : MonoBehaviour, IConfigurable
 
         for (int i = 0; i < statusEffects.Count; i++)
         {
-            StatusEffect se = statusEffects[i];
+            StatusEffect se = statusEffects[i].Effect;
             GameObject newIcon =
                 Instantiate(iconPREFAB, 
                 transform.position, 

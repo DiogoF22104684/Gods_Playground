@@ -56,7 +56,7 @@ public class EnemyBattleEntityProper : BattleEntityProper
 
         ConfigUIComponent<StatusEffectDisplay>(statusEffectDisplayPREFAB,
             ref statusEffectDisplay,
-            new Vector3(0,30,0));
+            new Vector3(0,60,0));
     }
 
     //Isto era fixe de fazer
