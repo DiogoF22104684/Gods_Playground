@@ -120,6 +120,7 @@ public class EntitySelector : MonoBehaviour
 
         return returnlist;
     }
+    
 
     internal void Config(BattleEntityProper playerProper, 
         List<BattleEntityProper> enemies)
@@ -127,9 +128,9 @@ public class EntitySelector : MonoBehaviour
         playerEntity = playerProper;
         enemiesEntity = enemies;
 
-        Debug.Log(SelectedEntity);
         if(SelectedEntity == null || SelectedEntity.entityData.Hp <= 0)
             this.SelectedEntity = enemiesEntity.First(x => x.entityData.Hp > 0);
+        
         
         SpawnIcon();
         onSelect?.Invoke();

@@ -25,6 +25,10 @@ public class BattleEntity
                 properEntity.PlayAnimation(DefaultAnimations.Death);
                 value.Stat = 0;
             }
+            if(value.Stat > value.MaxStat)
+            {
+                value.Stat = value.MaxStat;
+            }
             properEntity.ChangeValue("hp", hp.Stat);
         } 
     }

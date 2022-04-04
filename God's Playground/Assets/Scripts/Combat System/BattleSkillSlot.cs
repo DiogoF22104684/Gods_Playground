@@ -14,7 +14,7 @@ public class BattleSkillSlot : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         button = GetComponent<Button>();
         button.onClick.AddListener(ActivateAttack);

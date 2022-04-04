@@ -140,8 +140,7 @@ public abstract class BattleEntityProper : MonoBehaviour, IConfigurable
         {
             EndTurn();
             return false;
-        }
-        print("fuck");
+        }    
         statusEffectDisplay.Config(entityData);
         entityData.turns.Stat--;
         return true;

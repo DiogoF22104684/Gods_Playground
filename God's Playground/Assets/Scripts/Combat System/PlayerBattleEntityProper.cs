@@ -26,7 +26,7 @@ public class PlayerBattleEntityProper : BattleEntityProper
     public override bool StartTurn()
     {
         if (!base.StartTurn()) return false;
-      
+        
 
         battleMenu.SetActive(true);
         return true;

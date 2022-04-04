@@ -12,11 +12,17 @@ public class BattleSkillMenu : MonoBehaviour
     [SerializeField]
     private EntitySelector selector;
 
+
+    private void Awake()
+    {
+        selector.onSelect += UpdateSkillDisplay;
+    }
     // Start is called before the first frame update
     void Start()
     {
-        selector.onSelect += UpdateSkillDisplay;
+
         Display();
+        UpdateSkillDisplay();
     }
 
     private void Display()
@@ -29,7 +35,6 @@ public class BattleSkillMenu : MonoBehaviour
 
     private void UpdateSkillDisplay()
     {
-
 
         foreach (BattleSkillSlot slot in skillSlot)
         {
