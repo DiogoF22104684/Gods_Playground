@@ -29,6 +29,29 @@ public class BattleEntity
         } 
     }
 
+
+    private BattleStat mp;
+
+    [MoveAffecter]
+    public BattleStat Mp
+    {
+        get
+        {
+            return mp;
+        }
+        set
+        {
+            mp = value;
+
+            if (value.Stat <= 0)
+            {               
+                value.Stat = 0;
+            }
+            properEntity.ChangeValue("mp", mp.Stat);
+        }
+    }
+
+
     [MoveAffecter]
     public BattleStat str { get; set; }
 
@@ -53,6 +76,9 @@ public class BattleEntity
     {
         properEntity = proper;
         this.hp = new BattleStat(template.HP, template.HP, 0);
+
+        properEntity = proper;
+        this.mp = new BattleStat(template.Mp, template.Mp, 0);
 
         turns = new BattleStat(1,1,0);
 

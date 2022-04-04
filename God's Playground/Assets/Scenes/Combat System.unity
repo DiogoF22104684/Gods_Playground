@@ -196,7 +196,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &162214602
 GameObject:
@@ -298,7 +298,7 @@ RectTransform:
   - {fileID: 1763543915}
   - {fileID: 1421202584}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -609,6 +609,7 @@ RectTransform:
   m_Children:
   - {fileID: 944638780}
   - {fileID: 1536512619}
+  - {fileID: 670635719}
   m_Father: {fileID: 162214606}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -812,7 +813,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 596196625}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1973239371}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &596196625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -888,16 +901,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 670635718}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.2758055, y: 0.16912317, z: -7.142618}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -261.94623, y: -965.4291, z: -7.142618}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1703808599}
   - {fileID: 1961696176}
   - {fileID: 1552577484}
   - {fileID: 835949596}
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_Father: {fileID: 546300362}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &672532557
 GameObject:
@@ -1257,6 +1270,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hpSliderPREFAB: {fileID: 944638779}
+  mpSliderPREFAB: {fileID: 1536512618}
   statusEffectDisplayPREFAB: {fileID: 1107942590}
   battleMenu: {fileID: 1973239371}
 --- !u!1 &875262576
@@ -1463,7 +1477,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &944638779
 GameObject:
@@ -1556,7 +1570,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 583115599}
   m_HandleRect: {fileID: 0}
@@ -1939,7 +1953,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3bbf402fe3e5a24695225be6efa12ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  statusEffects: []
   iconPREFAB: {fileID: 4809350985330334639, guid: a35ae0e8c727816498f1ec6076c91d1a, type: 3}
 --- !u!1 &1191318739
 GameObject:
@@ -1969,7 +1982,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1204906066
 GameObject:
@@ -2053,7 +2066,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1204906069}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1973239371}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1204906069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2199,7 +2224,7 @@ RectTransform:
   m_Children:
   - {fileID: 1739741663}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2499,7 +2524,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1320977174
 MonoBehaviour:
@@ -3056,7 +3081,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1455342852}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1973239371}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1455342852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3119,6 +3156,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1536512619}
   - component: {fileID: 1536512620}
+  - component: {fileID: 1536512621}
   m_Layer: 5
   m_Name: Mana_Player
   m_TagString: Untagged
@@ -3186,7 +3224,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 165540990}
   m_HandleRect: {fileID: 0}
@@ -3198,6 +3236,19 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1536512621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1536512618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dc9b8125eb5ad043939c563dd525892, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  amountOfChange: 0.1
 --- !u!1 &1552577483
 GameObject:
   m_ObjectHideFlags: 0
@@ -3310,7 +3361,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1568460230}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1973239371}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1568460230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3391,7 +3454,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1616577324
 GameObject:

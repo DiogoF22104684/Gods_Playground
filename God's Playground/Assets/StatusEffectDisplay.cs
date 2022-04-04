@@ -22,6 +22,7 @@ public class StatusEffectDisplay : MonoBehaviour, IConfigurable
 
     public void Config(BattleEntity entity)
     {
+      
         statusEffects = entity.statusEffects;
         CleanStatusList();
 
@@ -29,9 +30,9 @@ public class StatusEffectDisplay : MonoBehaviour, IConfigurable
         {
             StatusEffect se = statusEffects[i].Effect;
             GameObject newIcon =
-                Instantiate(iconPREFAB, 
-                transform.position, 
-                Quaternion.identity, 
+                Instantiate(iconPREFAB,
+                transform.position,
+                Quaternion.identity,
                 this.transform);
 
             iconList.Add(newIcon);

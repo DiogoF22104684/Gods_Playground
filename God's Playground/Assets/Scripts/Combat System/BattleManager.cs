@@ -24,7 +24,7 @@ public class BattleManager : MonoBehaviour
     private int rollResult;
 
     private int turnnumb;
-
+    private bool playerDead;
 
       
     [SerializeField]
@@ -59,7 +59,11 @@ public class BattleManager : MonoBehaviour
         playerProper.onEndTurn += NextTurn;
 
         //Bue simplificado 
-        playerProper.onDeath += ()=> { deathPanel.SetActive(true); } ; 
+        playerProper.onDeath += ()=> 
+        {
+            playerDead = true;
+            deathPanel.SetActive(true); 
+        } ; 
 
         //mau
         int index = 0;
@@ -99,6 +103,8 @@ public class BattleManager : MonoBehaviour
 
     private void PrepareTurnOrder()
     {
+        if (playerDead) return;
+
         CleanEntityList();
         List<BattleEntity> turnEnt = new List<BattleEntity>(enemies);
         turnEnt.Add(playerData);
@@ -137,6 +143,7 @@ public class BattleManager : MonoBehaviour
 
     private void NextTurn()
     {
+        if (playerDead) return;
         PrepareTurnOrder();
         turnnumb++;
         inTurnEntity.properEntity.StartTurn();

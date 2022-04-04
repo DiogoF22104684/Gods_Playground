@@ -145,6 +145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hpSliderPREFAB: {fileID: 7064305074741614570, guid: f199930fdc123c540bbd30583b87cc7b, type: 3}
+  mpSliderPREFAB: {fileID: 1329683988761282122, guid: 1da3f1debf73f6d429a70c1c9ec5e9a2, type: 3}
   statusEffectDisplayPREFAB: {fileID: 7955892103798149732, guid: b485b31370c7cbf4c81d8f5c4af6bf64, type: 3}
   actionPoints: {fileID: 2057026620510045540}
 --- !u!95 &180720735727198802

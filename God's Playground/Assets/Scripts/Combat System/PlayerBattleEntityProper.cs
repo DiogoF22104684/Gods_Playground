@@ -45,10 +45,13 @@ public class PlayerBattleEntityProper : BattleEntityProper
     {
         //Dumb and bad and dumb(just for now)
         hpBattleSlider = hpSliderPREFAB.GetComponent<BattleSlider>();
+        mpBattleSlider = mpSliderPREFAB.GetComponent<BattleSlider>();
 
         hpBattleSlider.Config(entityData);
+        mpBattleSlider.Config(entityData);
         statusEffectDisplay = statusEffectDisplayPREFAB.GetComponent<StatusEffectDisplay>();
         statusEffectDisplay.Config(entityData);
-
+        hpBattleSlider.initStats(entityData.Hp);
+        mpBattleSlider.initStats(entityData.Mp);
     }
 }

@@ -15,8 +15,8 @@ MonoBehaviour:
   icon: {fileID: 2800000, guid: 8055b16d0dd81014093c6dca94994bac, type: 3}
   config:
     costStat:
-      selected: 0
-    costValue: 300
+      selected: 1
+    costValue: 10
     mode: 3
     type: 0
     mechanic: 0

@@ -16,5 +16,5 @@ MonoBehaviour:
   coolDown: 1
   effectType: 1
   param:
-    selected: 4
+    selected: 5
   value: 1

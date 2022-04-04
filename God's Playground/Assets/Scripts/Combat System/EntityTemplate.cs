@@ -16,9 +16,14 @@ public abstract class EntityTemplate: ScriptableObject
     public RangedInt Mp => mp;
 
 
+
     [SerializeField]
     private RangedInt dex;
     public RangedInt Dex => dex;
+
+    [SerializeField]
+    private RangedInt eva;
+    public RangedInt Eva => eva;
 
     [SerializeField]
     private RangedInt str;
@@ -29,6 +34,14 @@ public abstract class EntityTemplate: ScriptableObject
     public RangedInt Def => def;
 
 
+    [SerializeField]
+    private RangedInt inte;
+    public RangedInt Int => inte;
+
+
+    [SerializeField]
+    private RangedInt intu;
+    public RangedInt Intu => intu;
     //str
     //def
     //dex

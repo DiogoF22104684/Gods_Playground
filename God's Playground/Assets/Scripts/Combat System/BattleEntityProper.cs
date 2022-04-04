@@ -17,6 +17,11 @@ public abstract class BattleEntityProper : MonoBehaviour, IConfigurable
     [SerializeField]
     protected GameObject hpSliderPREFAB;
     protected BattleSlider hpBattleSlider;
+
+    [SerializeField]
+    protected GameObject mpSliderPREFAB;
+    protected BattleSlider mpBattleSlider;
+
     [SerializeField]
     protected GameObject statusEffectDisplayPREFAB;
     protected StatusEffectDisplay statusEffectDisplay;
@@ -67,6 +72,10 @@ public abstract class BattleEntityProper : MonoBehaviour, IConfigurable
             case "hp":
                 hpBattleSlider.ChangeValue(value);
                 break;
+            case "mp":
+                mpBattleSlider.ChangeValue(value);
+                break;
+
         }
     }
 
@@ -85,6 +94,7 @@ public abstract class BattleEntityProper : MonoBehaviour, IConfigurable
                 break;
             case DefaultAnimations.Death:
                 isDead = true;
+                onDeath?.Invoke();
                 AnimationStart("Death");
                 break;
         }
@@ -94,9 +104,12 @@ public abstract class BattleEntityProper : MonoBehaviour, IConfigurable
 
     public void Death()
     {
-        onDeath?.Invoke();
+       
+        Destroy(mpBattleSlider.gameObject);
         Destroy(hpBattleSlider.gameObject);
+        Destroy(statusEffectDisplay.gameObject);
         Destroy(gameObject);
+       
     }
 
     public void DamageTakenTrigger()
@@ -113,15 +126,23 @@ public abstract class BattleEntityProper : MonoBehaviour, IConfigurable
     public virtual bool StartTurn()
     {
 
-        entityData.ResolveDebuffs();
 
-        statusEffectDisplay.Config(entityData);
+        entityData.ResolveDebuffs();
         
-        if (entityData.turns < 1 || isDead)
+
+        if (isDead)
+        {
+            onEndTurn?.Invoke();
+            return false;
+        }
+
+        if (entityData.turns < 1)
         {
             EndTurn();
             return false;
         }
+        print("fuck");
+        statusEffectDisplay.Config(entityData);
         entityData.turns.Stat--;
         return true;
     }

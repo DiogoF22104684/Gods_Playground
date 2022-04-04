@@ -16,7 +16,7 @@ MonoBehaviour:
   config:
     costStat:
       selected: 0
-    costValue: 10
+    costValue: 0
     mode: 1
     type: 0
     mechanic: 1
@@ -26,9 +26,9 @@ MonoBehaviour:
     param1:
       selected: 0
     param2:
-      selected: 1
-    param3:
       selected: 2
+    param3:
+      selected: 3
     baseValue: 8
   basicIgnoreDef:
     param1:

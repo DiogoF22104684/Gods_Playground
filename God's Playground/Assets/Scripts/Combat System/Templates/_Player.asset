@@ -21,10 +21,19 @@ MonoBehaviour:
   dex:
     minV: 11
     maxV: 11
+  eva:
+    minV: 1
+    maxV: 1
   str:
     minV: 6
     maxV: 6
   def:
+    minV: 1
+    maxV: 1
+  inte:
+    minV: 1
+    maxV: 1
+  intu:
     minV: 1
     maxV: 1
   skills:

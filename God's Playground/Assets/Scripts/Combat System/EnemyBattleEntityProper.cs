@@ -49,6 +49,13 @@ public class EnemyBattleEntityProper : BattleEntityProper
         ConfigUIComponent<BattleSlider>(hpSliderPREFAB,
             ref hpBattleSlider,
             new Vector3(0,0,0));
+        hpBattleSlider.initStats(entityData.Hp);
+
+        ConfigUIComponent<BattleSlider>(mpSliderPREFAB,
+          ref mpBattleSlider,
+          new Vector3(0, -20, 0));
+        mpBattleSlider.initStats(entityData.Mp);
+
 
         ConfigUIComponent<StatusEffectDisplay>(statusEffectDisplayPREFAB,
             ref statusEffectDisplay,

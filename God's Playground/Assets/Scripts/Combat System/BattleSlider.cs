@@ -44,7 +44,12 @@ public class BattleSlider : MonoBehaviour, IConfigurable
     public void Config(BattleEntity entity)
     {
         if (slider == null) slider = GetComponent<Slider>();
-        slider.maxValue = entity.Hp;
-        slider.value = entity.Hp;
+    }
+
+    //feio
+    public void initStats(BattleStat stat)
+    {        
+        slider.maxValue = stat.Stat; 
+        slider.value = stat.Stat;
     }
 }
