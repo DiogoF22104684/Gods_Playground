@@ -1,15 +1,18 @@
 using UnityEngine;
+using Cinemachine;
 
-public class Player_Movement : MonoBehaviour
+public class Camera_Control : MonoBehaviour
 {
-    // Start is called before the first frame update
+
+    [SerializeField]
+    private GameObject _freelook;
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
         CheckForMouseControl();
@@ -18,16 +21,19 @@ public class Player_Movement : MonoBehaviour
     private void CheckForMouseControl()
     {
 
-        if ((Cursor.lockState == CursorLockMode.None && Cursor.visible == true) && Input.GetKeyDown(KeyCode.LeftControl))
+        if  ((Cursor.lockState == CursorLockMode.None && Cursor.visible == true) 
+            && Input.GetKeyDown(KeyCode.LeftControl))
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+            _freelook.SetActive(true);
         }
 
         else if ((Cursor.lockState != CursorLockMode.None && Cursor.visible == false) && Input.GetKeyDown(KeyCode.LeftControl))
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+            _freelook.SetActive(false);
         }
 
     }
