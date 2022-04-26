@@ -10,15 +10,16 @@ public class Enemy_AI : MonoBehaviour
 {
     private bool playerInZone = false;
     private bool playerInSight = false;
-    [SerializeField] private Vector3 spawnZone;
+    [SerializeField] private Spawn_Area_script patrolZone;
     private Player_Control player;
     private StateMachine stateMachine;
-    private float rotationValue;
+    private NavMeshAgent agent;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        agent = GetComponent<NavMeshAgent>();
 
         player = GameObject.FindObjectOfType<Player_Control>();
         State idleState = new State("Idle",
@@ -73,8 +74,20 @@ public class Enemy_AI : MonoBehaviour
 
     private void IdleBehaviour()
     {
-        rotationValue  = UnityEngine.Random.Range(0, 359);
-        //gameObject.transform.EulerAngles.y = rotationValue;
+        if(agent.remainingDistance >= 0.1f ) return;
+
+        Vector3 dest = Vector3.zero;
+        do{
+        float rotationValue  = UnityEngine.Random.Range(0, 359);
+        float rangeValue  = UnityEngine.Random.Range(0f, 1f);
+        gameObject.transform.localEulerAngles = 
+            gameObject.transform.localEulerAngles.y(rotationValue);
+        Vector3 direction = gameObject.transform.forward.normalized;
+        dest = transform.position + direction * rangeValue;
+        }while(!patrolZone.InArea(dest));
+        
+
+        agent.SetDestination(dest);
     }
 
     private void ChasingPlayer()
