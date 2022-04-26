@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using CombatSystem;
 
 public abstract class BattleEntityProper : MonoBehaviour, IConfigurable
 {
@@ -37,6 +38,7 @@ public abstract class BattleEntityProper : MonoBehaviour, IConfigurable
     }
     private void Start()
     {
+
         entityData.onStatusEffectUpdate += () =>
         {
             statusEffectDisplay.Config(entityData);
@@ -79,6 +81,11 @@ public abstract class BattleEntityProper : MonoBehaviour, IConfigurable
         }
     }
 
+    internal bool skillInCooldown(BattleMove battleMove)
+    {       
+        return entityData.skillCooldowns.Contains(battleMove);
+    }
+
     public void PlayAnimation(DefaultAnimations animation)
     {    
         switch (animation)
@@ -104,12 +111,12 @@ public abstract class BattleEntityProper : MonoBehaviour, IConfigurable
 
     public void Death()
     {
-       
+        
         Destroy(mpBattleSlider.gameObject);
         Destroy(hpBattleSlider.gameObject);
         Destroy(statusEffectDisplay.gameObject);
-        Destroy(gameObject);
-       
+        onEndTurn?.Invoke();
+        Destroy(gameObject);     
     }
 
     public void DamageTakenTrigger()
@@ -125,24 +132,28 @@ public abstract class BattleEntityProper : MonoBehaviour, IConfigurable
 
     public virtual bool StartTurn()
     {
-
-
         entityData.ResolveDebuffs();
         
-
         if (isDead)
         {
-            onEndTurn?.Invoke();
+            //onEndTurn?.Invoke();
             return false;
         }
+
+        statusEffectDisplay.Config(entityData);
 
         if (entityData.turns < 1)
         {
             EndTurn();
             return false;
-        }    
-        statusEffectDisplay.Config(entityData);
+        }
+
+
+        //to specific
+
+        
         entityData.turns.Stat--;
+        entityData.fowardSkillTimer();
         return true;
     }
 

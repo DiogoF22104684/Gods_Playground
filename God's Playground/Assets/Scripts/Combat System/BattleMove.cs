@@ -39,6 +39,7 @@ namespace CombatSystem
             BattleEntity player = playerEntity.entityData;
             BattleEntity target = selectedEntity.entityData;
 
+            //Compare the target with the skillmode 
             if(selectedEntity is EnemyBattleEntityProper)
             {
                 if (config.Mode == SelectorMode.Self || config.Mode == SelectorMode.Team)
@@ -52,6 +53,15 @@ namespace CombatSystem
             
             BattleStat stat = config.CostStat.GetValue(player);
 
+            //Check if the skill colldown
+            if (playerEntity.skillInCooldown(this))
+            {
+                return false;
+            }
+
+
+            //Check if the user has enough stats to 'pay' for the cost of
+            //using the skill
             if (stat.Stat < config.CostValue)
                 return false;
 
@@ -85,7 +95,10 @@ namespace CombatSystem
                 }
             }
 
+
+            
             BattleStat stat = config.CostStat.GetValue(attacker);
+
             BattleStat newStat = 
                 new BattleStat(stat.Stat - Config.CostValue, stat.MaxStat, stat.FlatStat);
             config.CostStat.param.SetValue(attacker, newStat);

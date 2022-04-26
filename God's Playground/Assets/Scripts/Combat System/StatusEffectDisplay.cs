@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class StatusEffectDisplay : MonoBehaviour, IConfigurable
 {
     [SerializeField]
-    List<StatusEffectTimer> statusEffects;
+    List<TurnTimer<StatusEffect>> statusEffects;
 
     [SerializeField]
     GameObject iconPREFAB;
@@ -22,7 +22,9 @@ public class StatusEffectDisplay : MonoBehaviour, IConfigurable
 
     public void Config(BattleEntity entity)
     {
-      
+
+       
+
         statusEffects = entity.statusEffects;
         CleanStatusList();
 

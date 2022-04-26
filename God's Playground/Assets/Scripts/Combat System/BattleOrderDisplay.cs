@@ -42,7 +42,8 @@ public class BattleOrderDisplay : MonoBehaviour
         int i = 0;
         foreach (BattleEntity be in turnorder)
         {
-            
+            if (be.IsDead) continue;
+
             Vector3 newPosition = GetIconPos(i);
 
             GameObject newIcon = Instantiate(debugPREFAB, newPosition,

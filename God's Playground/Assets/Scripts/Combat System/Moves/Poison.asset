@@ -20,6 +20,7 @@ MonoBehaviour:
     mode: 3
     type: 0
     mechanic: 0
+    cooldown: 0
   debuffs:
     debuffs:
     - {fileID: 11400000, guid: 5990e1a8f571a6a448292ef76b886e48, type: 2}

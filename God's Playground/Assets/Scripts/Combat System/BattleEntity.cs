@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CombatSystem;
 
 [System.Serializable]
 public class BattleEntity 
@@ -23,6 +24,7 @@ public class BattleEntity
             if(value.Stat <= 0)
             {
                 properEntity.PlayAnimation(DefaultAnimations.Death);
+                IsDead = true;
                 value.Stat = 0;
             }
             if(value.Stat > value.MaxStat)
@@ -68,7 +70,8 @@ public class BattleEntity
     [MoveAffecter]
     public BattleStat turns { get; set; }
 
-    public List<StatusEffectTimer> statusEffects { get; private set; }
+    public List<TurnTimer<StatusEffect>> statusEffects { get; private set; }
+    public List<TurnTimer<BattleMove>> skillCooldowns { get; private set; }
 
     public EntityTemplate template { get; }
 
@@ -79,10 +82,12 @@ public class BattleEntity
     public BattleEntity(BattleEntityProper proper, EntityTemplate template)
     {
         properEntity = proper;
-        this.hp = new BattleStat(template.HP, template.HP, 0);
+        int hpValue = template.HP;
+        this.hp = new BattleStat(hpValue, hpValue, 0);
 
         properEntity = proper;
-        this.mp = new BattleStat(template.Mp, template.Mp, 0);
+        int mpValue = template.Mp;
+        this.mp = new BattleStat(mpValue, mpValue, 0);
 
         turns = new BattleStat(1,1,0);
 
@@ -96,26 +101,36 @@ public class BattleEntity
         dex = new BattleStat(template.Dex, template.Dex, 0);
 
         this.template = template;
-        statusEffects = new List<StatusEffectTimer> { };
+        statusEffects = new List<TurnTimer<StatusEffect>> { };
+        skillCooldowns = new List<TurnTimer<BattleMove>> { };
     }
 
+    public bool IsDead { get; private set; }
 
     public override string ToString()
     {
         return $"Hp: {hp.Stat} \nAtk: {str.Stat} \nDef:{def.Stat}";
     }
 
-    internal void AddDebuff(StatusEffect d)
+    public void AddDebuff(StatusEffect d)
     { 
-        statusEffects.Add(new StatusEffectTimer(d));
+        statusEffects.Add(new TurnTimer<StatusEffect>(d));
         onStatusEffectUpdate?.Invoke();
     }
+
+    public void AddSkillCooldown(BattleMove move)
+    {
+        skillCooldowns.Add(new TurnTimer<BattleMove> (move));
+    }
+
 
     internal void ResolveDebuffs()
     {
         for (int i = statusEffects.Count - 1; i >= 0; i--)
         {
-            StatusEffectTimer d = statusEffects[i];
+           
+            TurnTimer<StatusEffect> d = statusEffects[i];
+            
             StatusEffect effect = d.Effect;
 
             effect.ResolveStatusEffect(this, d.Timer);
@@ -124,11 +139,26 @@ public class BattleEntity
 
             d.Timer++;
 
-            if(d.Timer >= effect.CoolDown)
+            if (d.Timer >= effect.CoolDown)
             {
                 effect.EndStatusEffect(this);
                 statusEffects.RemoveAt(i);
             }
         }  
+    }
+
+    //there's probably a better way for this
+    internal void fowardSkillTimer()
+    {
+        for (int i = skillCooldowns.Count - 1; i >= 0; i--)
+        {
+            TurnTimer<BattleMove> timer = skillCooldowns[i];
+            if (timer.Timer >= timer.Effect.Config.Cooldown)
+            {
+                skillCooldowns.Remove(timer);
+                continue;
+            }
+            timer.Timer++; 
+        }
     }
 }

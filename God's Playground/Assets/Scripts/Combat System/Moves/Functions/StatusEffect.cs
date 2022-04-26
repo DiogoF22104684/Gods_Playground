@@ -18,6 +18,11 @@ public abstract class StatusEffect: ScriptableObject
 
     public abstract void ResolveStatusEffect(BattleEntity entity, int timer);
     public abstract void EndStatusEffect(BattleEntity entity);
+
+    public override string ToString()
+    {
+        return name;
+    }
 }
 
 

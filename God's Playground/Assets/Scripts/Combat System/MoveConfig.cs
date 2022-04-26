@@ -27,6 +27,12 @@ namespace CombatSystem
         public BattlePropertyInfo CostStat => costStat;
         public int CostValue => costValue;
 
+        [SerializeField] [Tooltip("Number of turns to wait after use")]
+        private int cooldown;
+        public int Cooldown => cooldown;
+
         public MechanicType Mechanic => mechanic;
+
+       
     }
 }

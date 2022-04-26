@@ -104,6 +104,7 @@ public class BattleManager : MonoBehaviour
     private void PrepareTurnOrder()
     {
         if (playerDead) return;
+        
 
         CleanEntityList();
         List<BattleEntity> turnEnt = new List<BattleEntity>(enemies);
@@ -129,7 +130,7 @@ public class BattleManager : MonoBehaviour
             Where(x => x.turns.Stat > 0).
             OrderBy(x => -x.dex.Stat).ToList();
 
-        foreach (BattleEntity be in turnEnt)
+       // foreach (BattleEntity be in turnEnt)
  
         orderDisplay.UpdateDisplay(turnEnt);
 
@@ -138,14 +139,17 @@ public class BattleManager : MonoBehaviour
             inTurnEntity = turnEnt[0];
         }
 
+        
         selector.Config(playerProper, enemies.Select(x => x.properEntity).ToList());
     }
 
     private void NextTurn()
     {
+        selector.PlayerHasAttacked = false;
         if (playerDead) return;
         PrepareTurnOrder();
         turnnumb++;
+        print(inTurnEntity);
         inTurnEntity.properEntity.StartTurn();
     }
 
@@ -180,6 +184,7 @@ public class BattleManager : MonoBehaviour
 
     public void ResolvePlayerAttack(BattleMove move)
     {
+        selector.PlayerHasAttacked = true;
         this.move = move;
         Roll();
     }
@@ -238,5 +243,8 @@ public class BattleManager : MonoBehaviour
         
 
         move.Function(playerProper.entityData, enemiesSelected, roll);
+        
+        if (move.Config.Cooldown > 0)
+            playerData.AddSkillCooldown(move);
     }
 }

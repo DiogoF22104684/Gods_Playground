@@ -5,6 +5,7 @@ using UnityEngine;
 using System.Linq;
 public class EntitySelector : MonoBehaviour
 {
+    public bool PlayerHasAttacked { get; internal set; }
 
     [SerializeField]
     private GameObject iconSelector;
@@ -25,15 +26,22 @@ public class EntitySelector : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        //Select target entity
         if (Input.GetMouseButtonDown(0))
         {
-            SelectEntity(x => {
-                this.SelectedEntity = x;
-                SpawnIcon();
-                onSelect?.Invoke();
-            });
+            if (!PlayerHasAttacked)
+            {
+                SelectEntity(x =>
+                {
+                    this.SelectedEntity = x;
+                    SpawnIcon();
+                    onSelect?.Invoke();
+                });
+            }
         }
 
+        //Select info entity
         if (Input.GetMouseButton(1))
         {
             SelectEntity(x => {
@@ -68,7 +76,9 @@ public class EntitySelector : MonoBehaviour
     }
 
     private void SpawnIcon()
-    {        
+    {
+       
+
         iconSelector.GetComponent<RectTransform>().ScaleWithTarget(
             SelectedEntity.transform, 0.5f);
 
@@ -125,6 +135,9 @@ public class EntitySelector : MonoBehaviour
     internal void Config(BattleEntityProper playerProper, 
         List<BattleEntityProper> enemies)
     {
+
+        print(enemies.elements());
+
         playerEntity = playerProper;
         enemiesEntity = enemies;
 
@@ -133,6 +146,6 @@ public class EntitySelector : MonoBehaviour
         
         
         SpawnIcon();
-        onSelect?.Invoke();
+        //onSelect?.Invoke();
     }
 }

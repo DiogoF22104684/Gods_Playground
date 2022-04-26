@@ -70,4 +70,25 @@ public static class Extentions
             new Vector2(0.5f, 0.5f));
     }
 
+    //Whyyyyy
+    public static string elements<T>(this IEnumerable<T> self)
+    {
+        string returnString = "empty" ;
+
+        bool token = false;
+        foreach(T t in self)
+        {
+            if (!token)
+            {
+                returnString = "";
+                token = true;
+            }
+            returnString += t.ToString() + "\n";
+        }
+
+
+        return returnString;
+    }
+
+
 }

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Viking1
   m_EditorClassIdentifier: 
   hp:
-    minV: 3
-    maxV: 10
+    minV: 6
+    maxV: 8
   mp:
     minV: 1
     maxV: 100
