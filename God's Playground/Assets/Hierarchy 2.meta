@@ -1,9 +1,17 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 <<<<<<<< HEAD:God's Playground/Assets/Hierarchy 2.meta
 guid: 1fe252964d6c3e34d90f03e7cd06faa9
 ========
 guid: b1990b302be70ac4d8bfa1c7fc6f95c9
 >>>>>>>> Andre:God's Playground/Assets/Overworld/Shaders.meta
+=======
+<<<<<<<< HEAD:God's Playground/Assets/Materials.meta
+guid: 2ff0224572ddef545a001744e2d85c8f
+========
+guid: 34bd3e04869600747bdfd5e4386e75d4
+>>>>>>>> Diogo:God's Playground/Assets/Hierarchy 2.meta
+>>>>>>> 1ceb26c72da36491d4e6093ef7825376f46ba3b6
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
