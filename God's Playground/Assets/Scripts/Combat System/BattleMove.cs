@@ -7,7 +7,7 @@ using UnityEngine;
 namespace CombatSystem
 {
     [CreateAssetMenu(menuName = "Scriptables/Moves/Move")]
-    public class BattleMove : ScriptableObject
+    public class BattleMove : ScriptableObject, IInventoryItem
     {
         [SerializeField]
         private Texture2D icon;

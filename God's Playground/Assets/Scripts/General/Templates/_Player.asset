@@ -41,3 +41,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a6e2bee665ef1894e826f52da8b0479c, type: 2}
   - {fileID: 11400000, guid: 07dc17537f6d64e46869f2f972d3d5a1, type: 2}
   - {fileID: 11400000, guid: 8378c2fbe53844048b1d5c22a67c9a7f, type: 2}
+  inventory:
+    equipment: []
+    skills:
+    - {fileID: 11400000, guid: a6e2bee665ef1894e826f52da8b0479c, type: 2}
+    - {fileID: 11400000, guid: 9a0d6840c4606364bbed53fc2b09c169, type: 2}
+    - {fileID: 11400000, guid: 07dc17537f6d64e46869f2f972d3d5a1, type: 2}
+    - {fileID: 11400000, guid: 8378c2fbe53844048b1d5c22a67c9a7f, type: 2}

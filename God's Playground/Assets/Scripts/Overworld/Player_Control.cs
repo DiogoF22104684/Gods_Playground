@@ -53,7 +53,7 @@ public class Player_Control : MonoBehaviour
 
     private void Strafe()
     {
-        Vector3 strafe = transform.TransformDirection(Vector3.right);
+        Vector3 strafe = transform.TransformDirection(Vector3.left);
         float curSpeed = _strafeSpeed * Input.GetAxis("Horizontal");
         _controller.SimpleMove(strafe * curSpeed);
     }
