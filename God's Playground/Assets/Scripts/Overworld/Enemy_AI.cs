@@ -14,10 +14,13 @@ public class Enemy_AI : MonoBehaviour
     private StateMachine stateMachine;
     private NavMeshAgent agent;
 
+    
+    private BattleTransitioner transitioner;
 
     // Start is called before the first frame update
     void Start()
     {
+        transitioner = GetComponent<BattleTransitioner>();
         agent = GetComponent<NavMeshAgent>();
 
         player = GameObject.FindObjectOfType<Player_Control>();
@@ -102,7 +105,10 @@ public class Enemy_AI : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject == player.gameObject)
+        {
             playerInProximity = true;
+            transitioner.EnterBattle();
+        }
     }
 
     private void OnCollisionEnter(Collision other) 

@@ -50,6 +50,9 @@ public class BattleManager : MonoBehaviour
 
     private void Awake()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
         enemies = new List<BattleEntity>{ };
         
         //Instatiate things
