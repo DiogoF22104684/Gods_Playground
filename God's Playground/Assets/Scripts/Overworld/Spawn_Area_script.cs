@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Spawn_Area_script : MonoBehaviour
 {
-    [SerializeField] [Range(1,5)]float radius;
+    [SerializeField] [Range(1,10)]float radius;
 
     public bool InArea(Vector3 pos)
     {

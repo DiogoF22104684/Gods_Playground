@@ -8,8 +8,7 @@ using LibGameAI.FSMs;
 
 public class Enemy_AI : MonoBehaviour
 {
-    private bool playerInZone = false;
-    private bool playerInSight = false;
+    private bool playerInProximity = false;
     [SerializeField] private Spawn_Area_script patrolZone;
     private Player_Control player;
     private StateMachine stateMachine;
@@ -22,6 +21,7 @@ public class Enemy_AI : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
 
         player = GameObject.FindObjectOfType<Player_Control>();
+        
         State idleState = new State("Idle",
         () => Debug.Log("Entering idle state"),
         IdleBehaviour,
@@ -39,25 +39,25 @@ public class Enemy_AI : MonoBehaviour
     
         idleState.AddTransition(
             new Transition (
-                () => playerInZone && playerInSight, //Player in the outpost zone
+                () => playerInProximity,
                 () => Debug.Log("I'm coming for you"),
                 chaseState));
         
         chaseState.AddTransition(
             new Transition (
-                () => !playerInZone, //Player out of the outpost zone
+                () => !playerInProximity,
                 () => Debug.Log("I'm going back"),
                 returningState));
         
         returningState.AddTransition(
             new Transition (
-                () => playerInZone, //Player enters the outpost zone again
+                () => playerInProximity,
                 () => Debug.Log("You dare to make a fool of me!"),
                 chaseState));
 
         returningState.AddTransition(
             new Transition (
-                () => !playerInSight && !playerInZone, //Player did not return to the outpost zone
+                () => agent.remainingDistance <= 0.1,
                 () => Debug.Log("That person better be gone"),
                 idleState));
 
@@ -78,12 +78,12 @@ public class Enemy_AI : MonoBehaviour
 
         Vector3 dest = Vector3.zero;
         do{
-        float rotationValue  = UnityEngine.Random.Range(0, 359);
-        float rangeValue  = UnityEngine.Random.Range(0f, 1f);
-        gameObject.transform.localEulerAngles = 
-            gameObject.transform.localEulerAngles.y(rotationValue);
-        Vector3 direction = gameObject.transform.forward.normalized;
-        dest = transform.position + direction * rangeValue;
+            float rotationValue  = UnityEngine.Random.Range(0, 359);
+            float rangeValue  = UnityEngine.Random.Range(0f, 1f);
+            gameObject.transform.localEulerAngles = 
+                gameObject.transform.localEulerAngles.y(rotationValue);
+            Vector3 direction = gameObject.transform.forward.normalized;
+            dest = transform.position + direction * rangeValue;
         }while(!patrolZone.InArea(dest));
         
 
@@ -92,16 +92,24 @@ public class Enemy_AI : MonoBehaviour
 
     private void ChasingPlayer()
     {
-
+        agent.SetDestination(player.gameObject.transform.position);
     }
     private void ReturningToSpawn()
     {
-
+        agent.SetDestination(patrolZone.gameObject.transform.position);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject == player.gameObject)
-            playerInZone = true;
+            playerInProximity = true;
+    }
+
+    private void OnCollisionEnter(Collision other) 
+    {
+        if(other.gameObject == player.gameObject)
+        {
+            //Colocar aqui a transição e passagem entre cenas
+        }
     }
 }
