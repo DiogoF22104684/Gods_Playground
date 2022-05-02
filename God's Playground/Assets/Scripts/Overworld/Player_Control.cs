@@ -8,7 +8,7 @@ public class Player_Control : MonoBehaviour
     private CharacterController _controller;
     private Camera_Control _camera;
     [SerializeField]
-    private float _speed = 2f;
+    private float _speed = 5f;
     private float _strafeSpeed = 5f;
     private float _rotateSpeed = 1f;
 

@@ -8,7 +8,7 @@ using LibGameAI.FSMs;
 
 public class Enemy_AI : MonoBehaviour
 {
-    private bool playerInProximity = false;
+    [SerializeField] private float minDistanceToPlayer = 10f;
     [SerializeField] private Spawn_Area_script patrolZone;
     private Player_Control player;
     private StateMachine stateMachine;
@@ -42,19 +42,22 @@ public class Enemy_AI : MonoBehaviour
     
         idleState.AddTransition(
             new Transition (
-                () => playerInProximity,
+                () => (player.gameObject.transform.position - 
+                        transform.position).magnitude < minDistanceToPlayer,
                 () => Debug.Log("I'm coming for you"),
                 chaseState));
         
         chaseState.AddTransition(
             new Transition (
-                () => !playerInProximity,
+                () => (player.gameObject.transform.position - 
+                        transform.position).magnitude > minDistanceToPlayer,
                 () => Debug.Log("I'm going back"),
                 returningState));
         
         returningState.AddTransition(
             new Transition (
-                () => playerInProximity,
+                () => (player.gameObject.transform.position - 
+                        transform.position).magnitude < minDistanceToPlayer,
                 () => Debug.Log("You dare to make a fool of me!"),
                 chaseState));
 
@@ -106,16 +109,7 @@ public class Enemy_AI : MonoBehaviour
     {
         if (other.gameObject == player.gameObject)
         {
-            playerInProximity = true;
             transitioner.EnterBattle();
-        }
-    }
-
-    private void OnCollisionEnter(Collision other) 
-    {
-        if(other.gameObject == player.gameObject)
-        {
-            //Colocar aqui a transição e passagem entre cenas
         }
     }
 }
