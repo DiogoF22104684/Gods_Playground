@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
 
 public class Player_Control : MonoBehaviour
 {
@@ -10,7 +12,8 @@ public class Player_Control : MonoBehaviour
     private float _strafeSpeed = 5f;
     private float _rotateSpeed = 1f;
 
-
+    [SerializeField]
+    private List<ScriptableBool> stopMovementBool;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +25,11 @@ public class Player_Control : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (stopMovementBool.Any(x => x.Value == true))
+        {
+            _controller.Move(Vector3.zero);
+            return;
+        }
         Rotate();
         Move();
         Strafe();

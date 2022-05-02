@@ -9,9 +9,9 @@ public class ButtonControl : MonoBehaviour
     [SerializeField] private GameObject equipButton;
     [SerializeField] private GameObject revealButton;
     [SerializeField] private int timeMultiplier = 7;
-    private GameObject inventoryMenu;
-    private GameObject profileMenu;
-    private GameObject spellsMenu;
+    //private GameObject inventoryMenu;
+    //private GameObject profileMenu;
+    //private GameObject spellsMenu;
     private bool revealed;
     private Vector3 intialPos1;
     private Vector3 intialPos2;
@@ -22,14 +22,6 @@ public class ButtonControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        inventoryMenu = GameObject.Find("Inventory Menu");
-        profileMenu = GameObject.Find("Profile Menu");
-        spellsMenu = GameObject.Find("Spells Menu");
-
-        inventoryMenu.SetActive(false);
-        profileMenu.SetActive(false);
-        spellsMenu.SetActive(false);
-
         target = Quaternion.Euler(0, 0, 180);
 
         revealed = false;
@@ -83,11 +75,6 @@ public class ButtonControl : MonoBehaviour
             profButton.transform.position = Vector3.Lerp(profButton.transform.position, 
                         revealButton.transform.position, 
                         Time.deltaTime * timeMultiplier);
-
-
-            spellsMenu.SetActive(false);
-            inventoryMenu.SetActive(false);
-            profileMenu.SetActive(false);
         }
 
 
@@ -98,35 +85,35 @@ public class ButtonControl : MonoBehaviour
         revealed = !revealed;
     }
 
-    public void InventoryButton()
-    {
-        if (!inventoryMenu.activeSelf)
-        {
-            inventoryMenu.SetActive(true);
-            spellsMenu.SetActive(false);
-        }
-        else
-            inventoryMenu.SetActive(false);
+    //public void InventoryButton(GameObject )
+    //{
+    //    if (!inventoryMenu.activeSelf)
+    //    {
+    //        inventoryMenu.SetActive(true);
+    //        spellsMenu.SetActive(false);
+    //    }
+    //    else
+    //        inventoryMenu.SetActive(false);
             
-    }
-    public void ProfileButton()
-    {
-        if (!profileMenu.activeSelf)
-            profileMenu.SetActive(true);
-        else
-            profileMenu.SetActive(false);
-            spellsMenu.SetActive(false);
-            inventoryMenu.SetActive(false);
-    }
-    public void SpellsButton()
-    {
-        if (!spellsMenu.activeSelf)
-        {
-            spellsMenu.SetActive(true);
-            inventoryMenu.SetActive(false);
-        }
-        else
-            spellsMenu.SetActive(false);
-    }
+    //}
+    //public void ProfileButton()
+    //{
+    //    if (!profileMenu.activeSelf)
+    //        profileMenu.SetActive(true);
+    //    else
+    //        profileMenu.SetActive(false);
+    //        spellsMenu.SetActive(false);
+    //        inventoryMenu.SetActive(false);
+    //}
+    //public void SpellsButton()
+    //{
+    //    if (!spellsMenu.activeSelf)
+    //    {
+    //        spellsMenu.SetActive(true);
+    //        inventoryMenu.SetActive(false);
+    //    }
+    //    else
+    //        spellsMenu.SetActive(false);
+    //}
 
 }
