@@ -6,6 +6,7 @@ public class Camera_Control : MonoBehaviour
 
     [SerializeField]
     private GameObject _freelook;
+    public GameObject cam => _freelook;
 
     void Start()
     {
