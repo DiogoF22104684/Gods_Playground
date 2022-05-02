@@ -19647,19 +19647,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2187157571813315074, guid: 583f7b9a09c237d4c8991a51c3b80de1, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9870672
+      value: 0.9870673
       objectReference: {fileID: 0}
     - target: {fileID: 2187157571813315074, guid: 583f7b9a09c237d4c8991a51c3b80de1, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.16017891
+      value: 0.16017894
       objectReference: {fileID: 0}
     - target: {fileID: 2187157571813315074, guid: 583f7b9a09c237d4c8991a51c3b80de1, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.0063240817
+      value: -0.006324053
       objectReference: {fileID: 0}
     - target: {fileID: 2187157571813315074, guid: 583f7b9a09c237d4c8991a51c3b80de1, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0010262652
+      value: 0.0010262579
       objectReference: {fileID: 0}
     - target: {fileID: 2187157571953257126, guid: 583f7b9a09c237d4c8991a51c3b80de1, type: 3}
       propertyPath: _speed
@@ -19677,6 +19677,10 @@ PrefabInstance:
       propertyPath: stopMovementBool.Array.data[1]
       value: 
       objectReference: {fileID: 11400000, guid: ec191ecad1adfcf4b9030effd3faa1ae, type: 2}
+    - target: {fileID: 2187157571953257127, guid: 583f7b9a09c237d4c8991a51c3b80de1, type: 3}
+      propertyPath: inMenus
+      value: 
+      objectReference: {fileID: 11400000, guid: b4e913e6664e3104aac632d89647cd8a, type: 2}
     - target: {fileID: 2187157571953257129, guid: 583f7b9a09c237d4c8991a51c3b80de1, type: 3}
       propertyPath: m_RootOrder
       value: 3
