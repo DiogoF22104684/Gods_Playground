@@ -47,6 +47,8 @@ public class BattleManager : MonoBehaviour
     //Maybe criar outro componente q trate disto e do resto dos menus
     [SerializeField]
     private GameObject deathPanel;
+    [SerializeField]
+    private GameObject dubsMenu;
 
     private void Awake()
     {
@@ -111,6 +113,11 @@ public class BattleManager : MonoBehaviour
 
         CleanEntityList();
         List<BattleEntity> turnEnt = new List<BattleEntity>(enemies);
+        if (!turnEnt.Any(x => !x.IsDead))
+        {
+            Debug.Log("Ws all around");
+            dubsMenu.SetActive(true);
+        }
         turnEnt.Add(playerData);
 
 

@@ -136,14 +136,20 @@ public class EntitySelector : MonoBehaviour
         List<BattleEntityProper> enemies)
     {
 
-        print(enemies.elements());
-
         playerEntity = playerProper;
         enemiesEntity = enemies;
 
-        if(SelectedEntity == null || SelectedEntity.entityData.Hp <= 0)
-            this.SelectedEntity = enemiesEntity.First(x => x.entityData.Hp > 0);
-        
+        if (SelectedEntity == null || SelectedEntity.entityData.Hp <= 0)
+        {
+            try 
+            {
+                this.SelectedEntity = enemiesEntity.First(x => x.entityData.Hp > 0);
+            }
+            catch
+            {
+
+            }
+        }
         
         SpawnIcon();
         //onSelect?.Invoke();
