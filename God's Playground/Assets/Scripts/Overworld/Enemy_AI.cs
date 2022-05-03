@@ -13,6 +13,7 @@ public class Enemy_AI : MonoBehaviour
     private Player_Control player;
     private StateMachine stateMachine;
     private NavMeshAgent agent;
+    private Vector3 dest = Vector3.zero;
 
     
     private BattleTransitioner transitioner;
@@ -25,6 +26,7 @@ public class Enemy_AI : MonoBehaviour
 
         player = GameObject.FindObjectOfType<Player_Control>();
         
+    // ---------------------State Machine States---------------------
         State idleState = new State("Idle",
         () => Debug.Log("Entering idle state"),
         IdleBehaviour,
@@ -40,6 +42,7 @@ public class Enemy_AI : MonoBehaviour
         ReturningToSpawn,
         () => Debug.Log("Entering returning state"));
     
+    // ---------------------State Machine transitions---------------------
         idleState.AddTransition(
             new Transition (
                 () => (player.gameObject.transform.position - 
@@ -78,14 +81,22 @@ public class Enemy_AI : MonoBehaviour
         actions?.Invoke();
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject == player.gameObject)
+        {
+            transitioner.EnterBattle();
+        }
+    }
+
+    //---------------------State Machine Behaviors---------------------
     private void IdleBehaviour()
     {
         if(agent.remainingDistance >= 0.1f ) return;
 
-        Vector3 dest = Vector3.zero;
         do{
             float rotationValue  = UnityEngine.Random.Range(0, 359);
-            float rangeValue  = UnityEngine.Random.Range(0f, 1f);
+            float rangeValue  = UnityEngine.Random.Range(2f, 5f);
             gameObject.transform.localEulerAngles = 
                 gameObject.transform.localEulerAngles.y(rotationValue);
             Vector3 direction = gameObject.transform.forward.normalized;
@@ -105,11 +116,11 @@ public class Enemy_AI : MonoBehaviour
         agent.SetDestination(patrolZone.gameObject.transform.position);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnDrawGizmos()
     {
-        if (other.gameObject == player.gameObject)
-        {
-            transitioner.EnterBattle();
-        }
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(transform.position, 
+        dest);
     }
+
 }
