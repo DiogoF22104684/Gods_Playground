@@ -24,20 +24,20 @@ public class DMBehavior : MonoBehaviour
         AngryBehaviour,
         () => Debug.Log("Leaving angry state"));
 
-        State excitedState = new State("Returning",
-        () => Debug.Log("Entering returning state"),
+        State excitedState = new State("Excited",
+        () => Debug.Log("Entering excited state"),
         ExcitedBehaviour,
-        () => Debug.Log("Leaving returning state"));
+        () => Debug.Log("Leaving excited state"));
         
-        State annoyedState = new State("Returning",
-        () => Debug.Log("Entering returning state"),
+        State annoyedState = new State("Annoyed",
+        () => Debug.Log("Entering annoyed state"),
         AnnoyedBehaviour,
-        () => Debug.Log("Leaving returning state"));
+        () => Debug.Log("Leaving annoyed state"));
         
-        State hopefulState = new State("Returning",
-        () => Debug.Log("Entering returning state"),
+        State hopefulState = new State("Hopeful",
+        () => Debug.Log("Entering hopeful state"),
         HopefulBehaviour,
-        () => Debug.Log("Leaving returning state"));
+        () => Debug.Log("Leaving hopeful state"));
 
         //--------------------------To Neutral State--------------------------
         angryState.AddTransition(
