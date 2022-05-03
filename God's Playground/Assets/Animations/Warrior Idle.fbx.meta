@@ -1,0 +1,408 @@
+fileFormatVersion: 2
+guid: 30cc0123104c7534793a74cb793a0d15
+ModelImporter:
+  serializedVersion: 21100
+  internalIDToNameTable:
+  - first:
+      74: 1827226128182048838
+    second: Take 001
+  - first:
+      74: -203655887218126122
+    second: mixamo.com
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour
+    second: {fileID: 2100000, guid: abd1f861217933d4f9c580908f264825, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour1
+    second: {fileID: 2100000, guid: 9cf30ec952873b540909b9f5d43efcc5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour10
+    second: {fileID: 2100000, guid: acccf0b314b812948853de7a7f6fe32b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour11
+    second: {fileID: 2100000, guid: c6825b949b5ed1e48b1e5c0b63bd89b9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour12
+    second: {fileID: 2100000, guid: 42fbd6ad608a6f4488060296946c5963, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour13
+    second: {fileID: 2100000, guid: 1348f87ecc27fd14e9fff43ed64c0783, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour14
+    second: {fileID: 2100000, guid: 3b4d3cb1014ecd240b9570118800cec4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour15
+    second: {fileID: 2100000, guid: 88f21977c4bbc324eac5f7c9a42c7af3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour16
+    second: {fileID: 2100000, guid: c563699bad49b8c41b6c1970ecda7901, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour17
+    second: {fileID: 2100000, guid: 18403c8322cb25b4fa91e711ece0ee11, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour18
+    second: {fileID: 2100000, guid: 8b1800f17107cee4f8cf5abae3ee622a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour19
+    second: {fileID: 2100000, guid: 285edcd991954cd408f43ce3fd8a32d9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour2
+    second: {fileID: 2100000, guid: 4d8a0fc5d371f00408869d3423515b21, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour20
+    second: {fileID: 2100000, guid: 2f5af34f8a415ff43b2ab0b790a733c7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour21
+    second: {fileID: 2100000, guid: e37d08557534f494fb8f4513a6ec8a2c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour22
+    second: {fileID: 2100000, guid: e1554c28174933041a09a6a77e22ee59, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour23
+    second: {fileID: 2100000, guid: 572fd320923d80b478451652701f398a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour24
+    second: {fileID: 2100000, guid: 2065fdfd31aeb344ea8bcbfcd20010a2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour25
+    second: {fileID: 2100000, guid: ce03087afe4922f41ae16224f4381092, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour26
+    second: {fileID: 2100000, guid: 3455a441f02b42545b9a110e4148d8a6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour27
+    second: {fileID: 2100000, guid: 7ea2c92000e828447a5d572d9d8c1264, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour28
+    second: {fileID: 2100000, guid: 57b971a2aa2d330409882ea797a1db92, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour29
+    second: {fileID: 2100000, guid: 6074d7fb65368cd46b20d53d25a71af5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour3
+    second: {fileID: 2100000, guid: 1e35751e0e193374d9e0a460dc21fbd0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour30
+    second: {fileID: 2100000, guid: 43d839a388056fe42b2c3519f10f66bd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour31
+    second: {fileID: 2100000, guid: 41b777a85f4e7bc42a68365c80f2d2fd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour32
+    second: {fileID: 2100000, guid: 7ccff2ee56c168f428874629ed9a8ad7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour33
+    second: {fileID: 2100000, guid: 03423ef3870dfe54f80361bd6cab88c3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour34
+    second: {fileID: 2100000, guid: fd0428fe338dd8e4ba2a54ade413972b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour35
+    second: {fileID: 2100000, guid: 2c6e085ddaf1e364d9df15ef32e30355, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour36
+    second: {fileID: 2100000, guid: b64b62c34c508a24e9acd683b71bb713, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour37
+    second: {fileID: 2100000, guid: 15bc69615ed5fef45a49b93e443f7edb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour38
+    second: {fileID: 2100000, guid: 14bba5f92f994334999f26ba600db0c8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour39
+    second: {fileID: 2100000, guid: b2b74b823cfaecf498d94ba736d4c15f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour4
+    second: {fileID: 2100000, guid: 3aea28a98a8569241904ecd4b01d1cf0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour40
+    second: {fileID: 2100000, guid: 9e081a1588102824b9ece703d08d60ae, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour41
+    second: {fileID: 2100000, guid: affc44423b7156d499fde3406f6df099, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour42
+    second: {fileID: 2100000, guid: 1e26aae6b03e5924c9c6e732fcf7aa87, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour43
+    second: {fileID: 2100000, guid: 04465ef856f6518418d327b644d8ffa0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour44
+    second: {fileID: 2100000, guid: 25e4f7eda4fdee642bce8035a32e91d3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour45
+    second: {fileID: 2100000, guid: 7ad72d6553850d944a882077a9584144, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour46
+    second: {fileID: 2100000, guid: 70aa5dd8350e8d94688199b09b1ce2a9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour47
+    second: {fileID: 2100000, guid: 27ec54d315c03404eb558a90486e0876, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour48
+    second: {fileID: 2100000, guid: da3524deb6a250f428bff65869f6538b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour49
+    second: {fileID: 2100000, guid: f9c55a06af9e3c048ad40a95b22849da, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour5
+    second: {fileID: 2100000, guid: b6ccd0e67706c3a4da61efcadb1120c6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour50
+    second: {fileID: 2100000, guid: fad534c28bf472942bfb58eced84d844, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour51
+    second: {fileID: 2100000, guid: bc7b7ff4af6df204986d0a923b07ac48, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour52
+    second: {fileID: 2100000, guid: 78ed5493b5b86604bb85260e5cf5929a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour53
+    second: {fileID: 2100000, guid: 7c0a6a54103022646b48156f5629127a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour54
+    second: {fileID: 2100000, guid: 828d0b0db3935b142a6c8101349c66b5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour55
+    second: {fileID: 2100000, guid: 7ba1cbfd99dd4bd41b97b065f3780556, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour56
+    second: {fileID: 2100000, guid: 5ba855eafd653f24cad1f9782decd828, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour57
+    second: {fileID: 2100000, guid: ef92198704bc3614fa19e8437ff8a68a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour58
+    second: {fileID: 2100000, guid: 01eef717a2903eb44b39d13abbe743cb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour59
+    second: {fileID: 2100000, guid: c44751c3e383cbf4d899a88072a75260, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour6
+    second: {fileID: 2100000, guid: 64f48c20cf300c547bd1bf533aacc895, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour7
+    second: {fileID: 2100000, guid: 96191cbc1ac8e3e48b5431eb4be8727b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour8
+    second: {fileID: 2100000, guid: 69d71532f5f48e54b999a5b6356c3149, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour9
+    second: {fileID: 2100000, guid: de94449dd49dab748aafa2b58500329b, type: 2}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
