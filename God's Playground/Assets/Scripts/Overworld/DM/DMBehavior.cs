@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
-using URandom = UnityEngine.Random;
 using System;
 using LibGameAI.FSMs;
 
@@ -10,10 +6,16 @@ public class DMBehavior : MonoBehaviour
 {
     private bool temporaryBool;
     private StateMachine stateMachine;
+    private float timeLeft = 1f;
+    private Color oldColor;
+    private Color newColor;
+    private Renderer dm_renderer;
  
     // Start is called before the first frame update
     void Start()
     {
+        dm_renderer = GetComponent<Renderer>();
+
         State neutralState = new State("Neutral",
         () => Debug.Log("Entering neutral state"),
         NeutralBehaviour,
@@ -177,22 +179,28 @@ public class DMBehavior : MonoBehaviour
 
     private void NeutralBehaviour()
     {
-        
+        newColor = new Color(1,1,1);
+        dm_renderer.material.color = Color.Lerp(dm_renderer.material.color, newColor, Time.deltaTime * timeLeft);
     }
     private void AngryBehaviour()
     {
-
+        newColor = new Color(216f/255f,32f/255f,32f/255f);
+        dm_renderer.material.color = Color.Lerp(dm_renderer.material.color, newColor, Time.deltaTime * timeLeft);
     }
     private void ExcitedBehaviour()
     {
-
+        newColor = new Color(216f/255f,216f/255f,32f/255f);
+        dm_renderer.material.color = Color.Lerp(dm_renderer.material.color, newColor, Time.deltaTime * timeLeft);
     }
     private void AnnoyedBehaviour()
     {
-
+        newColor = new Color(32f/255f,56f/255f,92f/255f);
+        dm_renderer.material.color = Color.Lerp(dm_renderer.material.color, newColor, Time.deltaTime * timeLeft);
     }
     private void HopefulBehaviour()
     {
-
+        newColor = new Color(64f/255f,216f/255f,92f/255f);
+        dm_renderer.material.color = Color.Lerp(dm_renderer.material.color, newColor, Time.deltaTime * timeLeft);
     }
+
 }
