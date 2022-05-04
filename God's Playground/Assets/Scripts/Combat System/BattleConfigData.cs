@@ -30,5 +30,12 @@ public class BattleConfigData : ScriptableObject
         onEnterBattle?.Invoke(bt); 
     }
 
+    public void ResetValues()
+    {
+        playerPos = new Vector3(3.55f, 2, -13.6f);
+        currentEnemy = -1;
+        enemyInScene = new List<int> { 0, 1 };
+        enemyPos = new List<Vector3> { new Vector3(21.4f, 1.34f, -12.35f), new Vector3(36.84f, 1.34f, -12.11f) };
+    }
     //Other things
 }

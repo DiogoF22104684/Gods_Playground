@@ -24,7 +24,6 @@ MonoBehaviour:
   debuffs:
     debuffs:
     - {fileID: 11400000, guid: 5990e1a8f571a6a448292ef76b886e48, type: 2}
-    - {fileID: 11400000, guid: dbc52e8fdc6d8a84cae36ba0f52bdc86, type: 2}
   basicFunc:
     param1:
       selected: 0
@@ -42,7 +41,7 @@ MonoBehaviour:
   basicFlat:
     param1:
       selected: 0
-    baseValue: 2
+    baseValue: 6
   function: 2
   Debuff:
     debuffs: []

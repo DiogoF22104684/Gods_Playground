@@ -18,12 +18,17 @@ public class EntityInicializer : MonoBehaviour
     private PlayableDirector transition;
     [SerializeField]
     private Spawn_Area_script spawnArea;
-
+    [SerializeField]
     private List<GameObject> currentEnemies;
+
+    private List<BattleTransitioner> bts =>
+            currentEnemies.Select(x => x.GetComponent<BattleTransitioner>()).ToList();
+
+
     // Start is called before the first frame update
     void Start()
     {
-        battleData.onEnterBattle -= SaveEnemyData;
+        battleData.onEnterBattle = null;
         battleData.onEnterBattle += SaveEnemyData;
         player.transform.position = battleData.PlayerPos;
         InstatiateEnemies();
@@ -31,9 +36,6 @@ public class EntityInicializer : MonoBehaviour
 
     public void SaveEnemyData(BattleTransitioner bt)
     {
-        List<BattleTransitioner> bts =
-            currentEnemies.Select(x => x.GetComponent<BattleTransitioner>()).ToList();
-
         battleData.enemyInScene = bts.Select(x => x.Id).ToList();
         battleData.enemyPos = bts.Select(x => x.transform.position).ToList();
         battleData.currentEnemy = currentEnemies.IndexOf(bt.gameObject);
@@ -41,6 +43,7 @@ public class EntityInicializer : MonoBehaviour
 
     public void InstatiateEnemies()
     {
+        
         currentEnemies = new List<GameObject> { };
         for (int i1 = 0; i1 < battleData.enemyInScene.Count; i1++)
         {

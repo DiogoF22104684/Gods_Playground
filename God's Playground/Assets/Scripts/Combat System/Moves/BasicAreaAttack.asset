@@ -22,7 +22,8 @@ MonoBehaviour:
     mechanic: 1
     cooldown: 0
   debuffs:
-    debuffs: []
+    debuffs:
+    - {fileID: 11400000, guid: dbc52e8fdc6d8a84cae36ba0f52bdc86, type: 2}
   basicFunc:
     param1:
       selected: 0

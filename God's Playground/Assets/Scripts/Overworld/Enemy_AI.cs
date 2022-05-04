@@ -31,46 +31,46 @@ public class Enemy_AI : MonoBehaviour
         
     // ---------------------State Machine States---------------------
         State idleState = new State("Idle",
-        () => Debug.Log("Entering idle state"),
+        null,
         IdleBehaviour,
-        () => Debug.Log("Leaving idle state"));
+        null);
 
         State chaseState = new State("Chasing",
-        () => Debug.Log("Entering chasing state"),
+        null,
         ChasingPlayer,
-        () => Debug.Log("Entering chasing state"));
+        null);
 
         State returningState = new State("Returning",
-        () => Debug.Log("Entering returning state"),
+        null,
         ReturningToSpawn,
-        () => Debug.Log("Entering returning state"));
+        null);
     
     // ---------------------State Machine transitions---------------------
         idleState.AddTransition(
             new Transition (
                 () => (player.gameObject.transform.position - 
                         transform.position).magnitude < minDistanceToPlayer,
-                () => Debug.Log("I'm coming for you"),
+                null,
                 chaseState));
         
         chaseState.AddTransition(
             new Transition (
                 () => (player.gameObject.transform.position - 
                         transform.position).magnitude > minDistanceToPlayer,
-                () => Debug.Log("I'm going back"),
+                null,
                 returningState));
         
         returningState.AddTransition(
             new Transition (
                 () => (player.gameObject.transform.position - 
                         transform.position).magnitude < minDistanceToPlayer,
-                () => Debug.Log("You dare to make a fool of me!"),
+                null,
                 chaseState));
 
         returningState.AddTransition(
             new Transition (
                 () => agent.remainingDistance <= 0.1,
-                () => Debug.Log("That person better be gone"),
+                null,
                 idleState));
 
         stateMachine = new StateMachine(idleState);
