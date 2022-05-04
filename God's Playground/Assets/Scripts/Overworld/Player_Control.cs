@@ -30,19 +30,8 @@ public class Player_Control : MonoBehaviour
             _controller.Move(Vector3.zero);
             return;
         }
-        Rotate();
         Move();
         Strafe();
-    }
-
-    private void Rotate()
-    {
-        if(Input.GetAxis("Rotate") != 0)
-            transform.Rotate(0, Input.GetAxis("Rotate") * _rotateSpeed, 0);
-        else
-        {
-            transform.Rotate(0, 0, 0);
-        }
     }
 
     private void Move()

@@ -10,11 +10,15 @@ public class DMBehavior : MonoBehaviour
     private Color oldColor;
     private Color newColor;
     private Renderer dm_renderer;
+    private GameObject leftHand;
+    private GameObject rightHand;
  
     // Start is called before the first frame update
     void Start()
     {
         dm_renderer = GetComponent<Renderer>();
+        leftHand = gameObject.transform.GetChild(0).gameObject;
+        rightHand = gameObject.transform.GetChild(1).gameObject;
 
         State neutralState = new State("Neutral",
         () => Debug.Log("Entering neutral state"),
