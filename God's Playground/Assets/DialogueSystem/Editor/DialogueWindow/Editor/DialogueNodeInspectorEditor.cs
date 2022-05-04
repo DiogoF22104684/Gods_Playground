@@ -75,20 +75,28 @@ namespace DialogueSystem.Editor
                 }
 
                 EventDefinition[] def = 
-                    controller.Events
-                    .Where(x=>x.Script == nodeInsp.Script).ToArray()
+                    controller.Events 
                     .Where(x => x.NodeId == nodeInsp.id).ToArray();
 
                 EditorUtility.SetDirty(controller);
 
+                DialogueScript[] s = controller.Events.Select(x => x.Script).ToArray();
+
+
                 for (int i = 0; i < def.Length; i++)
                 {
+ 
                     string newId = def[i].NodeId;
                     int index = def[i].LetterIndex;
                     
                     GUILayout.Space(10);
 
+                    GUILayout.BeginHorizontal();
+                    float defaultLabelWidth = EditorGUIUtility.labelWidth;
+                    EditorGUIUtility.labelWidth = 100;
+                    
                     #region Component Type PopUp
+
                     GameObject selectedObj = nodeInsp.Container.gameObject;
                     
                     Component[] components = selectedObj.GetComponents(typeof(Component));
@@ -108,12 +116,14 @@ namespace DialogueSystem.Editor
                         componentInt = typeNameList.IndexOf(def[i].ComponentName);
                         if (componentInt < 0) componentInt = 0;
                         componentInt =
-                            EditorGUILayout.Popup(new GUIContent("Object Components"), componentInt, typeNameList.ToArray());
+                            EditorGUILayout.Popup(new GUIContent("Component"), componentInt, typeNameList.ToArray());
                         def[i].ComponentName = typeNameList[componentInt];
-                        //assembly = listType[componentInt].Assembly;
+                        //assembly = listType[componentInt].Assembly;                      
                     }
                     #endregion
-
+                    
+                    GUILayout.Space(1);
+                    
                     #region Method PopUp
                     if (listType.Count > 0)
                     {
@@ -122,21 +132,73 @@ namespace DialogueSystem.Editor
                         string qualifiedName = Assembly.CreateQualifiedName(assemblyName, type);
                         System.Type typeSelected = Type.GetType(qualifiedName);
 
-                        GUILayout.Label(typeSelected?.Name ?? "Null");
-
+                       
                         List<MethodInfo> methodInfo = typeSelected.GetMethods().ToList();
                         
+
+
                         List<string> methodNames = methodInfo.Select(x => x.Name).ToList();
                         methodInt = methodNames.IndexOf(def[i].MethodName);
                         if (methodInt < 0) methodInt = 0;
 
                         methodInt =
-                            EditorGUILayout.Popup(new GUIContent("Methods"), methodInt, methodNames.ToArray());
+                            EditorGUILayout.Popup(new GUIContent("Method"), methodInt, methodNames.ToArray());
                         
-                        def[i].MethodName = methodNames[methodInt];
-                    }
-                    #endregion
 
+                        def[i].MethodName = methodNames[methodInt];
+                        def[i].MethodInfo = new SerializableMethodInfo(methodInfo[methodInt]);
+
+                        GUILayout.EndHorizontal();
+                        EditorGUIUtility.labelWidth = defaultLabelWidth;
+                        
+                        ParameterInfo[] paramsInfo = methodInfo[methodInt].GetParameters();
+
+                        if (def[i].Parameters == null) { def[i].Parameters = new List<ParamsContainer> { }; };
+                       
+                        if (def[i].Parameters.Count == 0)
+                        {
+                            ParamsContainer parm = 
+                                new ParamsContainer(methodInfo[methodInt].Name, typeof(string));
+                            def[i].Parameters.Add(parm);
+
+                            foreach (ParameterInfo info in paramsInfo)
+                            {
+                                ParamsContainer parm1 = new ParamsContainer(info.GetType().GetDefault(), info.GetType());
+                                def[i].Parameters.Add(parm1);
+                            }
+                        }
+                        else
+                        {
+                            if (def[i].Parameters[0].String1 != methodInfo[methodInt].Name)
+                            {
+                                def[i].Parameters.Clear();
+                                ParamsContainer parm = 
+                                    new ParamsContainer(methodInfo[methodInt].Name, typeof(string));
+                                def[i].Parameters.Add(parm);
+                                foreach (ParameterInfo info in paramsInfo)
+                                {
+                                    ParamsContainer parm1 = new ParamsContainer(info.GetType().GetDefault(), info.GetType());
+                                    def[i].Parameters.Add(parm1);
+                                }
+                            }
+                            else
+                            {
+                                
+                                for (int i1 = 0; i1 < paramsInfo.Length; i1++)
+                                {                               
+                                    ParameterInfo info = paramsInfo[i1];
+                                   ParamsContainer parm1 = 
+                                        new ParamsContainer(
+                                            CreateGenericField(info, def[i].Parameters[i1 + 1]), 
+                                        info.ParameterType);
+                                    def[i].Parameters[i1 + 1] = parm1;
+                                }
+                               
+                            }
+                        }
+                    }
+                    #endregion                  
+                    
                     #region Show Text Toggle
                     def[i].hidden = EditorGUILayout.Toggle(def[i].hidden);
                     if (def[i].hidden)
@@ -154,11 +216,12 @@ namespace DialogueSystem.Editor
 
                     GUILayout.EndHorizontal();
                     #endregion
+                   
 
-
-                    //def[i] = new EventDefinition("", newId, index, component, method);
+                    //def[i] = new EventDefinition("", newId, index, component, method); 
                 }
-            }
+                   
+                }
             else
             {
                 GUILayout.Space(10);
@@ -168,6 +231,70 @@ namespace DialogueSystem.Editor
             EditorGUI.indentLevel = 1;
             
             serializedObject.ApplyModifiedProperties();
+        }
+
+        private object CreateGenericField(ParameterInfo info, ParamsContainer value)
+        {
+
+           
+            
+            if (System.Type.GetType(value.QualifiedName).IsSubclassOf(typeof(UnityEngine.Object)))
+            {
+                GUILayout.Label("Object not implemented");
+            }
+            else if(value.Type == typeof(int).ToString())
+            {
+                try
+                {
+                    return EditorGUILayout.IntField(new GUIContent(info.Name), value.Int1);
+                }
+                catch
+                {
+                    return 0;
+                }
+            }
+            else if (value.Type == typeof(string).ToString())
+            {
+                try
+                {                    
+                    return EditorGUILayout.TextField(new GUIContent(info.Name), value.String1);
+                }
+                catch
+                {
+                    return "";
+                }
+            }
+            else if (value.Type == typeof(bool).ToString())
+            {
+                try
+                {
+                    return EditorGUILayout.Toggle(new GUIContent(info.Name), value.Bool1);
+                }
+                catch
+                {
+                    return false;
+                }
+                //GUILayout.Label("String not implemented");
+            }
+            else if (System.Type.GetType(value.QualifiedName).IsEnum)
+            {
+                string enumName = System.Type.GetType(value.QualifiedName).Name;
+                List<string> enumValues = new List<string> { };
+                Array what = System.Type.GetType(value.QualifiedName).GetEnumValues();
+               
+                for (int i = 0; i < what.Length; i++)
+                {
+                    enumValues.Add(what.GetValue(i).ToString());
+                }
+                return EditorGUILayout.Popup(new GUIContent(info.Name), value.Enum1,enumValues.ToArray());
+                //System.Type.GetType(value.QualifiedName).GetEnumValues();
+
+                GUILayout.Label("Enum not implemented");
+                return default;
+            }
+
+            GUILayout.Label("Type not suported");
+            return default;
         }
 
         private void DrawTriggerLabel(int intValue, string text)
@@ -202,7 +329,6 @@ namespace DialogueSystem.Editor
             GUILayout.EndHorizontal();
             GUILayout.EndVertical();
         }
-     
         
         private void RemoveEventFromManager(int index)
         {

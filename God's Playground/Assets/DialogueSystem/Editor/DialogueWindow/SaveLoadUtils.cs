@@ -12,7 +12,15 @@ namespace DialogueSystem.Editor
     /// Class responsible for Saving and Loading a DialogueScript
     /// </summary>
     public class SaveLoadUtils
-    {       
+    {
+
+        private string savingPath;
+
+        public SaveLoadUtils(string savingPath)
+        {
+            this.savingPath = savingPath;
+        }
+
         /// <summary>
         /// Method responsible for saving the Dialogue
         /// </summary>
@@ -24,12 +32,25 @@ namespace DialogueSystem.Editor
                        
             if (dialogueName == null)
                 dialogueName = "InitialName";
-
-            string path =
-                EditorUtility.SaveFilePanelInProject("Save Your Dialogue",
-                dialogueName + ".asset", "asset",
-                "Please select file name to save dialogue to:",
-                "Assets/DialogueSystem/Dialogues");
+            
+            string path = "";
+            
+            if (savingPath == "")
+            {               
+                path =
+                    EditorUtility.SaveFilePanelInProject("Save Your Dialogue",
+                    dialogueName + ".asset", "asset",
+                    "Please select file name to save dialogue to:",
+                    "Assets/DialogueSystem/Dialogues");
+            }
+            else 
+            {
+                path = 
+                    EditorUtility.SaveFilePanelInProject("Save Your Dialogue",
+                    dialogueName + ".asset", "asset",
+                    "Please select file name to save dialogue to:",
+                    savingPath);
+            }
 
             if (string.IsNullOrEmpty(path)) return null;
 

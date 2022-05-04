@@ -80,6 +80,7 @@ public class Enemy_AI : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (player == null) return;
         Action actions = stateMachine.Update();
         actions?.Invoke();
     }
@@ -112,10 +113,12 @@ public class Enemy_AI : MonoBehaviour
 
     private void ChasingPlayer()
     {
+        agent.transform.LookAt(player.gameObject.transform.position);
         agent.SetDestination(player.gameObject.transform.position);
     }
     private void ReturningToSpawn()
     {
+        agent.transform.LookAt(PatrolZone.gameObject.transform.position);
         agent.SetDestination(PatrolZone.gameObject.transform.position);
     }
 

@@ -14,5 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   randomUnusedString: I dont understand2
   data:
-  - entityName: Villager
+  - entityName: Wierd Kid
+    entitySprite: {fileID: 21300000, guid: f89ce242627bf964fbd8780c4b027ef5, type: 3}
+  - entityName: Head Chef
     entitySprite: {fileID: 0}
+  - entityName: Chef's Belly
+    entitySprite: {fileID: 0}
+  - entityName: Chef's Feet
+    entitySprite: {fileID: 0}
+  - entityName: John
+    entitySprite: {fileID: 0}
+  - entityName: RobotKid
+    entitySprite: {fileID: 21300000, guid: b7eb69c753c3468418c0b8395d288f74, type: 3}
+  - entityName: Demon Kid
+    entitySprite: {fileID: 21300000, guid: a39bfe935b806b24787f23f0ee4626ce, type: 3}
+  - entityName: Deryl
+    entitySprite: {fileID: 21300000, guid: a25517c9a4469c64286546b713c18bbb, type: 3}
