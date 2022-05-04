@@ -10,6 +10,7 @@ public class Enemy_AI : MonoBehaviour
 {
     [SerializeField] private float minDistanceToPlayer = 10f;
     [SerializeField] private Spawn_Area_script patrolZone;
+
     private Player_Control player;
     private StateMachine stateMachine;
     private NavMeshAgent agent;
@@ -17,6 +18,8 @@ public class Enemy_AI : MonoBehaviour
 
     
     private BattleTransitioner transitioner;
+
+    public Spawn_Area_script PatrolZone { get => patrolZone; set => patrolZone = value; }
 
     // Start is called before the first frame update
     void Start()
@@ -101,7 +104,7 @@ public class Enemy_AI : MonoBehaviour
                 gameObject.transform.localEulerAngles.y(rotationValue);
             Vector3 direction = gameObject.transform.forward.normalized;
             dest = transform.position + direction * rangeValue;
-        }while(!patrolZone.InArea(dest));
+        }while(!PatrolZone.InArea(dest));
         
 
         agent.SetDestination(dest);
@@ -113,7 +116,7 @@ public class Enemy_AI : MonoBehaviour
     }
     private void ReturningToSpawn()
     {
-        agent.SetDestination(patrolZone.gameObject.transform.position);
+        agent.SetDestination(PatrolZone.gameObject.transform.position);
     }
 
     private void OnDrawGizmos()

@@ -51,7 +51,7 @@ public class Player_Control : MonoBehaviour
 
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         float curSpeed = _speed * Input.GetAxis("Vertical");
-        if(curSpeed != 0) 
+        if(curSpeed != 0 && _camera.IsLocked) 
         {
             transform.LookAt(_camera.cam.transform.position.y(transform.position.y));
             transform.eulerAngles += new Vector3(0, 180, 0);

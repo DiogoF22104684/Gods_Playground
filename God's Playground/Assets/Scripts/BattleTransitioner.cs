@@ -5,6 +5,10 @@ using UnityEngine.Playables;
 
 public class BattleTransitioner : MonoBehaviour
 {
+
+    private int id;
+    
+
     [SerializeField]
     private BattleConfigData battleConfig;
     
@@ -21,7 +25,10 @@ public class BattleTransitioner : MonoBehaviour
 
     [SerializeField]
     private ScriptableBool midCutscene;
-    
+
+    public int Id { get => id; set => id = value; }
+    public PlayableDirector Transition { get => transition; set => transition = value; }
+
 
     // Start is called before the first frame update
     void Start()
@@ -44,9 +51,9 @@ public class BattleTransitioner : MonoBehaviour
     public void EnterBattle()
     {
         //Change Battle Config
-        battleConfig.SetupConfig(Vector3.zero,enemies);
+        battleConfig.SetupConfig(transform.position,enemies, this);
         //Enter Battle
         midCutscene.Value = true;
-        transition.Play();
+        Transition.Play();
     }
 }

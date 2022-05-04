@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 8061781236341004610}
   - component: {fileID: 8061781236341004611}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: Enemy_Overworld_Viking
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -97,7 +97,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e4fe55d22485694409b6a0115baf41c3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -256,6 +256,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SK_Vikings_Warrior_01
       objectReference: {fileID: 0}
+    - target: {fileID: 8901985415685994950, guid: f512048db64c373499fc73a8f30ed3e4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e4fe55d22485694409b6a0115baf41c3, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f512048db64c373499fc73a8f30ed3e4, type: 3}
 --- !u!4 &7524259538637701424 stripped
