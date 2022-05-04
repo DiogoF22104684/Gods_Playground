@@ -47,8 +47,6 @@ public class Player_Control : MonoBehaviour
 
     private void Move()
     {
-        
-
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         float curSpeed = _speed * Input.GetAxis("Vertical");
         if(curSpeed != 0) 
