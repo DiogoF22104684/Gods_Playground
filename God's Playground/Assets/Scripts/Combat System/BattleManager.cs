@@ -115,7 +115,7 @@ public class BattleManager : MonoBehaviour
         List<BattleEntity> turnEnt = new List<BattleEntity>(enemies);
         if (!turnEnt.Any(x => !x.IsDead))
         {
-            Debug.Log("Ws all around");
+            //Debug.Log("Ws all around");
             dubsMenu.SetActive(true);
         }
         turnEnt.Add(playerData);
@@ -159,7 +159,7 @@ public class BattleManager : MonoBehaviour
         if (playerDead) return;
         PrepareTurnOrder();
         turnnumb++;
-        print(inTurnEntity);
+        //print(inTurnEntity);
         inTurnEntity.properEntity.StartTurn();
     }
 

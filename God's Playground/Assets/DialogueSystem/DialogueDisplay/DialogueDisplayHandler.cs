@@ -96,13 +96,17 @@ public class DialogueDisplayHandler : MonoBehaviour
     public System.Action<DialogueScript> onStartDialogue;
     public System.Action<NodeData> onStartLine;
     public System.Action onEndDialogue;
+    public System.Action onEndLine;
 
     private WaitForSeconds endDelay = new WaitForSeconds(0.01f);
 
     private int chosenOp;
 
+    private EntityData presetData;
+
     private void Start()
     {
+        presetData = Resources.Load<EntityData>("EntityData");
         choices = new List<ChoiceSelector> { };
         content = transform.GetChild(0).gameObject;
         if (playOnLoad)
@@ -217,6 +221,8 @@ public class DialogueDisplayHandler : MonoBehaviour
     {
         choices.Clear();
         
+        
+
         foreach (Transform g in buttonLayout.transform)
         {
             Destroy(g.gameObject);
@@ -224,6 +230,18 @@ public class DialogueDisplayHandler : MonoBehaviour
 
         int choiceNumb = dialogueLine.OutPorts.Count;
         if (choiceNumb == 0) return;
+
+        //Dumb and Hardcoded
+        if(choiceNumb > 2)
+        {
+            buttonLayout.transform.localPosition = 
+                new Vector3(buttonLayout.transform.localPosition.x, -60);
+        }
+        else
+        {
+            buttonLayout.transform.localPosition =
+                new Vector3(buttonLayout.transform.localPosition.x, -133);
+        }
 
         for (int i = 0; i < choiceNumb; i++)
         {
@@ -264,6 +282,8 @@ public class DialogueDisplayHandler : MonoBehaviour
 
         dialogueText = dialogueLine.Dialogue;
 
+       
+
         InstatiateChoices();
         DisplayLine();
     }
@@ -289,6 +309,38 @@ public class DialogueDisplayHandler : MonoBehaviour
     /// </summary>
     private void DisplayLine()
     {
+
+       
+        //DUMB AND HARCODED
+        if (presetData[dialogueLine.PresetName].EntityName == "Default")
+        {
+            dialogueDisplayTarget.gameObject.transform.localPosition =
+                new Vector3(
+                    0,
+                    dialogueDisplayTarget.gameObject.transform.localPosition.y,
+                    dialogueDisplayTarget.gameObject.transform.localPosition.z);
+            RectTransform rectT = dialogueDisplayTarget.gameObject.GetComponent<RectTransform>();
+
+            rectT.sizeDelta =
+                new Vector2(
+                    5910.446f,
+                    rectT.sizeDelta.y);
+        }
+        else
+        {
+            dialogueDisplayTarget.gameObject.transform.localPosition =
+               new Vector3(
+                   -192.3f,
+                   dialogueDisplayTarget.gameObject.transform.localPosition.y,
+                   dialogueDisplayTarget.gameObject.transform.localPosition.z);
+            RectTransform rectT = dialogueDisplayTarget.gameObject.GetComponent<RectTransform>();
+
+            rectT.sizeDelta =
+                new Vector2(
+                    4628.585f,
+                    rectT.sizeDelta.y);
+        }
+
         onStartLine?.Invoke(dialogueLine);
         StopCoroutine("TypeWriterEffect");
         StartCoroutine("TypeWriterEffect");
@@ -322,7 +374,29 @@ public class DialogueDisplayHandler : MonoBehaviour
                         MonoBehaviour obj =
                             currentContainer.gameObject.GetComponent(def.ComponentName) as MonoBehaviour;
 
-                        obj.Invoke(def.MethodName, 0);
+
+                        if (def.Parameters != null)
+                        {
+                            if (def.Parameters.Count != 0)
+                            {
+
+                                List<object> parms = def.Parameters.Select(x => x.GetValue()).ToList();
+                                parms.RemoveAt(0);
+                                
+                                def.MethodInfo.methodInfo.Invoke(obj, parms.ToArray());
+                            }
+                            else
+                            {
+                                def.MethodInfo.methodInfo.Invoke(obj, null);
+                            }
+                        }
+                        else
+                        {
+                            def.MethodInfo.methodInfo.Invoke(obj, null);
+                        }
+                        //obj.Invoke(def.MethodName, 0);                                                 
+                        
+                       
                     }
                 }
             }
@@ -360,9 +434,9 @@ public class DialogueDisplayHandler : MonoBehaviour
             dialogueText = dialogueText.Substring(1);
         }
         ended = true;
+        onEndLine?.Invoke();
         buttonLayout.SetActive(true);
     }
-
 
     IEnumerator DelayNextChoice()
     {
@@ -374,7 +448,8 @@ public class DialogueDisplayHandler : MonoBehaviour
     {
         yield return endDelay;
         onEndDialogue?.Invoke();
-        content.GetComponent<Animator>().Play("DialogueExit");
+        //content.GetComponent<Animator>().Play("DialogueExit");
+        content.SetActive(false);
         inDialogue = false;
     }
 }

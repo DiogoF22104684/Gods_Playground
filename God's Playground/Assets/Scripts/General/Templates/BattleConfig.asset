@@ -14,5 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerTemplate: {fileID: 11400000, guid: 7f25d388dfc82504caad2ea8bc894dfe, type: 2}
   enemies:
-  - {fileID: 11400000, guid: a5bdcb35f1a97e64f9d709a2eaa957cb, type: 2}
-  - {fileID: 11400000, guid: a5bdcb35f1a97e64f9d709a2eaa957cb, type: 2}
+  - {fileID: 11400000, guid: 3163d925f242c6f47bd6aea6313437a6, type: 2}
+  - {fileID: 11400000, guid: 3163d925f242c6f47bd6aea6313437a6, type: 2}
+  playerPos: {x: 29.360504, y: 1.3433334, z: -13.658955}
+  enemyInScene: 0000000001000000
+  enemyPos:
+  - {x: 21.47415, y: 1.3433334, z: -12.35407}
+  - {x: 36.84, y: 1.3433334, z: -12.11}
+  currentEnemy: -1

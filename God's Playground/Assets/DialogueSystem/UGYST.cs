@@ -80,7 +80,14 @@ public static class UGYST
             }
         }
     }
-
+    public static object GetDefault(this System.Type type)
+    {
+        if (type.IsValueType)
+        {
+            return System.Activator.CreateInstance(type);
+        }
+        return null;
+    }
     public static string print<T>(this IEnumerable<T> enumerable)
     {
         string returnstring = "";

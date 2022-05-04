@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 namespace DialogueSystem 
@@ -10,7 +11,9 @@ namespace DialogueSystem
         [SerializeField]
         private string id;
         public string Id => id;
+        
 
+        public int startScriptNum;
 
         [SerializeField]
         List<DialogueScript> scripts;
@@ -18,6 +21,7 @@ namespace DialogueSystem
  
         [SerializeField]
         List<EventDefinition> events;
+       
         public List<EventDefinition> Events => events;
 
 
@@ -25,7 +29,6 @@ namespace DialogueSystem
 
     }
 
-    //REMIND SETDIRTY IS A THING PLEASE DEAR GOD
     [System.Serializable]
     public class EventDefinition
     {
@@ -39,15 +42,22 @@ namespace DialogueSystem
         string componentName;
         [SerializeField]
         string methodName;
+        [SerializeField]
+        SerializableMethodInfo methodInfo;
+        [SerializeField]
+        List<ParamsContainer> parameters;
 
         [HideInInspector]
         public bool hidden;
 
+     
         public DialogueScript Script { get => script; set => script = value; }
         public string NodeId { get => nodeId; set => nodeId = value; }
         public int LetterIndex { get => letterIndex; set => letterIndex = value; }
         public string ComponentName { get => componentName; set => componentName = value; }
         public string MethodName { get => methodName; set => methodName = value; }
+        public List<ParamsContainer> Parameters { get => parameters; set => parameters = value; }
+        public SerializableMethodInfo MethodInfo { get => methodInfo; set => methodInfo = value; }
 
         public EventDefinition(DialogueScript script, string nodeId, int letterIndex, string componentName, string methodName)
         {

@@ -10,6 +10,7 @@ public class Enemy_AI : MonoBehaviour
 {
     [SerializeField] private float minDistanceToPlayer = 10f;
     [SerializeField] private Spawn_Area_script patrolZone;
+
     private Player_Control player;
     private StateMachine stateMachine;
     private NavMeshAgent agent;
@@ -17,6 +18,8 @@ public class Enemy_AI : MonoBehaviour
 
     
     private BattleTransitioner transitioner;
+
+    public Spawn_Area_script PatrolZone { get => patrolZone; set => patrolZone = value; }
 
     // Start is called before the first frame update
     void Start()
@@ -28,46 +31,46 @@ public class Enemy_AI : MonoBehaviour
         
     // ---------------------State Machine States---------------------
         State idleState = new State("Idle",
-        () => Debug.Log("Entering idle state"),
+        null,
         IdleBehaviour,
-        () => Debug.Log("Leaving idle state"));
+        null);
 
         State chaseState = new State("Chasing",
-        () => Debug.Log("Entering chasing state"),
+        null,
         ChasingPlayer,
-        () => Debug.Log("Entering chasing state"));
+        null);
 
         State returningState = new State("Returning",
-        () => Debug.Log("Entering returning state"),
+        null,
         ReturningToSpawn,
-        () => Debug.Log("Entering returning state"));
+        null);
     
     // ---------------------State Machine transitions---------------------
         idleState.AddTransition(
             new Transition (
                 () => (player.gameObject.transform.position - 
                         transform.position).magnitude < minDistanceToPlayer,
-                () => Debug.Log("I'm coming for you"),
+                null,
                 chaseState));
         
         chaseState.AddTransition(
             new Transition (
                 () => (player.gameObject.transform.position - 
                         transform.position).magnitude > minDistanceToPlayer,
-                () => Debug.Log("I'm going back"),
+                null,
                 returningState));
         
         returningState.AddTransition(
             new Transition (
                 () => (player.gameObject.transform.position - 
                         transform.position).magnitude < minDistanceToPlayer,
-                () => Debug.Log("You dare to make a fool of me!"),
+                null,
                 chaseState));
 
         returningState.AddTransition(
             new Transition (
                 () => agent.remainingDistance <= 0.1,
-                () => Debug.Log("That person better be gone"),
+                null,
                 idleState));
 
         stateMachine = new StateMachine(idleState);
@@ -77,6 +80,7 @@ public class Enemy_AI : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (player == null) return;
         Action actions = stateMachine.Update();
         actions?.Invoke();
     }
@@ -101,7 +105,7 @@ public class Enemy_AI : MonoBehaviour
                 gameObject.transform.localEulerAngles.y(rotationValue);
             Vector3 direction = gameObject.transform.forward.normalized;
             dest = transform.position + direction * rangeValue;
-        }while(!patrolZone.InArea(dest));
+        }while(!PatrolZone.InArea(dest));
         
 
         agent.SetDestination(dest);
@@ -109,11 +113,13 @@ public class Enemy_AI : MonoBehaviour
 
     private void ChasingPlayer()
     {
+        agent.transform.LookAt(player.gameObject.transform.position);
         agent.SetDestination(player.gameObject.transform.position);
     }
     private void ReturningToSpawn()
     {
-        agent.SetDestination(patrolZone.gameObject.transform.position);
+        agent.transform.LookAt(PatrolZone.gameObject.transform.position);
+        agent.SetDestination(PatrolZone.gameObject.transform.position);
     }
 
     private void OnDrawGizmos()

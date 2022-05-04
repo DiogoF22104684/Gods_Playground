@@ -31,20 +31,16 @@ namespace DialogueSystem.Editor
         /// </summary>
         public bool EntryPoint { get; set; }
        
-        private SavingWaitingList saveWatingList;
-        public SavingWaitingList SaveWatingList { get => saveWatingList; set => saveWatingList = value; }
-
         private DialogueContainer container;
         public DialogueContainer Container => container;
 
         private DialogueScript script;
         public DialogueScript Script => script;
 
-        public DialogueNode(SavingWaitingList savingWaitingList, NodeData nd = null, 
+        public DialogueNode(NodeData nd = null, 
             DialogueContainer container = null, DialogueScript script = null)
         {
             this.container = container;
-            SaveWatingList = savingWaitingList;
 
             GUID = nd == null ? Guid.NewGuid().ToString() : nd.GUID;
             title = "Dialogue Node";

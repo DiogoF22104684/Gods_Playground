@@ -3,29 +3,53 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DialogueContainer : Interactable
+public class DialogueContainer : MonoBehaviour
 {
 
-    [SerializeField]
+    [SerializeField][HideInInspector]
     private DialogueController controller;
     public DialogueController Controller => controller;
 
-    private int dialogueToDisplay;
+    [SerializeField][HideInInspector]
+    private DialogueScript script;
+    public DialogueScript Script => script;
 
-    public override void Interact()
+    [SerializeField][HideInInspector]
+    private bool useSoloScript;
+    public bool UseSoloScript => useSoloScript;
+    
+    private int dialogueToDisplay => controller.startScriptNum;
+
+    public void Interact()
     {
+        //This is bad
         GameObject DialogueSystem = GameObject.Find("DDisplay");
-        DialogueSystem.GetComponent<DialogueDisplayHandler>().StartDialogue(controller.Scripts[dialogueToDisplay], this);
+        if (UseSoloScript == false)
+            DialogueSystem.GetComponent<DialogueDisplayHandler>().StartDialogue(controller.Scripts[dialogueToDisplay], this);
+        if (UseSoloScript == true)
+            DialogueSystem.GetComponent<DialogueDisplayHandler>().StartDialogue(Script, this);
     }
 
-    public void testeContainer()
+    public DialogueScript GetDialogueToDisplay()
     {
-        Debug.Log("FUCK");
+        if (UseSoloScript == false)
+            return controller.Scripts[dialogueToDisplay];
+        else
+        {
+            return Script;
+        }
     }
 
-    public void ChangeDialogue(int dialogueId)
+    public void ChangeDialogue(int dialogueId, bool next)
     {
-        dialogueToDisplay = dialogueId;
+        controller.startScriptNum = dialogueId;
+        if (next)
+            Interact();
+    }
+
+    public void ChangeDialogueAndNext(int dialogueId)
+    {
+        controller.startScriptNum = dialogueId;
         Interact();
     }
 
