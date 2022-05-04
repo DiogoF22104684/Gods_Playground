@@ -24,6 +24,8 @@ public class EntityInicializer : MonoBehaviour
     private List<BattleTransitioner> bts =>
             currentEnemies.Select(x => x.GetComponent<BattleTransitioner>()).ToList();
 
+    public List<GameObject> CurrentEnemies { get => currentEnemies; set => currentEnemies = value; }
+
 
     // Start is called before the first frame update
     void Start()

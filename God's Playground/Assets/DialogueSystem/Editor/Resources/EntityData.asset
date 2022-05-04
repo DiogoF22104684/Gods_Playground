@@ -14,11 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   randomUnusedString: I dont understand2
   data:
-  - entityName: Wierd Kid
-    entitySprite: {fileID: 0}
-  - entityName: Regular Chef
-    entitySprite: {fileID: 0}
-  - entityName: Chef's Belly
-    entitySprite: {fileID: 0}
-  - entityName: Chef's Feet
+  - entityName: Villager
     entitySprite: {fileID: 0}
