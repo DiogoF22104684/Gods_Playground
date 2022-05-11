@@ -2,12 +2,14 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
-public class Player_Control : MonoBehaviour
+public class Player_Control : Agent
 {
 
     private CharacterController _controller;
     private Camera_Control _camera;
-    [SerializeField]
+    private Rigidbody rigi;
+
+
     private float _speed = 5f;
     private float _strafeSpeed = 5f;
     private float _rotateSpeed = 1f;
@@ -15,9 +17,13 @@ public class Player_Control : MonoBehaviour
     [SerializeField]
     private List<ScriptableBool> stopMovementBool;
 
+
+
     // Start is called before the first frame update
     void Start()
     {
+        rigi = GetComponent<Rigidbody>();
+        mover = new Mover(gameObject,5,5,1);
         _controller = GetComponent<CharacterController>();
         _camera = GetComponent<Camera_Control>();
     }
@@ -30,8 +36,18 @@ public class Player_Control : MonoBehaviour
             _controller.Move(Vector3.zero);
             return;
         }
-        Move();
-        Strafe();
+
+        //_controller.SimpleMove(mover.Translate());
+        //rigi.velocity = Vector3.zero;
+        //rigi.MovePosition(transform.position + mover.Translate() * Time.deltaTime);
+        //Move();
+        //Strafe();
+
+        if (Input.GetAxis("Vertical") != 0 && _camera.IsLocked)
+        {
+            transform.LookAt(_camera.cam.transform.position.y(transform.position.y));
+            transform.eulerAngles += new Vector3(0, 180, 0);
+        }
     }
 
     private void Move()

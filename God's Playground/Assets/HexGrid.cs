@@ -15,7 +15,8 @@ public class HexGrid : MonoBehaviour
     [ReadOnly][SerializeField]
     private float height;
 
-    const int defaultMax = 100;
+    [SerializeField]
+    int defaultMax = 20;
 
     private enum HexType
     {
@@ -26,7 +27,7 @@ public class HexGrid : MonoBehaviour
     [SerializeField] [HideInInspector]
     private HexType type;
 
-    [SerializeField]
+    [SerializeField] [HideInInspector]
     private bool inSnap;
     
 
