@@ -2,15 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System.IO;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
-
-public class WorldMap : MonoBehaviour
+public class WorldMap : MonoBehaviour, ISavable
 {
     [SerializeField]
-    List<GameObject> map;
-    
+    private int mapId;
+    public int ID { get; set; }
 
-    
+    [SerializeField] [ReadOnly]
+    List<GameObject> map;
+
+    [SerializeField]
+    List<GameObject> entities;
+
     [Header("Setup")] [SerializeField]
     float walkRadius;
     [SerializeField]
@@ -23,21 +30,15 @@ public class WorldMap : MonoBehaviour
     List<GameObject> inView;
     private Rect rect;
 
-    //[SerializeField]
-    //bool constrain;
-    //[Header("Movement Values")]
-    //[SerializeField]
-    //[ReadOnly]
-    //private Vector3 previousPos;
-    //private Vector3 currentPos;
-
     [Header("Prefab Only")]
     [SerializeField] [OnPrefab] GameObject mapPlacer;
+    [SerializeField] [OnPrefab] GameObject entityPlacer;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        LoadData(File.ReadAllText("Assets/data.json"));
         SetupViewabilityList();
     }
 
@@ -47,30 +48,8 @@ public class WorldMap : MonoBehaviour
         SetupViewabilityList();       
     }
 
-    private void FixedUpdate()
-    {
-        //if (target == null) return;
-      
-        //if (constrain)
-        //{
-        //    previousPos = currentPos;
-        //    currentPos = target.transform.position;
-
-        //    if (previousPos != Vector3.zero)
-        //    {
-        //        Vector3 dir = currentPos - previousPos;
-
-        //        //mapPlacer.transform.position -= dir.y(0);
-        //        //ground.transform.position -= dir.y(0);
-
-        //        target.transform.position = 
-        //            previousPos.y(target.transform.position.y);
-        //        currentPos = previousPos;
-        //    }
-        //}
-    }
-
-
+  
+    //Can be more efficient
     private void SetupViewabilityList()
     {
         inView = new List<GameObject>();
@@ -80,10 +59,10 @@ public class WorldMap : MonoBehaviour
         rect = new Rect(new Vector2(center.x - extend, center.z - extend), 
             new Vector2(viewRadius,viewRadius));
 
-       
 
         foreach (GameObject tile in map)
         {
+            if (tile == null) continue;
             if (rect.Contains(
                 new Vector2(tile.transform.position.x, tile.transform.position.z)))
             {
@@ -95,7 +74,29 @@ public class WorldMap : MonoBehaviour
                 tile.SetActive(false);
             }
         }
+
+        foreach (GameObject entity in entities)
+        {
+            if (entity == null) continue;
+            
+            //VERY BAD
+            if (rect.Contains(
+                new Vector2(entity.transform.position.x, entity.transform.position.z)))
+            {
+                inView.Add(entity);
+                if(entity.GetComponent<EnemyAgent>()?.IsAlive ?? false)
+                {
+                    entity.SetActive(true);
+                }               
+            }
+            else
+            {
+                entity.SetActive(false);
+            }
+        }
     }
+
+
 
     public void AddTiles()
     {
@@ -106,17 +107,74 @@ public class WorldMap : MonoBehaviour
         }
     }
 
-    
+    public void AddEntities()
+    {
+        entities.Clear();
+        foreach (Transform entity in entityPlacer.transform)
+        {
+            entities.Add(entity.gameObject);
+        }
+    }
+
+
+    public string GetData()
+    {
+        string returnString = "{\"enemies\":{";
+
+        int iterator = 0;
+        for (int i = 0; i < entities.Count; i++)
+        {
+            GameObject g = entities[i];
+            ISavable save = g.GetComponent<ISavable>();
+            if (save != null)
+            {
+                save.ID = iterator;
+                returnString += "\"Entity_" + iterator + "\":" + save.GetData() + ",";
+                iterator++;
+            }
+        }
+        returnString = returnString.Substring(0, returnString.Length - 1);
+        returnString += "}}";
+
+        return returnString;
+    }
+
+    public void LoadData(string data)
+    {
+
+        dynamic a = JObject.Parse(data);
+       
+        #region Load Enemies
+
+        string enemies = a.enemies.ToString();
+
+        Dictionary<string, object> enemyDataDic = 
+            JsonConvert.DeserializeObject<Dictionary<string, object>>(enemies);
+
+        for (int i = 0; i < entities.Count; i++)
+        {
+            GameObject g = entities[i];
+            ISavable save = g.GetComponent<ISavable>();
+            if (save != null)
+            {
+                save.LoadData(enemyDataDic["Entity_" + save.ID].ToString());
+            }
+        }
+
+        #endregion
+    }
+
+
     private void OnDrawGizmos()
     {
-        Vector3 center = target != null ? target.transform.position: transform.position;
+        Vector3 center = target != null ? target.transform.position : transform.position;
 
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(center, new Vector3(viewRadius, 0, viewRadius));
 
         Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(transform.position,new Vector3(walkRadius,0,walkRadius));
+        Gizmos.DrawWireCube(transform.position, new Vector3(walkRadius, 0, walkRadius));
 
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireCube(transform.position, new Vector3(boardRadius, 0, boardRadius));
@@ -124,5 +182,6 @@ public class WorldMap : MonoBehaviour
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(new Vector3(rect.center.x, 0, rect.center.y), new Vector3(rect.size.x, 0, rect.size.y));
     }
+
 }
 

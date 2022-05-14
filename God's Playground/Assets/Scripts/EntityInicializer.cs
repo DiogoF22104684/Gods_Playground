@@ -38,7 +38,6 @@ public class EntityInicializer : MonoBehaviour
 
     public void SaveEnemyData(BattleTransitioner bt)
     {
-        battleData.enemyInScene = bts.Select(x => x.Id).ToList();
         battleData.enemyPos = bts.Select(x => x.transform.position).ToList();
         battleData.currentEnemy = currentEnemies.IndexOf(bt.gameObject);
     }
@@ -53,9 +52,8 @@ public class EntityInicializer : MonoBehaviour
             int i = (int)battleData.enemyInScene[i1];
             GameObject enemy = Instantiate(enemyPREFABS[i], battleData.enemyPos[i1], Quaternion.identity);
             BattleTransitioner bt = enemy.GetComponent<BattleTransitioner>();
-            bt.Id = i;
             bt.Transition = transition;
-            enemy.GetComponent<Enemy_AI>().PatrolZone = spawnArea;
+            enemy.GetComponent<EnemyAgent>().PatrolZone = spawnArea;
             currentEnemies.Add(enemy);
         }
     }

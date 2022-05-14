@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using System.IO;
 
 [CustomEditor(typeof(WorldMap))]
 public class WorldMapEditor : Editor
@@ -24,16 +25,25 @@ public class WorldMapEditor : Editor
         if(GUILayout.Button("Setup Map"))
         {
             map.AddTiles();
-            if (inSetup) 
-            {
-                
-            }
-            else
-            {
-
-            }
-
-            //inSetup = !inSetup;
+            map.AddEntities();
         }
+
+        if (GUILayout.Button("Save Data"))
+        {
+            string s = map.GetData();
+            writeFile(s);
+        }
+
+
+        if (GUILayout.Button("Load Data"))
+        {
+            map.LoadData(File.ReadAllText("Assets/data.json"));           
+        }
+    }
+
+    public void writeFile(string json)
+    {
+        // Write JSON to file.
+        File.WriteAllText("Assets/data.json", json);
     }
 }

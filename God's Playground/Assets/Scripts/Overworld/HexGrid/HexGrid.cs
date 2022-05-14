@@ -2,10 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEditor;
 
 public class HexGrid : MonoBehaviour
 {
-    Vector3[,] grid;   
+    HexTile[,] grid;
+    public HexTile[,] Grid { get => grid; set => grid = value; }
+
+
     [SerializeField][HideInInspector]
     private float size;   
     
@@ -29,20 +33,19 @@ public class HexGrid : MonoBehaviour
 
     [SerializeField] [HideInInspector]
     private bool inSnap;
+
     
+
+
+
 
     // Start is called before the first frame update
     void Start()
     {
-        grid = new Vector3[defaultMax, defaultMax];    
+        grid = new HexTile[defaultMax, defaultMax];    
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+ 
     public void ChangeSize()
     {
         if (type == HexType.Pointy)
@@ -64,7 +67,7 @@ public class HexGrid : MonoBehaviour
         Vector3 topLeft = 
             transform.position - new Vector3(size * defaultMax, 0, size * defaultMax);
         
-        grid = new Vector3[defaultMax, defaultMax];
+        grid = new HexTile[defaultMax, defaultMax];
 
 
 
@@ -77,7 +80,7 @@ public class HexGrid : MonoBehaviour
                 for (int j = 0; j < defaultMax; j++)
                 {
                     DrawHex(currPos);
-                    grid[i, j] = currPos;
+                    grid[i, j] = new HexTile(currPos, null);
                     currPos += new Vector3(width, 0, 0);
                 }
 
@@ -97,7 +100,7 @@ public class HexGrid : MonoBehaviour
 
                 for (int j = 0; j < defaultMax; j++)
                 {
-                    grid[i, j] = currPos;
+                    grid[i, j] = new HexTile(currPos, null);
                     DrawHex(currPos);
                     currPos += new Vector3(0, 0, height);
                 }
@@ -113,7 +116,9 @@ public class HexGrid : MonoBehaviour
 
         foreach (Transform t in transform)
         {
-            Vector3 tilePos = ClosestTileAt(t.position);
+            HexTile hex = ClosestTileAt(t.position);
+            Vector3 tilePos = hex.Pos;
+            hex.Tile = t.gameObject;
             t.gameObject.transform.position = tilePos;
         }
     
@@ -148,8 +153,19 @@ public class HexGrid : MonoBehaviour
                                 center.z + size * Mathf.Sin(angle_rad));
     }
 
-    private Vector3 ClosestTileAt(Vector3 pos)
+    public HexTile ClosestTileAt(Vector3 pos)
     {
-        return grid.Cast<Vector3>().OrderBy(x => Vector3.Distance(pos, x)).First();
+        return grid.Cast<HexTile>().Where(x => x.Tile == null)
+            .OrderBy(x => Vector3.Distance(pos, x.Pos)).First();
     }
+
+
+    #if UNITY_EDITOR
+    public HexTile ClosestTilePointOnScreen(Vector3 pos, SceneView scene)
+    {
+        return grid.Cast<HexTile>()
+            .Where(x => x.Tile == null)
+            .OrderBy(x => Vector3.Distance(pos, scene.camera.WorldToScreenPoint(x.Pos))).First();
+    }
+    #endif
 }

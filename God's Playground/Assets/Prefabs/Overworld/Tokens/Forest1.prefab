@@ -68,7 +68,7 @@ GameObject:
   - component: {fileID: 249650359494085301}
   - component: {fileID: 4361751251959318054}
   - component: {fileID: 4496906533516044750}
-  - component: {fileID: 5739594352053318408}
+  - component: {fileID: 3231194059923256299}
   m_Layer: 0
   m_Name: HexTile
   m_TagString: Untagged
@@ -161,7 +161,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!65 &5739594352053318408
+--- !u!65 &3231194059923256299
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

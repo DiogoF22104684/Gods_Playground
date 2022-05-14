@@ -33,7 +33,7 @@ public class Player_Control : Agent
     {
         if (stopMovementBool.Any(x => x.Value == true))
         {
-            _controller.Move(Vector3.zero);
+            //_controller.Move(Vector3.zero);
             return;
         }
 

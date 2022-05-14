@@ -51,6 +51,8 @@ public class HexGridEditor : Editor
             (target as HexGrid).ChangeSize();
         }
 
+        
+
         base.OnInspectorGUI();
 
     }

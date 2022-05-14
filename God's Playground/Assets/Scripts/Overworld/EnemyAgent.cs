@@ -2,31 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using URandom = UnityEngine.Random;
 using System;
 using LibGameAI.FSMs;
 
-public class Enemy_AI : MonoBehaviour
+
+public class EnemyAgent : MonoBehaviour, ISavable
 {
     [SerializeField] private float minDistanceToPlayer = 10f;
     [SerializeField] private Spawn_Area_script patrolZone;
 
+    private BattleTransitioner transitioner;
     private Player_Control player;
     private StateMachine stateMachine;
-    private NavMeshAgent agent;
     private Vector3 dest = Vector3.zero;
 
-    
-    private BattleTransitioner transitioner;
-
     public Spawn_Area_script PatrolZone { get => patrolZone; set => patrolZone = value; }
+
+    public bool IsAlive => data.States != States.Dead;
 
     // Start is called before the first frame update
     void Start()
     {
         transitioner = GetComponent<BattleTransitioner>();
-        agent = GetComponent<NavMeshAgent>();
-
         player = GameObject.FindObjectOfType<Player_Control>();
         
     // ---------------------State Machine States---------------------
@@ -44,8 +41,9 @@ public class Enemy_AI : MonoBehaviour
         null,
         ReturningToSpawn,
         null);
-    
-    // ---------------------State Machine transitions---------------------
+
+        #region State Machine Trasitions
+       
         idleState.AddTransition(
             new Transition (
                 () => (player.gameObject.transform.position - 
@@ -69,9 +67,11 @@ public class Enemy_AI : MonoBehaviour
 
         returningState.AddTransition(
             new Transition (
-                () => agent.remainingDistance <= 0.1,
+                () => false,
                 null,
                 idleState));
+
+        #endregion
 
         stateMachine = new StateMachine(idleState);
 
@@ -80,6 +80,7 @@ public class Enemy_AI : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        data.Position = transform.localPosition;
         if (player == null) return;
         Action actions = stateMachine.Update();
         actions?.Invoke();
@@ -93,10 +94,12 @@ public class Enemy_AI : MonoBehaviour
         }
     }
 
-    //---------------------State Machine Behaviors---------------------
+
+    #region State Machine Behaviors
+    
     private void IdleBehaviour()
     {
-        if(agent.remainingDistance >= 0.1f ) return;
+        //if(agent.remainingDistance >= 0.1f ) return;
 
         do{
             float rotationValue  = UnityEngine.Random.Range(0, 359);
@@ -108,25 +111,75 @@ public class Enemy_AI : MonoBehaviour
         }while(!PatrolZone.InArea(dest));
         
 
-        agent.SetDestination(dest);
+        //agent.SetDestination(dest);
     }
 
     private void ChasingPlayer()
     {
-        agent.transform.LookAt(player.gameObject.transform.position);
-        agent.SetDestination(player.gameObject.transform.position);
+        //agent.transform.LookAt(player.gameObject.transform.position);
+        //agent.SetDestination(player.gameObject.transform.position);
     }
+  
     private void ReturningToSpawn()
     {
-        agent.transform.LookAt(PatrolZone.gameObject.transform.position);
-        agent.SetDestination(PatrolZone.gameObject.transform.position);
+        //agent.transform.LookAt(PatrolZone.gameObject.transform.position);
+        //agent.SetDestination(PatrolZone.gameObject.transform.position);
     }
+
+    #endregion
+ 
+    #region Load/Save
+    public int ID { get => iD; set => iD = value; }
+
+    [Header("Saving Settings")]
+    [SerializeField]
+    [ReadOnly]
+    private int iD;
+
+    [SerializeField][ReadOnly]
+    private Data data;
+
+
+    [Serializable]
+    struct Data
+    {
+        [SerializeField]
+        private Vector3 position;
+
+        public Vector3 Position { get => position; set => position = value; }
+
+        [SerializeField]
+        private States states;
+
+        public States States => states;
+
+    }
+
+    private enum States
+    {
+        Alive,
+        Dead
+    }
+
+   
+    string ISavable.GetData()
+    {
+        data.Position = transform.localPosition;
+        return JsonUtility.ToJson(data);
+    }
+
+    public void LoadData(string data)
+    {
+        this.data = JsonUtility.FromJson<Data>(data);
+        transform.localPosition = this.data.Position;
+    }
+    #endregion
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position, 
+        Gizmos.DrawLine(transform.position,
         dest);
     }
-
 }
+
