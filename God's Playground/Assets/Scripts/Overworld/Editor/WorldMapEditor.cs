@@ -26,24 +26,29 @@ public class WorldMapEditor : Editor
         {
             map.AddTiles();
             map.AddEntities();
+            PrefabUtility.ApplyPrefabInstance(map.gameObject,InteractionMode.AutomatedAction);
         }
 
-        if (GUILayout.Button("Save Data"))
+        if (GUILayout.Button("Setup Save File"))
         {
             string s = map.GetData();
-            writeFile(s);
+            #if UNITY_EDITOR
+            try
+            {
+                PrefabUtility.ApplyPrefabInstance(map.gameObject, InteractionMode.AutomatedAction);
+            }
+            catch
+            {
+
+            }
+            #endif
+            SaveLoadManager.Instance.Save();
         }
 
-
-        if (GUILayout.Button("Load Data"))
+        if (GUILayout.Button("Test Load Data"))
         {
-            map.LoadData(File.ReadAllText("Assets/data.json"));           
+            SaveLoadManager.Instance.Load();       
         }
     }
 
-    public void writeFile(string json)
-    {
-        // Write JSON to file.
-        File.WriteAllText("Assets/data.json", json);
-    }
 }

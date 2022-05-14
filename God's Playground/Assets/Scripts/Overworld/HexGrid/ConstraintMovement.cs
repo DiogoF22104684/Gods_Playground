@@ -50,6 +50,6 @@ public class ConstraintMovement : MonoBehaviour
         if (constraintObject == null) return;
         mover = constraintObject.Mover;
         rigi.velocity = Vector3.zero;
-        rigi.MovePosition(transform.position - mover.Translate() * Time.deltaTime);
+        rigi.AddForce(- mover.Translate() * Time.deltaTime * 4000);
     }
 }

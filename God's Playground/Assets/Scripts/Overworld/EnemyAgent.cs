@@ -4,14 +4,14 @@ using UnityEngine;
 using UnityEngine.AI;
 using System;
 using LibGameAI.FSMs;
-
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 public class EnemyAgent : MonoBehaviour, ISavable
 {
     [SerializeField] private float minDistanceToPlayer = 10f;
     [SerializeField] private Spawn_Area_script patrolZone;
 
-    private BattleTransitioner transitioner;
     private Player_Control player;
     private StateMachine stateMachine;
     private Vector3 dest = Vector3.zero;
@@ -23,8 +23,7 @@ public class EnemyAgent : MonoBehaviour, ISavable
     // Start is called before the first frame update
     void Start()
     {
-        transitioner = GetComponent<BattleTransitioner>();
-        player = GameObject.FindObjectOfType<Player_Control>();
+        player = FindObjectOfType<Player_Control>();
         
     // ---------------------State Machine States---------------------
         State idleState = new State("Idle",
@@ -82,21 +81,12 @@ public class EnemyAgent : MonoBehaviour, ISavable
     {
         data.Position = transform.localPosition;
         if (player == null) return;
-        Action actions = stateMachine.Update();
-        actions?.Invoke();
+       // Action actions = stateMachine.Update();
+        //actions?.Invoke();
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject == player.gameObject)
-        {
-            transitioner.EnterBattle();
-        }
-    }
-
 
     #region State Machine Behaviors
-    
+   
     private void IdleBehaviour()
     {
         //if(agent.remainingDistance >= 0.1f ) return;
@@ -141,21 +131,18 @@ public class EnemyAgent : MonoBehaviour, ISavable
 
 
     [Serializable]
-    struct Data
+    public class Data
     {
         [SerializeField]
         private Vector3 position;
-
-        public Vector3 Position { get => position; set => position = value; }
-
         [SerializeField]
         private States states;
 
-        public States States => states;
-
+        public Vector3 Position { get => position; set => position = value; }
+        public States States { get => states; set => states = value; }
     }
 
-    private enum States
+    public enum States
     {
         Alive,
         Dead
@@ -165,13 +152,21 @@ public class EnemyAgent : MonoBehaviour, ISavable
     string ISavable.GetData()
     {
         data.Position = transform.localPosition;
-        return JsonUtility.ToJson(data);
+
+        JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+        {
+            Formatting = Newtonsoft.Json.Formatting.None,
+            ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore,
+        };
+
+        return JToken.FromObject(data).ToString();
     }
 
     public void LoadData(string data)
-    {
-        this.data = JsonUtility.FromJson<Data>(data);
+    { 
+        this.data = JsonConvert.DeserializeObject<Data>(data);
         transform.localPosition = this.data.Position;
+        gameObject.SetActive(this.data.States == (States)0);
     }
     #endregion
 

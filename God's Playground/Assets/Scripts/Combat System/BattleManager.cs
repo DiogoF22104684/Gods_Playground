@@ -55,47 +55,78 @@ public class BattleManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        enemies = new List<BattleEntity>{ };
-        
-        //Instatiate things
+
+        InitializeBattle();
+    }
+
+    /// <summary>
+    /// Initializes the battle. Instatiates entities  
+    /// </summary>
+    private void InitializeBattle()
+    {
+        #region Initialize Battle Scenario
+        //Get current map id stored in the save files
+        int mapId = SaveLoadManager.ForceGetValue(x => x.currentMapID);
+
+        string pathSaveFile = $"Map_{mapId}_Save";
+
+        //Initializes the apropriate scenery scene
+        #endregion
+
+        #region Initialize Player
+        //Create player Battle Entity
         playerData = new BattleEntity(playerProper, battleConfig.PlayerTemplate);
         playerProper.Config(playerData);
-
         playerProper.onEndTurn += NextTurn;
-
-        //Bue simplificado 
-        playerProper.onDeath += ()=> 
+        //Create functionality for when the player loses
+        playerProper.onDeath += () =>
         {
             playerDead = true;
-            deathPanel.SetActive(true); 
-        } ; 
+            //Activate Death Panel
+            deathPanel.SetActive(true);
+        };
+        #endregion
 
-        //mau
+        #region Initialize Enemies
+        //Empty enemy List
+        enemies = new List<BattleEntity> { };
+       
+        //Iterate through the enemy list and inicializes each one
         int index = 0;
         foreach (EnemiesTemplate enTemp in battleConfig.Enemies)
         {
-            //Ainda mau mas melhor
-            //soparaagoraEnemies[index].gameObject.SetActive(true);
-            GameObject bep = Instantiate(enTemp.Prefab,
+            //Initializes Enemy Object in its proper position
+            GameObject enemyObj = Instantiate(enTemp.Prefab,
                 enemiesSlots[index].transform.position,
                 enemiesSlots[index].transform.rotation);
+            EnemyBattleEntityProper enemyProper =
+                enemyObj.GetComponent<EnemyBattleEntityProper>();
 
-            BattleEntityProper crtProper = 
-                bep.GetComponent<BattleEntityProper>();
-
-            BattleEntity enemyData = new BattleEntity(crtProper, enTemp);
-
-            crtProper.Config(enemyData);
-            crtProper.onEndTurn += NextTurn;
+            //Create enemy Battle Entity
+            BattleEntity enemyData = new BattleEntity(enemyProper, enTemp);
+            //Initialize the enemy object using the new Battle Entity
+            enemyProper.Config(enemyData);
+            enemyProper.onEndTurn += NextTurn;
+            //Add new enemy to enemy list 
             enemies.Add(enemyData);
-            (crtProper as EnemyBattleEntityProper).SetPlayers(
+            //Create functionality for when the enemy loses
+            enemyProper.onDeath += () => 
+            {
+                enemies.Remove(enemyData);
+                SaveLoadManager.ForceSetListValue(x => x.enemies, battleConfig.EnemyID, 1, pathSaveFile);
+                //Check Map in use
+                //Update Map Save File
+
+            };
+
+            enemyProper.SetPlayers(
                 new List<BattleEntity> { playerData });
-            crtProper.attackTrigger += AnimationResponse;
-            
+            enemyProper.attackTrigger += AnimationResponse;
+
             index++;
         }
+        #endregion
     }
-
 
     private void CleanEntityList()
     {

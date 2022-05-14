@@ -5,12 +5,13 @@ using System.Linq;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using UnityEditor;
 
 public class WorldMap : MonoBehaviour, ISavable
 {
     [SerializeField]
     private int mapId;
-    public int ID { get; set; }
+    public int ID { get => mapId; set => mapId = value; }
 
     [SerializeField] [ReadOnly]
     List<GameObject> map;
@@ -38,7 +39,6 @@ public class WorldMap : MonoBehaviour, ISavable
     // Start is called before the first frame update
     void Start()
     {
-        LoadData(File.ReadAllText("Assets/data.json"));
         SetupViewabilityList();
     }
 
@@ -49,7 +49,7 @@ public class WorldMap : MonoBehaviour, ISavable
     }
 
   
-    //Can be more efficient
+    //Can be A LOT more efficient
     private void SetupViewabilityList()
     {
         inView = new List<GameObject>();
@@ -84,7 +84,7 @@ public class WorldMap : MonoBehaviour, ISavable
                 new Vector2(entity.transform.position.x, entity.transform.position.z)))
             {
                 inView.Add(entity);
-                if(entity.GetComponent<EnemyAgent>()?.IsAlive ?? false)
+                if(entity.GetComponent<EnemyAgent>()?.IsAlive ?? true)
                 {
                     entity.SetActive(true);
                 }               
@@ -94,6 +94,8 @@ public class WorldMap : MonoBehaviour, ISavable
                 entity.SetActive(false);
             }
         }
+
+  
     }
 
 
@@ -112,14 +114,49 @@ public class WorldMap : MonoBehaviour, ISavable
         entities.Clear();
         foreach (Transform entity in entityPlacer.transform)
         {
-            entities.Add(entity.gameObject);
+            entities.Add(entity.gameObject);         
         }
     }
 
 
+    #region Save/Load
+    [SerializeField]
+    [ReadOnly]
+    private Data data;
+
+
+    [System.Serializable]
+    struct Data
+    {
+        [SerializeField]
+        private Vector3 position;
+
+        public Vector3 Position { get => position; set => position = value; }  
+    }
+
     public string GetData()
     {
-        string returnString = "{\"enemies\":{";
+        JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+        {
+            Formatting = Newtonsoft.Json.Formatting.None,
+            ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore,
+        };
+
+        string returnString = "{";
+
+        #region Map Data    
+
+        data.Position = transform.position;
+
+        string mapDataString = "\"mapData\":";
+        mapDataString += JsonUtility.ToJson(data);
+        mapDataString += ",";
+        returnString += mapDataString;
+        #endregion
+
+
+        #region Enemy Data
+        string enemyDataString = "\n\"enemies\":[";
 
         int iterator = 0;
         for (int i = 0; i < entities.Count; i++)
@@ -129,13 +166,15 @@ public class WorldMap : MonoBehaviour, ISavable
             if (save != null)
             {
                 save.ID = iterator;
-                returnString += "\"Entity_" + iterator + "\":" + save.GetData() + ",";
+                enemyDataString += save.GetData() + ",";
                 iterator++;
             }
         }
-        returnString = returnString.Substring(0, returnString.Length - 1);
-        returnString += "}}";
+        enemyDataString = enemyDataString.Substring(0, enemyDataString.Length - 1);
+        enemyDataString += "]}";
+        #endregion
 
+        returnString += enemyDataString;
         return returnString;
     }
 
@@ -143,13 +182,18 @@ public class WorldMap : MonoBehaviour, ISavable
     {
 
         dynamic a = JObject.Parse(data);
-       
-        #region Load Enemies
 
+        #region Load Map
+        string mapData = a.mapData.ToString();
+        this.data = JsonUtility.FromJson<Data>(mapData);
+        transform.position = this.data.Position;
+        #endregion
+
+        #region Load Enemies
         string enemies = a.enemies.ToString();
 
-        Dictionary<string, object> enemyDataDic = 
-            JsonConvert.DeserializeObject<Dictionary<string, object>>(enemies);
+        List<object> enemyDataDic = 
+            JsonConvert.DeserializeObject<List<object>>(enemies);
 
         for (int i = 0; i < entities.Count; i++)
         {
@@ -157,13 +201,13 @@ public class WorldMap : MonoBehaviour, ISavable
             ISavable save = g.GetComponent<ISavable>();
             if (save != null)
             {
-                save.LoadData(enemyDataDic["Entity_" + save.ID].ToString());
+                save.LoadData(enemyDataDic[save.ID].ToString());
             }
         }
-
         #endregion
     }
 
+    #endregion
 
     private void OnDrawGizmos()
     {

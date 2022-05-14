@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8061781236341004614}
   - component: {fileID: 8061781236341004611}
   - component: {fileID: 8061781236341004633}
+  - component: {fileID: 4905962025815042797}
   m_Layer: 0
   m_Name: Viking_OverworldEnemy
   m_TagString: Untagged
@@ -78,6 +79,24 @@ MonoBehaviour:
   iD: 0
   data:
     position: {x: 0, y: 0, z: 0}
+    states: 0
+--- !u!114 &4905962025815042797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8061781236341004635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89d6bbda5e9c885419564203b88d5ab3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  battleConfig: {fileID: 11400000, guid: 3c06cc151f7f7464b947ea42f84432c2, type: 2}
+  transition: {fileID: 0}
+  midCutscene: {fileID: 11400000, guid: ec191ecad1adfcf4b9030effd3faa1ae, type: 2}
+  enemies:
+  - {fileID: 11400000, guid: a5bdcb35f1a97e64f9d709a2eaa957cb, type: 2}
 --- !u!1001 &8061781235667904219
 PrefabInstance:
   m_ObjectHideFlags: 0
