@@ -39,7 +39,7 @@ MonoBehaviour:
   skills:
   - {fileID: 11400000, guid: 9adaf4c224318a94fa23bb4726a643d3, type: 2}
   - {fileID: 11400000, guid: 07dc17537f6d64e46869f2f972d3d5a1, type: 2}
-  - {fileID: 11400000, guid: 0426c237e535d124ebef1916234b9158, type: 2}
+  - {fileID: 11400000, guid: 9a0d6840c4606364bbed53fc2b09c169, type: 2}
   - {fileID: 11400000, guid: 8378c2fbe53844048b1d5c22a67c9a7f, type: 2}
   inventory:
     equipment: []

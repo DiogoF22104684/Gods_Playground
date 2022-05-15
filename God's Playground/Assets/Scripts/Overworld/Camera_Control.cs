@@ -38,14 +38,14 @@ public class Camera_Control : MonoBehaviour
         }
 
         if (_freelook.activeSelf == false
-            && Input.GetKeyDown(KeyCode.LeftControl))
+            && Input.GetKeyDown(KeyCode.Escape))
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
             _freelook.SetActive(true);
             inMenus.Value = false;
         }
-        else if (_freelook.activeSelf == true && Input.GetKeyDown(KeyCode.LeftControl))
+        else if (_freelook.activeSelf == true && Input.GetKeyDown(KeyCode.Escape))
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;

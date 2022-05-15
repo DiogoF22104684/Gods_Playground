@@ -79,6 +79,7 @@ public class BattleEntity
 
     public System.Action onStatusEffectUpdate;
 
+
     public BattleEntity(BattleEntityProper proper, EntityTemplate template)
     {
         properEntity = proper;
@@ -103,6 +104,19 @@ public class BattleEntity
         this.template = template;
         statusEffects = new List<TurnTimer<StatusEffect>> { };
         skillCooldowns = new List<TurnTimer<BattleMove>> { };
+    }
+
+    /// <summary>
+    /// Check if the entity is in the same team as the given entity.
+    /// </summary>
+    /// <param name="target">Entity to querry</param>
+    /// <returns>True if both entities are in the same team.</returns>
+    public bool IsSameTeam(BattleEntity target)
+    {
+        //Pretty ugly
+        bool isPlayer = (template is PlayerTemplate);
+        bool otherisPlayer = (target.template is PlayerTemplate);
+        return isPlayer == otherisPlayer;
     }
 
     public bool IsDead { get; private set; }

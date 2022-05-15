@@ -21,8 +21,8 @@ MonoBehaviour:
     type: 0
     mechanic: 0
     cooldown: 0
-  debuffs:
-    debuffs:
+  statusEffect:
+    statusEffects:
     - {fileID: 11400000, guid: 5990e1a8f571a6a448292ef76b886e48, type: 2}
   basicFunc:
     param1:
@@ -43,5 +43,3 @@ MonoBehaviour:
       selected: 0
     baseValue: 6
   function: 2
-  Debuff:
-    debuffs: []

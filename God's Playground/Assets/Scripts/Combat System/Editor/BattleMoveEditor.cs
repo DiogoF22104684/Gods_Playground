@@ -15,7 +15,7 @@ public class BattleMoveEditor : Editor
     SerializedProperty funcIgDef;
     SerializedProperty function;
     SerializedProperty basicFlat;
-    SerializedProperty debuffs;
+    SerializedProperty statusEffect;
 
     private void OnEnable()
     {
@@ -26,8 +26,8 @@ public class BattleMoveEditor : Editor
         funcIgDef = serializedObject.FindProperty("basicIgnoreDef");
         basicFlat = serializedObject.FindProperty("basicFlat");
         function = serializedObject.FindProperty("function");
-        debuffs = serializedObject.FindProperty("debuffs").
-            FindPropertyRelative("debuffs");
+        statusEffect = serializedObject.FindProperty("statusEffect").
+            FindPropertyRelative("statusEffects");
     }
     public override void OnInspectorGUI()
     {
@@ -41,11 +41,11 @@ public class BattleMoveEditor : Editor
 
         GUILayout.Space(10);
 
-        EditorGUILayout.PropertyField(debuffs);
+        EditorGUILayout.PropertyField(statusEffect);
 
         string[] values =
-            System.Enum.GetValues(typeof(FuncType))
-                .Cast<FuncType>().Select(x => x.ToString()).ToArray();
+            System.Enum.GetValues(typeof(FuncAffectType))
+                .Cast<FuncAffectType>().Select(x => x.ToString()).ToArray();
 
         GUILayout.Space(10);
 

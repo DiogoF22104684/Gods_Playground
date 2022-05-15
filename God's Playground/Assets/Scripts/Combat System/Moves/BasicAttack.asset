@@ -21,8 +21,8 @@ MonoBehaviour:
     type: 0
     mechanic: 1
     cooldown: 0
-  debuffs:
-    debuffs: []
+  statusEffect:
+    statusEffects: []
   basicFunc:
     param1:
       selected: 0
@@ -30,7 +30,7 @@ MonoBehaviour:
       selected: 2
     param3:
       selected: 3
-    baseValue: 2
+    baseValue: 5
   basicIgnoreDef:
     param1:
       selected: 0
@@ -42,5 +42,3 @@ MonoBehaviour:
       selected: 0
     baseValue: 0
   function: 0
-  Debuff:
-    debuffs: []

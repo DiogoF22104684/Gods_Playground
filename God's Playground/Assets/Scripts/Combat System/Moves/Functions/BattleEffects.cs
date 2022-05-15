@@ -7,6 +7,6 @@ public class BattleEffects
 {
    
     [SerializeField]
-    private List<StatusEffect> debuffs;
-    public List<StatusEffect> Debuffs => debuffs;
+    private List<StatusEffect> statusEffects;
+    public List<StatusEffect> StatusEffects => statusEffects;
 }
