@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CombatSystem;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class BattleManager : MonoBehaviour
 {
@@ -71,6 +72,7 @@ public class BattleManager : MonoBehaviour
         string pathSaveFile = $"Map_{mapId}_Save";
 
         //Initializes the apropriate scenery scene
+        SceneManager.LoadScene($"CombatBackground_{mapId}", LoadSceneMode.Additive);
         #endregion
 
         #region Initialize Player

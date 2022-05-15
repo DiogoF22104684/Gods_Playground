@@ -399,7 +399,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6368661631688009781, guid: 3ced6eecaffd9b74c9d12510282b7301, type: 3}
   m_PrefabInstance: {fileID: 807658516}
   m_PrefabAsset: {fileID: 0}
---- !u!135 &72903701
+--- !u!135 &72903704
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7619,6 +7619,10 @@ PrefabInstance:
       propertyPath: mover.strafeSpeed
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 2187157571953257128, guid: 583f7b9a09c237d4c8991a51c3b80de1, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 6b2ba104b78d50d4c8343c58a4eb47e6, type: 2}
     - target: {fileID: 2187157571953257129, guid: 583f7b9a09c237d4c8991a51c3b80de1, type: 3}
       propertyPath: m_RootOrder
       value: 6
