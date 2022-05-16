@@ -17,13 +17,13 @@ public class BasicFlat : BattleAffects
 
     public override void Function(BattleEntity attacker, IEnumerable<BattleEntity> target, float roll)
     {
+        target.print();
+
         currentTargets = target;
 
         float firstComp = baseValue;
 
         float firstAndRoll = firstComp * roll;
-
-
 
         attacker.properEntity.PlayAnimation(DefaultAnimations.BasicAttack);
 
@@ -38,6 +38,7 @@ public class BasicFlat : BattleAffects
 
             be.properEntity.damageTrigger += () =>
             {
+                Debug.Log("KKK");
                 BattleStat value =
                        new BattleStat(valueToChange, stat.MaxStat, stat.FlatStat);
                 param1.param.SetValue(be, value);

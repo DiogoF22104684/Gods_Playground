@@ -7,26 +7,27 @@ using System.Linq;
 
 public class EnemyBattleEntityProper : BattleEntityProper
 {
-
-    //Isto é kinda Dumb
-    private IEnumerable<BattleEntity> players;
-
     [SerializeField]
     private ActionPointProper actionPoints;
     public ActionPointProper ActionPoints => actionPoints;
 
+    IEnumerable<BattleEntity> entitiesSelected;
 
     public override bool StartTurn()
     {
         if (!base.StartTurn()) return false;
-       
+
+        entitiesSelected = new List<BattleEntity>();
 
         BattleMove mo = (entityData.template as EnemiesTemplate).ResolveAction();
-        mo.Function(entityData, players.Where(x => x.Hp > 0), Random.Range(1,7) / 6f);
+
+        entitiesSelected = EntitySelector.SelectEntity(entityData,
+            new List<BattleEntity> { EntitySelector.PlayerEntity.entityData }, 
+            mo.Config.Mode, mo.Config.Type);
+
+        mo.Function(entityData, entitiesSelected, Random.Range(1, 7) / 6f);
+
         return true;
-        //Animate things probably
-        
-       // Invoke("EndTurn", 1);
     }
 
     public override void EndTurn()
@@ -34,14 +35,11 @@ public class EnemyBattleEntityProper : BattleEntityProper
         Invoke("OnEndTurn", 1);
     }
 
-    public void SetPlayers(IEnumerable<BattleEntity> players)
-    {
-        this.players = players;
-    }
+
 
     public override void AttackTriggerAnimation(DefaultAnimations animType)
-    {
-        attackTrigger?.Invoke(animType, players.First(x => x.Hp > 0));
+    {     
+        attackTrigger?.Invoke(animType, entitiesSelected);
     }
 
     protected override void ConfingBars()

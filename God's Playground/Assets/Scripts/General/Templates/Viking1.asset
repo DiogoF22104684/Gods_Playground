@@ -13,29 +13,37 @@ MonoBehaviour:
   m_Name: Viking1
   m_EditorClassIdentifier: 
   hp:
-    minV: 6
-    maxV: 8
+    minV: 50
+    maxV: 50
+    flatten: 1
   mp:
     minV: 1
     maxV: 100
+    flatten: 0
   dex:
     minV: 1
     maxV: 10
+    flatten: 0
   eva:
     minV: 1
     maxV: 10
+    flatten: 0
   str:
     minV: 1
     maxV: 5
+    flatten: 0
   def:
     minV: 3
     maxV: 5
+    flatten: 0
   inte:
     minV: 1
     maxV: 10
+    flatten: 0
   intu:
     minV: 1
     maxV: 10
+    flatten: 0
   moves:
-  - {fileID: 11400000, guid: 9a0d6840c4606364bbed53fc2b09c169, type: 2}
+  - {fileID: 11400000, guid: 07dc17537f6d64e46869f2f972d3d5a1, type: 2}
   prefab: {fileID: 3250357001580299096, guid: b322c39904fd07745a95540963087e74, type: 3}

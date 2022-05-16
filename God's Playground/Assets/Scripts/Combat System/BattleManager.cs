@@ -120,9 +120,6 @@ public class BattleManager : MonoBehaviour
                 //Update Map Save File
 
             };
-
-            enemyProper.SetPlayers(
-                new List<BattleEntity> { playerData });
             enemyProper.attackTrigger += AnimationResponse;
 
             index++;
@@ -204,11 +201,10 @@ public class BattleManager : MonoBehaviour
         cameraManager = GetComponent<BattleCameraManager>();
         inTurnEntity.properEntity.StartTurn();      
     }
-
-    
-    private void AnimationResponse(DefaultAnimations anim, BattleEntity target = null)
+   
+    private void AnimationResponse(DefaultAnimations anim, IEnumerable<BattleEntity> targets = null)
     {
-        if (target == null)
+        if (targets == null)
         {
             foreach (BattleEntityProper bep in selector.SelectedEntities)
             {
@@ -217,13 +213,13 @@ public class BattleManager : MonoBehaviour
         }
         else
         {
-            target.properEntity.PlayAnimation(anim);
+            foreach(BattleEntity be in targets)
+                be.properEntity.PlayAnimation(anim);
         }
 
         //Kinda scuffed very scuffed
         inTurnEntity.properEntity.EndTurn();
     }
-
 
     public void ResolvePlayerAttack(BattleMove move)
     {
@@ -254,7 +250,7 @@ public class BattleManager : MonoBehaviour
     private void SwitchCamera()
     {
 
-        cameraManager.SwitchCameras(selector.SelectedEntity.gameObject);  
+        cameraManager.SwitchCameras(EntitySelector.SelectedEntity.gameObject);  
         
         GameObject acTimer = 
             Instantiate(actionTimer,transform.position, 
@@ -263,7 +259,7 @@ public class BattleManager : MonoBehaviour
         ActionPointManager acPointManager = 
             acTimer.GetComponent<ActionPointManager>();
        
-        acPointManager.Config(selector.SelectedEntity, rollResult, Attack);
+        acPointManager.Config(EntitySelector.SelectedEntity, rollResult, Attack);
         
         //Spawn points
         //Add AttackFunction to spawnPoints event
@@ -280,7 +276,7 @@ public class BattleManager : MonoBehaviour
                 break;
         }
 
-        enemiesSelected = selector.GetTargets(move.Config.Type).Select(x => x.entityData);
+        enemiesSelected = selector.GetTargets(playerData, move.Config.Type).Select(x => x.entityData);
 
         //KindaDumbMasPorAgora
         

@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using CombatSystem;
+using static CombatSystem.SelectorMode;
+using static CombatSystem.SelectorType;
 public class EntitySelector : MonoBehaviour
 {
     public bool PlayerHasAttacked { get; internal set; }
@@ -12,15 +15,15 @@ public class EntitySelector : MonoBehaviour
 
     [SerializeField]
     private BattleInfoPanel infoPanel;
-    public BattleEntityProper SelectedEntity { get; private set; }
+    public static BattleEntityProper SelectedEntity { get; private set; }
 
     public List<BattleEntityProper> SelectedEntities { get; private set; }
 
     public System.Action onSelect;
 
-    private List<BattleEntityProper> enemiesEntity;
-    private BattleEntityProper playerEntity;
-    public BattleEntityProper PlayerEntity => playerEntity;
+    private static List<BattleEntityProper> enemiesEntity;
+    private static BattleEntityProper playerEntity;
+    public static BattleEntityProper PlayerEntity => playerEntity;
 
    
     // Update is called once per frame
@@ -34,7 +37,7 @@ public class EntitySelector : MonoBehaviour
             {
                 SelectEntity(x =>
                 {
-                    this.SelectedEntity = x;
+                    SelectedEntity = x;
                     SpawnIcon();
                     onSelect?.Invoke();
                 });
@@ -86,21 +89,18 @@ public class EntitySelector : MonoBehaviour
            Camera.main.WorldToScreenPoint(SelectedEntity.transform.position);
     }
 
-
-    public IEnumerable<BattleEntityProper> GetTargets(CombatSystem.SelectorType type)
+    public IEnumerable<BattleEntityProper> GetTargets(BattleEntity entity, SelectorType type)
     {
-
-
         List<BattleEntityProper> returnlist = new List<BattleEntityProper> { };
         switch(type)
         {
-            case CombatSystem.SelectorType.Solo:
+            case Solo:
                 returnlist = new List<BattleEntityProper> { SelectedEntity };
                 break;
-            case CombatSystem.SelectorType.Area:
+            case Area:
                 returnlist = GetAllAdjacent().ToList();
                 break;
-            case CombatSystem.SelectorType.All:
+            case SelectorType.All:
                 returnlist = enemiesEntity;
                 break;
 
@@ -115,6 +115,8 @@ public class EntitySelector : MonoBehaviour
         List<BattleEntityProper> returnlist = new List<BattleEntityProper> { };
         int index = enemiesEntity.IndexOf(SelectedEntity);
         
+        returnlist.Add(SelectedEntity);
+
         if (index - 1 >= 0)
         {
             returnlist.Add(enemiesEntity[index - 1]);
@@ -124,12 +126,11 @@ public class EntitySelector : MonoBehaviour
             returnlist.Add(enemiesEntity[index + 1]);
         }
 
-        returnlist.Add(SelectedEntity);
+        
 
         return returnlist;
     }
     
-
     internal void Config(BattleEntityProper playerProper, 
         List<BattleEntityProper> enemies)
     {
@@ -141,7 +142,7 @@ public class EntitySelector : MonoBehaviour
         {
             try 
             {
-                this.SelectedEntity = enemiesEntity.First(x => x.entityData.Hp > 0);
+                SelectedEntity = enemiesEntity.First(x => x.entityData.Hp > 0);
             }
             catch
             {
@@ -152,4 +153,83 @@ public class EntitySelector : MonoBehaviour
         SpawnIcon();
         //onSelect?.Invoke();
     }
+
+    /// <summary>
+    /// Get team given an entity 
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <param name="ofTeam"></param>
+    /// <returns></returns>
+    private static IEnumerable<BattleEntity> GetTeam(BattleEntity entity, bool ofTeam = false)
+    {
+        
+        bool isPlayer = !(entity.IsSameTeam(playerEntity.entityData) ^ ofTeam);
+        return isPlayer ?
+            new List<BattleEntity> { playerEntity.entityData }
+            : 
+            enemiesEntity.Select(x => x.entityData)
+            ;
+    }
+
+    /// <summary>
+    /// Get entity given an entity 
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <param name="ofTeam"></param>
+    /// <returns></returns>
+    private static BattleEntity GetSelected(BattleEntity entity, bool ofTeam = false)
+    {
+        bool isPlayer = !(entity.IsSameTeam(playerEntity.entityData) ^ ofTeam);
+        return isPlayer ? playerEntity.entityData: SelectedEntity.entityData;
+    }
+
+    public static IEnumerable<BattleEntity> SelectEntity(
+        BattleEntity attacker, IEnumerable<BattleEntity> target, 
+        SelectorMode team, SelectorType type)
+    {
+        List<BattleEntity> returnlist = new List<BattleEntity> { };
+
+        //Bad dumb and ugly
+        switch (type)
+        {
+            case Solo:
+                switch (team)
+                {
+                    case SelectorMode.All:
+                        returnlist.Add(GetSelected(attacker));
+                        return returnlist;
+                    case Self:
+                        returnlist.Add(attacker);
+                        return returnlist;
+                    case Adversary:
+                        returnlist.Add(GetSelected(attacker));
+                        return returnlist;
+                    case Team:
+                        returnlist.Add(GetSelected(attacker));
+                        return returnlist;
+                }
+                break;           
+            case SelectorType.All:
+                switch (team)
+                {
+                    case SelectorMode.All:
+                        returnlist = enemiesEntity.Select(x =>x.entityData).ToList();
+                        returnlist.Add(playerEntity.entityData);
+                        return returnlist;
+                    case Self:
+                        returnlist.Add(attacker);
+                        return returnlist;
+                    case Adversary:                        
+                        return GetTeam(attacker);
+                    case Team:
+                        return GetTeam(attacker, true);
+                }
+                break;
+        }
+
+        Debug.Log(returnlist.print());
+
+        return returnlist;
+    }
+    
 }

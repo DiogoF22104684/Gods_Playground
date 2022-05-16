@@ -38,7 +38,7 @@ public class BattleSkillMenu : MonoBehaviour
 
         foreach (BattleSkillSlot slot in skillSlot)
         {
-            if (slot.Move.IsUsable(selector.PlayerEntity,selector.SelectedEntity))
+            if (slot.Move.IsUsable(EntitySelector.PlayerEntity,EntitySelector.SelectedEntity))
             {
                 slot.Unlock();
             }

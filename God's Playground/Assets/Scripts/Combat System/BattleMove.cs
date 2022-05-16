@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,31 +32,31 @@ namespace CombatSystem
 
         //Status Effects applied when the move is used
         [SerializeField]
-        private BattleEffects statusEffect;
+        private List<StatusEffecOverrider> statusEffect;
 
         /// <summary>
         /// Status Effects applied when the move is used
         /// </summary>
-        public BattleEffects StatusEffects => statusEffect;
+        public List<StatusEffecOverrider> StatusEffects => statusEffect;
 
         #region Battle Affects
         //Function currently selected. Used to resolve the effect
         private BattleAffects selectedFuncAffect;
 
         //Basic Function
-        [SerializeField]
+        [SerializeField] 
         private BasicAffect basicFunc;
 
         //Basic Funcition without counting the adversary Def
-        [SerializeField]
+        [SerializeField] 
         private BasicIgnoreDef basicIgnoreDef;
 
         //Basic Function without stat aditives. Flat Value
-        [SerializeField]
+        [SerializeField]  
         private BasicFlat basicFlat;
 
         //Type of Affect Selected
-        [SerializeField]
+        [SerializeField] [HideInInspector]
         private FuncAffectType function;
         #endregion
 
@@ -124,15 +123,20 @@ namespace CombatSystem
             //Calculate the result of the move and apply it to the targets.
             selectedFuncAffect.Function(attacker, target, roll);
 
-            //Apply the status effects on the targets
-            foreach (BattleEntity be in target)
+            //Apply the status effects on the targets        
+            foreach (StatusEffecOverrider d in StatusEffects)
             {
-                foreach(StatusEffect d in statusEffect.StatusEffects)
+                StatusEffectHelper statusEffectHelper = d.GetValues();
+                IEnumerable<BattleEntity> affectedEntities =
+                         EntitySelector.SelectEntity(attacker, target,
+                             statusEffectHelper.Team, statusEffectHelper.Type);
+
+                foreach (BattleEntity be in affectedEntities)
                 {
-                    be.AddDebuff(d);
+                    be.AddStatusEffect(statusEffectHelper);
                 }
             }
-
+           
             //If aplicable remove the cost value from the user stats 
             BattleStat stat = config.CostStat.GetValue(attacker);
             //Apply modified cost value to the user
@@ -167,6 +171,7 @@ namespace CombatSystem
     }
 
 }
+
 
 
 

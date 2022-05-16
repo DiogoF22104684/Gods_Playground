@@ -22,8 +22,10 @@ MonoBehaviour:
     mechanic: 0
     cooldown: 0
   statusEffect:
-    statusEffects:
-    - {fileID: 11400000, guid: 5990e1a8f571a6a448292ef76b886e48, type: 2}
+  - statusEffect: {fileID: 11400000, guid: 5990e1a8f571a6a448292ef76b886e48, type: 2}
+    overrideThis: 0
+    coolDown: 0
+    team: 0
   basicFunc:
     param1:
       selected: 0
