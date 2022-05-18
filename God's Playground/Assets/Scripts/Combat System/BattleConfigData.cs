@@ -7,20 +7,22 @@ using UnityEngine;
 public class BattleConfigData : ScriptableObject
 {
     [SerializeField]
-    PlayerTemplate playerTemplate;
-    public PlayerTemplate PlayerTemplate => playerTemplate;
-
+    PlayerTemplate playerTemplate; 
     [SerializeField]
     List<EnemiesTemplate> enemies;
+
     public List<EnemiesTemplate> Enemies => enemies;
+    public PlayerTemplate PlayerTemplate => playerTemplate;
 
-    private Vector3 playerPos;
+    public int EnemyID { get => currentEnemies; set => currentEnemies = value; }
 
-    internal void SetupConfig(Vector3 playerPos, List<EnemiesTemplate> enemies)
+    [SerializeField] [ReadOnly]
+    private int currentEnemies;
+
+    internal void SetupConfig(EnemyAgent enemy,List<EnemiesTemplate> enemies, BattleTransitioner bt)
     {
         this.enemies = enemies;
-        this.playerPos = playerPos;
+        currentEnemies = enemy.ID;
     }
 
-    //Other things
 }

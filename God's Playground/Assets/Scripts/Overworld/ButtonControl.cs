@@ -9,9 +9,7 @@ public class ButtonControl : MonoBehaviour
     [SerializeField] private GameObject equipButton;
     [SerializeField] private GameObject revealButton;
     [SerializeField] private int timeMultiplier = 7;
-    //private GameObject inventoryMenu;
-    //private GameObject profileMenu;
-    //private GameObject spellsMenu;
+
     private bool revealed;
     private Vector3 intialPos1;
     private Vector3 intialPos2;
@@ -36,6 +34,11 @@ public class ButtonControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            RevealButtons();
+        }
+
         if (revealed)
         {
             revealButton.transform.rotation = 
@@ -84,36 +87,4 @@ public class ButtonControl : MonoBehaviour
     {
         revealed = !revealed;
     }
-
-    //public void InventoryButton(GameObject )
-    //{
-    //    if (!inventoryMenu.activeSelf)
-    //    {
-    //        inventoryMenu.SetActive(true);
-    //        spellsMenu.SetActive(false);
-    //    }
-    //    else
-    //        inventoryMenu.SetActive(false);
-            
-    //}
-    //public void ProfileButton()
-    //{
-    //    if (!profileMenu.activeSelf)
-    //        profileMenu.SetActive(true);
-    //    else
-    //        profileMenu.SetActive(false);
-    //        spellsMenu.SetActive(false);
-    //        inventoryMenu.SetActive(false);
-    //}
-    //public void SpellsButton()
-    //{
-    //    if (!spellsMenu.activeSelf)
-    //    {
-    //        spellsMenu.SetActive(true);
-    //        inventoryMenu.SetActive(false);
-    //    }
-    //    else
-    //        spellsMenu.SetActive(false);
-    //}
-
 }

@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdd81a4266a235745a0860053e1ba1c1, type: 3}
+  m_Name: BasicAttack
+  m_EditorClassIdentifier: 
+  icon: {fileID: 2800000, guid: 60d3f2d6a250c02499d6a6583e8858a3, type: 3}
+  config:
+    costStat:
+      selected: 0
+    costValue: 0
+    mode: 1
+    type: 0
+    mechanic: 1
+    cooldown: 0
+  statusEffect: []
+  basicFunc:
+    param1:
+      selected: 0
+    param2:
+      selected: 2
+    param3:
+      selected: 3
+    baseValue: 4
+  basicIgnoreDef:
+    param1:
+      selected: 0
+    param2:
+      selected: 1
+    baseValue: 0
+  basicFlat:
+    param1:
+      selected: 0
+    baseValue: 0
+  function: 0

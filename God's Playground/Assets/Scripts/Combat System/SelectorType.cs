@@ -4,6 +4,7 @@ namespace CombatSystem
     {
         Solo,
         Area,
-        All
+        All,
+        Random
     }
 }

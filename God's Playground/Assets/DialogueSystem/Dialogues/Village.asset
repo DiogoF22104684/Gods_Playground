@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 853ec2b1a18ccb449a50215f388a6fa1, type: 3}
+  m_Name: Village
+  m_EditorClassIdentifier: 
+  id: 00
+  startScriptNum: 0
+  scripts:
+  - {fileID: 11400000, guid: 3996ebc406988424888a8b8a85ca4c2c, type: 2}
+  events:
+  - script: {fileID: 0}
+    nodeId: f787ca0f-4a36-4cf4-8130-6f7f243b1d00
+    letterIndex: 25
+    componentName: TileInteractable
+    methodName: EndInteraction
+    methodInfo:
+      type:
+        data: 005854696c65496e74657261637461626c652c20417373656d626c792d4353686172702c2056657273696f6e3d302e302e302e302c2043756c747572653d6e65757472616c2c205075626c69634b6579546f6b656e3d6e756c6c
+      methodName: EndInteraction
+      parameters: []
+      flags: 20
+    parameters:
+    - String: EndInteraction
+      Int: 0
+      Enum: 0
+      Bool: 0
+      Obj: {fileID: 0}
+      type: System.String
+      qualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    hidden: 1

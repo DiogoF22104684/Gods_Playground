@@ -9,7 +9,7 @@ public abstract class BattleEntityProper : MonoBehaviour, IConfigurable
     public BattleEntity entityData { get; protected set; }
     private Animator anim;
 
-    public Action<DefaultAnimations, BattleEntity> attackTrigger;
+    public Action<DefaultAnimations, IEnumerable<BattleEntity>> attackTrigger;
     public Action damageTrigger;
     public Action onDeath;
     public Action onEndTurn;
@@ -132,7 +132,7 @@ public abstract class BattleEntityProper : MonoBehaviour, IConfigurable
 
     public virtual bool StartTurn()
     {
-        entityData.ResolveDebuffs();
+        entityData.ResolveStatusEffect();
         
         if (isDead)
         {

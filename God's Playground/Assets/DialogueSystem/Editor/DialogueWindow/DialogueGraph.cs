@@ -30,7 +30,7 @@ namespace DialogueSystem.Editor
         /// </summary>
         private void Awake()
         {
-            svUtil = new SaveLoadUtils();
+            //svUtil = new SaveLoadUtils("");
         }
 
         void Update()
@@ -66,6 +66,7 @@ namespace DialogueSystem.Editor
         {
             DialogueGraph window = GetWindow<DialogueGraph>();
             window.titleContent = new GUIContent(text: "Dialogue Graph");
+            window.svUtil = new SaveLoadUtils("");
 
         }
 
@@ -76,12 +77,11 @@ namespace DialogueSystem.Editor
         /// an already existing Dialogue
         /// </summary>
         /// <param name="ds">Dialogue to be loaded</param>
-        public static void OpenDialogueGraphWindow(DialogueScript ds, DialogueContainer container = null)
+        public static void OpenDialogueGraphWindow(DialogueScript ds, DialogueContainer container = null, string path = "")
         {
             
             DialogueGraph window = GetWindow<DialogueGraph>();
-            
-            
+           
             window = GetWindow<DialogueGraph>();
 
             window.titleContent = new GUIContent(text: ds.DialogueName);
@@ -89,10 +89,10 @@ namespace DialogueSystem.Editor
             window.CreateGraphView();
             window.CreateToolbar();
             window.Focus();
-
+            
             //window.graphview.remove
-            SaveLoadUtils svUtil = new SaveLoadUtils();
-            svUtil.LoadDialogues(window.graphview, ds, container);
+            window.svUtil = new SaveLoadUtils(path);
+            window.svUtil.LoadDialogues(window.graphview, ds, container);
             
         }
 
@@ -115,6 +115,7 @@ namespace DialogueSystem.Editor
             //Create button to save the Dialogue
             Button saveButton = new Button(clickEvent: () =>
             {
+
                 DialogueScript script = 
                     svUtil.SaveDialogues(graphview, graphview.DialogueName);
 

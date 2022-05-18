@@ -70,7 +70,7 @@ public class BattleEntity
     [MoveAffecter]
     public BattleStat turns { get; set; }
 
-    public List<TurnTimer<StatusEffect>> statusEffects { get; private set; }
+    public List<TurnTimer<StatusEffectHelper>> statusEffects { get; private set; }
     public List<TurnTimer<BattleMove>> skillCooldowns { get; private set; }
 
     public EntityTemplate template { get; }
@@ -78,6 +78,7 @@ public class BattleEntity
     public BattleEntityProper properEntity { get; }
 
     public System.Action onStatusEffectUpdate;
+
 
     public BattleEntity(BattleEntityProper proper, EntityTemplate template)
     {
@@ -101,8 +102,21 @@ public class BattleEntity
         dex = new BattleStat(template.Dex, template.Dex, 0);
 
         this.template = template;
-        statusEffects = new List<TurnTimer<StatusEffect>> { };
+        statusEffects = new List<TurnTimer<StatusEffectHelper>> { };
         skillCooldowns = new List<TurnTimer<BattleMove>> { };
+    }
+
+    /// <summary>
+    /// Check if the entity is in the same team as the given entity.
+    /// </summary>
+    /// <param name="target">Entity to querry</param>
+    /// <returns>True if both entities are in the same team.</returns>
+    public bool IsSameTeam(BattleEntity target)
+    {
+        //Pretty ugly
+        bool isPlayer = (template is PlayerTemplate);
+        bool otherisPlayer = (target.template is PlayerTemplate);
+        return isPlayer == otherisPlayer;
     }
 
     public bool IsDead { get; private set; }
@@ -112,9 +126,9 @@ public class BattleEntity
         return $"Hp: {hp.Stat} \nAtk: {str.Stat} \nDef:{def.Stat}";
     }
 
-    public void AddDebuff(StatusEffect d)
+    public void AddStatusEffect(StatusEffectHelper statusEft)
     { 
-        statusEffects.Add(new TurnTimer<StatusEffect>(d));
+        statusEffects.Add(new TurnTimer<StatusEffectHelper>(statusEft));
         onStatusEffectUpdate?.Invoke();
     }
 
@@ -124,16 +138,16 @@ public class BattleEntity
     }
 
 
-    internal void ResolveDebuffs()
+    internal void ResolveStatusEffect()
     {
         for (int i = statusEffects.Count - 1; i >= 0; i--)
         {
            
-            TurnTimer<StatusEffect> d = statusEffects[i];
-            
-            StatusEffect effect = d.Effect;
+            TurnTimer<StatusEffectHelper> d = statusEffects[i];
 
-            effect.ResolveStatusEffect(this, d.Timer);
+            StatusEffectHelper effect = d.Effect;
+
+            effect.Effect?.Invoke(this, d.Timer);
 
             //Debug.Log("TimePassed: " + d.Timer + "Duration:" + effect.CoolDown);
 
@@ -141,7 +155,7 @@ public class BattleEntity
 
             if (d.Timer >= effect.CoolDown)
             {
-                effect.EndStatusEffect(this);
+                effect.EndEffect?.Invoke(this);
                 statusEffects.RemoveAt(i);
             }
         }  

@@ -45,7 +45,6 @@ namespace DialogueSystem.Editor
             container = dn.Container;
             script = dn.Script;
             presetEntityName = dn.PresetName;
-            SaveWaitingList = dn.SaveWatingList;
 
             EntityData data = Resources.Load<EntityData>("EntityData");
             entityInfo = data[presetEntityName];

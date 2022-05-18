@@ -117,7 +117,7 @@ namespace DialogueSystem.Editor
         public void CreateDialogueNode(NodeData nd = null, DialogueContainer container = null, DialogueScript script = null)
         {
             
-            DialogueNode node = new DialogueNode(SaveWatingList, nd, container, script);
+            DialogueNode node = new DialogueNode(nd, container, script);
             AddElement(node);
             if(nd == null)
                 node.SetInInitialPosition(this); 
@@ -155,7 +155,10 @@ namespace DialogueSystem.Editor
                     if (data.OutPorts.Count == 0) continue;
 
                     string gui = data.OutPorts[it].ID;
-                    DialogueNode conNode = GetNode(gui);
+
+                    DialogueNode conNode = new DialogueNode();
+                    if (GetNode(gui) != null)  
+                        conNode = GetNode(gui);
 
                     foreach (Port ort in conNode.inputContainer.Children())
                     {
