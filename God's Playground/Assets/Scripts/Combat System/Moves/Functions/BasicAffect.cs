@@ -63,12 +63,16 @@ public class BasicAffect : BattleAffects
 
             float valueToChange = stat1 - totalValue;
 
-            be.properEntity.damageTrigger += ()=> 
+            be.properEntity.damageTrigger += (BattleEntity en)=> 
             {
+                //Animation response aqui??
+
                 BattleStat value = 
                        new BattleStat(valueToChange, stat.MaxStat, stat.FlatStat);
                
-                param1.param.SetValue(be, value);        
+                param1.param.SetValue(be, value);
+
+                attacker.EndTurn();
             };
 
         }

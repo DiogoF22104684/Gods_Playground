@@ -138,9 +138,10 @@ public class BattleManager : MonoBehaviour
 
     private void PrepareTurnOrder()
     {
+        //Ignore if player is dead
         if (playerDead) return;
         
-
+        //
         CleanEntityList();
         List<BattleEntity> turnEnt = new List<BattleEntity>(enemies);
         if (!turnEnt.Any(x => !x.IsDead))
@@ -156,13 +157,10 @@ public class BattleManager : MonoBehaviour
 
         if (endOfTurn)
         {
-
-
             foreach (BattleEntity be in turnEnt)
             {
                 be.turns.Stat = be.turns.MaxStat;
             }
-
             //TurnOrderUpdate
         }
 
@@ -218,7 +216,7 @@ public class BattleManager : MonoBehaviour
         }
 
         //Kinda scuffed very scuffed
-        inTurnEntity.properEntity.EndTurn();
+        //inTurnEntity.properEntity.EndTurn();
     }
 
     public void ResolvePlayerAttack(BattleMove move)
@@ -276,7 +274,7 @@ public class BattleManager : MonoBehaviour
                 break;
         }
 
-        enemiesSelected = selector.GetTargets(playerData, move.Config.Type).Select(x => x.entityData);
+        enemiesSelected = selector.GetTargets(playerData, move).Select(x => x.entityData);
 
         //KindaDumbMasPorAgora
         

@@ -55,6 +55,10 @@ namespace CombatSystem
         [SerializeField]  
         private BasicFlat basicFlat;
 
+        //Function with multiple separated moves
+        [SerializeField]
+        private MultipleAffect multipleAffect;
+
         //Type of Affect Selected
         [SerializeField] [HideInInspector]
         private FuncAffectType function;
@@ -153,6 +157,7 @@ namespace CombatSystem
         /// <param name="selected">Value corresponding to the affect func.</param>
         public void SelectFunc(int selected)
         {
+            //Very mal feito
             switch (selected)
             {
                 case 0:
@@ -163,6 +168,9 @@ namespace CombatSystem
                     break;
                 case 2:
                     selectedFuncAffect = basicFlat;
+                    break;
+                case 3:
+                    selectedFuncAffect = multipleAffect;
                     break;
             }
         }

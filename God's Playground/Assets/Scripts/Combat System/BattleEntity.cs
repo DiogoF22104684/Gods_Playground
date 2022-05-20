@@ -57,7 +57,7 @@ public class BattleEntity
         }
     }
 
-
+   
     [MoveAffecter]
     public BattleStat str { get; set; }
 
@@ -105,6 +105,13 @@ public class BattleEntity
         statusEffects = new List<TurnTimer<StatusEffectHelper>> { };
         skillCooldowns = new List<TurnTimer<BattleMove>> { };
     }
+
+
+    public void EndTurn()
+    {
+        properEntity.EndTurn();
+    }
+
 
     /// <summary>
     /// Check if the entity is in the same team as the given entity.

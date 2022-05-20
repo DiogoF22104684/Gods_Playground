@@ -13,6 +13,7 @@ public class BattleMoveEditor : Editor
     SerializedProperty funcIgDef;
     SerializedProperty function;
     SerializedProperty basicFlat;
+    SerializedProperty multipleAffect;
 
     private void OnEnable()
     {
@@ -20,6 +21,7 @@ public class BattleMoveEditor : Editor
         funcBas = serializedObject.FindProperty("basicFunc");
         funcIgDef = serializedObject.FindProperty("basicIgnoreDef");
         basicFlat = serializedObject.FindProperty("basicFlat");
+        multipleAffect = serializedObject.FindProperty("multipleAffect");
         function = serializedObject.FindProperty("function");
     }
     public override void OnInspectorGUI()
@@ -27,7 +29,7 @@ public class BattleMoveEditor : Editor
         
         serializedObject.Update();
         EditorGUI.BeginChangeCheck();
-        DrawPropertiesExcluding(serializedObject, "basicFunc", "basicIgnoreDef", "basicFlat");
+        DrawPropertiesExcluding(serializedObject, "basicFunc", "basicIgnoreDef", "basicFlat", "multipleAffect");
        
 
         string[] values =
@@ -50,6 +52,9 @@ public class BattleMoveEditor : Editor
                 break;
             case 2:
                 EditorGUILayout.PropertyField(basicFlat);
+                break;
+            case 3:
+                EditorGUILayout.PropertyField(multipleAffect);
                 break;
         }
 

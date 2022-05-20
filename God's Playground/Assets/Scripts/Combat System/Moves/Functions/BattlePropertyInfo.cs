@@ -32,7 +32,13 @@ public class BattlePropertyInfo: ISerializationCallbackReceiver
         PropertyInfo[] propInfo = typeof(BattleEntity).GetProperties()
            .Where(prop => prop.IsDefined(typeof(MoveAffecterAttribute), false)).ToArray();
 
-        param = propInfo[selected];
+        if (selected == -1)
+        {
+            selected = 0;
+        }
+
+       param = propInfo[selected];
+     
     }
 
     public BattleStat GetValue(BattleEntity entity)
