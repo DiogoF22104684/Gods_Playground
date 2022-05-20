@@ -9,6 +9,9 @@ public class ConstraintMovement : MonoBehaviour
     private bool isActive;
 
     [SerializeField]
+    private ScriptableBool inMenu;
+
+    [SerializeField]
     private Agent constraintObject;
    
     [SerializeField]
@@ -40,6 +43,8 @@ public class ConstraintMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        isActive = !inMenu.Value;
+
         if (movementBool.Any(x => x.Value == true))
         {
             rigi.velocity = Vector3.zero;
