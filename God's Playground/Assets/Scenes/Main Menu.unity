@@ -870,6 +870,7 @@ GameObject:
   - component: {fileID: 112877119}
   - component: {fileID: 112877118}
   - component: {fileID: 112877117}
+  - component: {fileID: 112877120}
   m_Layer: 5
   m_Name: Vetical Layout
   m_TagString: Untagged
@@ -964,6 +965,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 112877115}
   m_CullTransparentMesh: 1
+--- !u!114 &112877120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 112877115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56e5f2976cd283444a64bd57126867bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &120970526
 GameObject:
   m_ObjectHideFlags: 0
@@ -1105,6 +1118,7 @@ GameObject:
   - component: {fileID: 165586010}
   - component: {fileID: 165586009}
   - component: {fileID: 165586008}
+  - component: {fileID: 165586011}
   m_Layer: 5
   m_Name: Save Button 3
   m_TagString: Untagged
@@ -1176,16 +1190,28 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 165586011}
+        m_TargetAssemblyTypeName: SaveTypeDecision, Assembly-CSharp
+        m_MethodName: SelectSave
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 112877120}
+        m_TargetAssemblyTypeName: ButtonUtility, Assembly-CSharp
+        m_MethodName: SceneTransition
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Overworld
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &165586009
@@ -1226,6 +1252,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 165586006}
   m_CullTransparentMesh: 1
+--- !u!114 &165586011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 165586006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efb07d2bf8075d045b987b84e41060eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 2
 --- !u!1 &187891147
 GameObject:
   m_ObjectHideFlags: 0
@@ -2187,6 +2226,7 @@ GameObject:
   - component: {fileID: 680100322}
   - component: {fileID: 680100321}
   - component: {fileID: 680100320}
+  - component: {fileID: 680100323}
   m_Layer: 5
   m_Name: Save Button 2
   m_TagString: Untagged
@@ -2258,16 +2298,28 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 165586011}
+        m_TargetAssemblyTypeName: SaveTypeDecision, Assembly-CSharp
+        m_MethodName: SelectSave
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 112877120}
+        m_TargetAssemblyTypeName: ButtonUtility, Assembly-CSharp
+        m_MethodName: SceneTransition
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Overworld
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &680100321
@@ -2308,6 +2360,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 680100318}
   m_CullTransparentMesh: 1
+--- !u!114 &680100323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 680100318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efb07d2bf8075d045b987b84e41060eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
 --- !u!1 &696475957
 GameObject:
   m_ObjectHideFlags: 0
@@ -2640,6 +2705,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1270392895}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &758196234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2886,6 +2963,7 @@ GameObject:
   - component: {fileID: 898465918}
   - component: {fileID: 898465917}
   - component: {fileID: 898465916}
+  - component: {fileID: 898465919}
   m_Layer: 5
   m_Name: Save Button 1
   m_TagString: Untagged
@@ -2957,16 +3035,28 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 165586011}
+        m_TargetAssemblyTypeName: SaveTypeDecision, Assembly-CSharp
+        m_MethodName: SelectSave
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 112877120}
+        m_TargetAssemblyTypeName: ButtonUtility, Assembly-CSharp
+        m_MethodName: SceneTransition
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Overworld
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &898465917
@@ -3007,6 +3097,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 898465914}
   m_CullTransparentMesh: 1
+--- !u!114 &898465919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 898465914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efb07d2bf8075d045b987b84e41060eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
 --- !u!1 &932838908
 GameObject:
   m_ObjectHideFlags: 0
@@ -3227,6 +3330,18 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1270392895}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &990171981
 MonoBehaviour:
@@ -3786,6 +3901,7 @@ GameObject:
   - component: {fileID: 1223166006}
   - component: {fileID: 1223166005}
   - component: {fileID: 1223166004}
+  - component: {fileID: 1223166007}
   m_Layer: 5
   m_Name: Autosave
   m_TagString: Untagged
@@ -3857,16 +3973,28 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 1223166007}
+        m_TargetAssemblyTypeName: SaveTypeDecision, Assembly-CSharp
+        m_MethodName: SelectSave
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 112877120}
+        m_TargetAssemblyTypeName: ButtonUtility, Assembly-CSharp
+        m_MethodName: SceneTransition
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Overworld
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1223166005
@@ -3907,6 +4035,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1223166002}
   m_CullTransparentMesh: 1
+--- !u!114 &1223166007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1223166002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efb07d2bf8075d045b987b84e41060eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 3
 --- !u!1 &1270392895
 GameObject:
   m_ObjectHideFlags: 0
@@ -5484,19 +5625,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1270392895}
-        m_TargetAssemblyTypeName: ButtonUtility, Assembly-CSharp
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1270392896}
         m_TargetAssemblyTypeName: ButtonUtility, Assembly-CSharp
         m_MethodName: ExitApplication
         m_Mode: 1
