@@ -15,27 +15,35 @@ MonoBehaviour:
   hp:
     minV: 1
     maxV: 10
+    flatten: 0
   mp:
     minV: 1
     maxV: 100
+    flatten: 0
   dex:
     minV: 1
     maxV: 10
+    flatten: 0
   eva:
     minV: 1
     maxV: 10
+    flatten: 0
   str:
     minV: 1
     maxV: 5
+    flatten: 0
   def:
     minV: 4
     maxV: 9
+    flatten: 0
   inte:
     minV: 1
     maxV: 10
+    flatten: 0
   intu:
     minV: 1
     maxV: 10
+    flatten: 0
   moves:
   - {fileID: 11400000, guid: 9a0d6840c4606364bbed53fc2b09c169, type: 2}
   prefab: {fileID: 1792786035079805320, guid: 0838fec8d12305540bca53c96f2bf0fb, type: 3}

@@ -3,11 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using CombatSystem;
 
 public class StatusEffectDisplay : MonoBehaviour, IConfigurable
 {
     [SerializeField]
-    List<TurnTimer<StatusEffect>> statusEffects;
+    List<TurnTimer<StatusEffectHelper>> statusEffects;
 
     [SerializeField]
     GameObject iconPREFAB;
@@ -21,16 +22,13 @@ public class StatusEffectDisplay : MonoBehaviour, IConfigurable
     }
 
     public void Config(BattleEntity entity)
-    {
-
-       
-
+    {      
         statusEffects = entity.statusEffects;
         CleanStatusList();
 
         for (int i = 0; i < statusEffects.Count; i++)
         {
-            StatusEffect se = statusEffects[i].Effect;
+            StatusEffectHelper se = statusEffects[i].Effect;
             GameObject newIcon =
                 Instantiate(iconPREFAB,
                 transform.position,

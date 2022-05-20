@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CombatSystem;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class BattleManager : MonoBehaviour
 {
@@ -55,47 +56,76 @@ public class BattleManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        enemies = new List<BattleEntity>{ };
-        
-        //Instatiate things
+
+        InitializeBattle();
+    }
+
+    /// <summary>
+    /// Initializes the battle. Instatiates entities  
+    /// </summary>
+    private void InitializeBattle()
+    {
+        #region Initialize Battle Scenario
+        //Get current map id stored in the save files
+        int mapId = SaveLoadManager.ForceGetValue(x => x.currentMapID);
+
+        string pathSaveFile = $"Map_{mapId}_Save";
+
+        //Initializes the apropriate scenery scene
+        SceneManager.LoadScene($"CombatBackground_{mapId}", LoadSceneMode.Additive);
+        #endregion
+
+        #region Initialize Player
+        //Create player Battle Entity
         playerData = new BattleEntity(playerProper, battleConfig.PlayerTemplate);
         playerProper.Config(playerData);
-
         playerProper.onEndTurn += NextTurn;
-
-        //Bue simplificado 
-        playerProper.onDeath += ()=> 
+        //Create functionality for when the player loses
+        playerProper.onDeath += () =>
         {
             playerDead = true;
-            deathPanel.SetActive(true); 
-        } ; 
+            //Activate Death Panel
+            deathPanel.SetActive(true);
+        };
+        #endregion
 
-        //mau
+        #region Initialize Enemies
+        //Empty enemy List
+        enemies = new List<BattleEntity> { };
+       
+        //Iterate through the enemy list and inicializes each one
         int index = 0;
         foreach (EnemiesTemplate enTemp in battleConfig.Enemies)
         {
-            //Ainda mau mas melhor
-            //soparaagoraEnemies[index].gameObject.SetActive(true);
-            GameObject bep = Instantiate(enTemp.Prefab,
+            //Initializes Enemy Object in its proper position
+            GameObject enemyObj = Instantiate(enTemp.Prefab,
                 enemiesSlots[index].transform.position,
                 enemiesSlots[index].transform.rotation);
+            EnemyBattleEntityProper enemyProper =
+                enemyObj.GetComponent<EnemyBattleEntityProper>();
 
-            BattleEntityProper crtProper = 
-                bep.GetComponent<BattleEntityProper>();
-
-            BattleEntity enemyData = new BattleEntity(crtProper, enTemp);
-
-            crtProper.Config(enemyData);
-            crtProper.onEndTurn += NextTurn;
+            //Create enemy Battle Entity
+            BattleEntity enemyData = new BattleEntity(enemyProper, enTemp);
+            //Initialize the enemy object using the new Battle Entity
+            enemyProper.Config(enemyData);
+            enemyProper.onEndTurn += NextTurn;
+            //Add new enemy to enemy list 
             enemies.Add(enemyData);
-            (crtProper as EnemyBattleEntityProper).SetPlayers(
-                new List<BattleEntity> { playerData });
-            crtProper.attackTrigger += AnimationResponse;
-            
+            //Create functionality for when the enemy loses
+            enemyProper.onDeath += () => 
+            {
+                enemies.Remove(enemyData);
+                SaveLoadManager.ForceSetListValue(x => x.enemies, battleConfig.EnemyID, 1, pathSaveFile);
+                //Check Map in use
+                //Update Map Save File
+
+            };
+            enemyProper.attackTrigger += AnimationResponse;
+
             index++;
         }
+        #endregion
     }
-
 
     private void CleanEntityList()
     {
@@ -171,11 +201,10 @@ public class BattleManager : MonoBehaviour
         cameraManager = GetComponent<BattleCameraManager>();
         inTurnEntity.properEntity.StartTurn();      
     }
-
-    
-    private void AnimationResponse(DefaultAnimations anim, BattleEntity target = null)
+   
+    private void AnimationResponse(DefaultAnimations anim, IEnumerable<BattleEntity> targets = null)
     {
-        if (target == null)
+        if (targets == null)
         {
             foreach (BattleEntityProper bep in selector.SelectedEntities)
             {
@@ -184,13 +213,13 @@ public class BattleManager : MonoBehaviour
         }
         else
         {
-            target.properEntity.PlayAnimation(anim);
+            foreach(BattleEntity be in targets)
+                be.properEntity.PlayAnimation(anim);
         }
 
         //Kinda scuffed very scuffed
         inTurnEntity.properEntity.EndTurn();
     }
-
 
     public void ResolvePlayerAttack(BattleMove move)
     {
@@ -221,7 +250,7 @@ public class BattleManager : MonoBehaviour
     private void SwitchCamera()
     {
 
-        cameraManager.SwitchCameras(selector.SelectedEntity.gameObject);  
+        cameraManager.SwitchCameras(EntitySelector.SelectedEntity.gameObject);  
         
         GameObject acTimer = 
             Instantiate(actionTimer,transform.position, 
@@ -230,7 +259,7 @@ public class BattleManager : MonoBehaviour
         ActionPointManager acPointManager = 
             acTimer.GetComponent<ActionPointManager>();
        
-        acPointManager.Config(selector.SelectedEntity, rollResult, Attack);
+        acPointManager.Config(EntitySelector.SelectedEntity, rollResult, Attack);
         
         //Spawn points
         //Add AttackFunction to spawnPoints event
@@ -247,7 +276,7 @@ public class BattleManager : MonoBehaviour
                 break;
         }
 
-        enemiesSelected = selector.GetTargets(move.Config.Type).Select(x => x.entityData);
+        enemiesSelected = selector.GetTargets(playerData, move.Config.Type).Select(x => x.entityData);
 
         //KindaDumbMasPorAgora
         

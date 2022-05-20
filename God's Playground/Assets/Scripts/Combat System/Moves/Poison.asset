@@ -21,9 +21,12 @@ MonoBehaviour:
     type: 0
     mechanic: 0
     cooldown: 0
-  debuffs:
-    debuffs:
-    - {fileID: 11400000, guid: 5990e1a8f571a6a448292ef76b886e48, type: 2}
+  statusEffect:
+  - statusEffect: {fileID: 11400000, guid: 5990e1a8f571a6a448292ef76b886e48, type: 2}
+    overrideThis: 1
+    coolDown: 2
+    team: 1
+    type: 0
   basicFunc:
     param1:
       selected: 0
@@ -43,5 +46,3 @@ MonoBehaviour:
       selected: 0
     baseValue: 6
   function: 2
-  Debuff:
-    debuffs: []

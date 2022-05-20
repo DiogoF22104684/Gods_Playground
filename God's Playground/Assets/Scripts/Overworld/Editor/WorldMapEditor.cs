@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using System.IO;
 
 [CustomEditor(typeof(WorldMap))]
 public class WorldMapEditor : Editor
@@ -24,16 +25,30 @@ public class WorldMapEditor : Editor
         if(GUILayout.Button("Setup Map"))
         {
             map.AddTiles();
-            if (inSetup) 
+            map.AddEntities();
+            PrefabUtility.ApplyPrefabInstance(map.gameObject,InteractionMode.AutomatedAction);
+        }
+
+        if (GUILayout.Button("Setup Save File"))
+        {
+            string s = map.GetData();
+            #if UNITY_EDITOR
+            try
             {
-                
+                PrefabUtility.ApplyPrefabInstance(map.gameObject, InteractionMode.AutomatedAction);
             }
-            else
+            catch
             {
 
             }
+            #endif
+            SaveLoadManager.Instance.Save();
+        }
 
-            //inSetup = !inSetup;
+        if (GUILayout.Button("Test Load Data"))
+        {
+            SaveLoadManager.Instance.Load();       
         }
     }
+
 }

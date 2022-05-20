@@ -3,57 +3,60 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 
+
+/// <summary>
+/// Class responsible for setting up the game when transitioning between the 
+/// Overworld and the Combat scenes
+/// </summary>
 public class BattleTransitioner : MonoBehaviour
 {
-
-    private int id;
-    
-
+    //Data to inicialize the battle
     [SerializeField]
     private BattleConfigData battleConfig;
-    
-    [SerializeField]
-    private bool debug;
-    [SerializeField]
-    private string sceneName;
 
-    [SerializeField]
-    List<EnemiesTemplate> enemies;
-
-    [SerializeField]
-    private PlayableDirector transition;
-
+    //True if the game is in a cutscene
     [SerializeField]
     private ScriptableBool midCutscene;
 
-    public int Id { get => id; set => id = value; }
-    public PlayableDirector Transition { get => transition; set => transition = value; }
+    //List of enemies to instatiate in the battle
+    [SerializeField]
+    List<EnemiesTemplate> enemies;
 
+    //Enemy Info
+    private EnemyAgent agent;
 
-    // Start is called before the first frame update
-    void Start()
+    //Collide with player
+    private void OnTriggerEnter(Collider other)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (debug)
+        if (other.gameObject.tag == "Player")
         {
-            if (Input.GetKeyDown(KeyCode.Y))
-            {
-                EnterBattle();
-            }   
+            EnterBattle();
         }
     }
 
+    /// <summary>
+    /// Timeline director in the scene
+    /// </summary>
+    public PlayableDirector Transition { get; set; }
+      
+    private void Start()
+    {
+        agent = GetComponent <EnemyAgent>();
+        Transition = FindObjectOfType<PlayableDirector>();
+    }
+
+    /// <summary>
+    /// Method responsible for preparing the game to enter a battle
+    /// /// </summary>
     public void EnterBattle()
     {
         //Change Battle Config
-        battleConfig.SetupConfig(transform.position,enemies, this);
-        //Enter Battle
+        battleConfig.SetupConfig(agent, enemies, this);
+        //Change bool to stop entities from moving
         midCutscene.Value = true;
+        //Play the transition between scenes
         Transition.Play();
+        //Save the game
+        SaveLoadManager.Instance.Save();
     }
 }

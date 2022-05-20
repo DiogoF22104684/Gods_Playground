@@ -15,31 +15,39 @@ MonoBehaviour:
   hp:
     minV: 30
     maxV: 30
+    flatten: 1
   mp:
     minV: 100
     maxV: 100
+    flatten: 1
   dex:
     minV: 11
     maxV: 11
+    flatten: 1
   eva:
     minV: 1
     maxV: 1
+    flatten: 1
   str:
     minV: 6
     maxV: 6
+    flatten: 1
   def:
     minV: 1
     maxV: 1
+    flatten: 1
   inte:
     minV: 1
     maxV: 1
+    flatten: 1
   intu:
     minV: 1
     maxV: 1
+    flatten: 1
   skills:
   - {fileID: 11400000, guid: 9adaf4c224318a94fa23bb4726a643d3, type: 2}
   - {fileID: 11400000, guid: 07dc17537f6d64e46869f2f972d3d5a1, type: 2}
-  - {fileID: 11400000, guid: 0426c237e535d124ebef1916234b9158, type: 2}
+  - {fileID: 11400000, guid: 9a0d6840c4606364bbed53fc2b09c169, type: 2}
   - {fileID: 11400000, guid: 8378c2fbe53844048b1d5c22a67c9a7f, type: 2}
   inventory:
     equipment: []

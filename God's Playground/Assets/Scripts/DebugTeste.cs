@@ -20,7 +20,6 @@ public class DebugTeste : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Y))
         {
-            bcd.ResetValues();
             SceneManager.LoadScene("Overworld");
             Destroy(gameObject);
         }
