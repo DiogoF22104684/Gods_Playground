@@ -47,6 +47,7 @@ public class ConstraintMovement : MonoBehaviour
 
         rigi.velocity = Vector3.zero;
         rigi.MovePosition(transform.position - mover.Translate() * Time.deltaTime);
+        
         //controller.Move(-mover.Translate().y(transform.position.y) * Time.deltaTime);  
     }
 }
