@@ -40,7 +40,7 @@ public class SaveLoadManager: MonoBehaviour
 
     private void Start()
     {
-        Load();
+        Load((Saves)PlayerPrefs.GetInt("saveType"));
     }
 
     public void Save(Saves saveType = Autosave)
