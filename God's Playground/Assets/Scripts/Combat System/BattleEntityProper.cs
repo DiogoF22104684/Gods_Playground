@@ -10,7 +10,7 @@ public abstract class BattleEntityProper : MonoBehaviour, IConfigurable
     private Animator anim;
 
     public Action<DefaultAnimations, IEnumerable<BattleEntity>> attackTrigger;
-    public Action damageTrigger;
+    public Action<BattleEntity> damageTrigger;
     public Action onDeath;
     public Action onEndTurn;
 
@@ -121,8 +121,7 @@ public abstract class BattleEntityProper : MonoBehaviour, IConfigurable
 
     public void DamageTakenTrigger()
     {
-        damageTrigger?.Invoke();
-        damageTrigger = null;
+        damageTrigger?.Invoke(this.entityData);
     }
 
     private void AnimationStart(string name)

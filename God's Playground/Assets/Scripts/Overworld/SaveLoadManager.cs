@@ -75,7 +75,7 @@ public class SaveLoadManager: MonoBehaviour
     public void Load(Saves saveType = Autosave)
     {
         if (!Directory.Exists(DirPath))
-            Directory.CreateDirectory(DirPath + $"/{saveType}");
+            Directory.CreateDirectory(DirPath + $"/{saveType}" );
 
         string maindataString = 
             File.ReadAllText(DirPath + $"{saveType}/Main_{saveType}.json");

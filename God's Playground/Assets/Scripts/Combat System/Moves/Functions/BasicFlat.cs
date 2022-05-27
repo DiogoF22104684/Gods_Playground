@@ -36,12 +36,13 @@ public class BasicFlat : BattleAffects
 
             float valueToChange = stat1 - totalValue;
 
-            be.properEntity.damageTrigger += () =>
+            be.properEntity.damageTrigger += (BattleEntity en) =>
             {
-                Debug.Log("KKK");
                 BattleStat value =
                        new BattleStat(valueToChange, stat.MaxStat, stat.FlatStat);
                 param1.param.SetValue(be, value);
+                en.properEntity.damageTrigger = null;
+                attacker.EndTurn();
             };
         }
 

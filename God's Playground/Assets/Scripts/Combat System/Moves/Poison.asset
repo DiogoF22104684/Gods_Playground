@@ -34,7 +34,7 @@ MonoBehaviour:
       selected: 1
     param3:
       selected: 2
-    baseValue: -10
+    baseValue: 10
   basicIgnoreDef:
     param1:
       selected: 0
@@ -45,4 +45,14 @@ MonoBehaviour:
     param1:
       selected: 0
     baseValue: 6
-  function: 2
+  multipleAffect:
+    numb: 3
+    affect:
+      param1:
+        selected: 0
+      param2:
+        selected: 2
+      param3:
+        selected: 3
+      baseValue: 10
+  function: 0

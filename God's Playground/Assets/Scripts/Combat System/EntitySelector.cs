@@ -89,10 +89,12 @@ public class EntitySelector : MonoBehaviour
            Camera.main.WorldToScreenPoint(SelectedEntity.transform.position);
     }
 
-    public IEnumerable<BattleEntityProper> GetTargets(BattleEntity entity, SelectorType type)
+    public IEnumerable<BattleEntityProper> GetTargets(BattleEntity entity, BattleMove move)
     {
         List<BattleEntityProper> returnlist = new List<BattleEntityProper> { };
-        switch(type)
+
+        
+        switch(move.Config.Type)
         {
             case Solo:
                 returnlist = new List<BattleEntityProper> { SelectedEntity };
@@ -232,4 +234,40 @@ public class EntitySelector : MonoBehaviour
         return returnlist;
     }
     
+    public static IEnumerable<BattleEntity> GetRandomRange(
+        BattleEntity attacker, SelectorMode team, int numb, bool canRepeat = true)
+    {
+        List<BattleEntity> affectedEntities = enemiesEntity.Select(x => x.entityData).ToList();
+        affectedEntities.Add(playerEntity.entityData);
+
+        if (team == Adversary || team == Team)
+        {
+            bool isTeam = true;
+            if (team == Adversary)
+            {
+                isTeam = false;
+            }
+
+            affectedEntities = GetTeam(attacker, isTeam).ToList();
+        }
+        else if (team == Self)
+        {
+            affectedEntities = new List<BattleEntity> { playerEntity.entityData };
+        }
+
+
+        List<BattleEntity> returnList = new List<BattleEntity>();
+        for (int i = 0; i < numb; i++)
+        {
+            int r =  UnityEngine.Random.Range(0,affectedEntities.Count);
+            returnList.Add(affectedEntities[r]);
+            if (!canRepeat)
+            {
+                affectedEntities.RemoveAt(r);
+            }
+        }
+
+        return returnList;
+    }
+
 }
