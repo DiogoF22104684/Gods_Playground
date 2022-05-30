@@ -179,11 +179,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 39514032}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59364ea59b5a46e42812bc8e26443f4e, type: 3}
+  m_Script: {fileID: 11500000, guid: 08c11124f7f431a458a8de8f0029e760, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   iconSelector: {fileID: 313037120}
   infoPanel: {fileID: 1421202587}
+  manager: {fileID: 1320977172}
 --- !u!4 &39514034
 Transform:
   m_ObjectHideFlags: 0
@@ -390,7 +391,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 25
+  m_AdditionalShaderChannelsFlag: 1
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -1476,7 +1477,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0586fe413703c964ea3d1b80822beb54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manager: {fileID: 1320977172}
   isLocked: 0
 --- !u!1 &633303780
 GameObject:
@@ -2002,7 +2002,7 @@ MonoBehaviour:
   hpSliderPREFAB: {fileID: 944638779}
   mpSliderPREFAB: {fileID: 1536512618}
   statusEffectDisplayPREFAB: {fileID: 1107942590}
-  battleMenu: {fileID: 1973239371}
+  battleMenu: {fileID: 1973239375}
 --- !u!1 &875262576
 GameObject:
   m_ObjectHideFlags: 0
@@ -3157,7 +3157,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0586fe413703c964ea3d1b80822beb54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manager: {fileID: 1320977172}
   isLocked: 0
 --- !u!1 &1214983477
 GameObject:
@@ -3608,7 +3607,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4112e54a0974f1b43992ca4d61ed682e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selector: {fileID: 39514033}
   orderDisplay: {fileID: 1746304487}
   actionTimer: {fileID: 4886072578692119607, guid: b6853b55ca58fe5418d529c184620d0b, type: 3}
   dice: {fileID: 7455203477441740701, guid: d21f66ec34ae82540bfad08a8351de32, type: 3}
@@ -4334,7 +4332,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0586fe413703c964ea3d1b80822beb54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manager: {fileID: 1320977172}
   isLocked: 0
 --- !u!1 &1536512618
 GameObject:
@@ -4614,7 +4611,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0586fe413703c964ea3d1b80822beb54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manager: {fileID: 1320977172}
   isLocked: 0
 --- !u!1 &1580728493
 GameObject:
@@ -5588,6 +5584,7 @@ MonoBehaviour:
   - {fileID: 596196627}
   template: {fileID: 11400000, guid: 7f25d388dfc82504caad2ea8bc894dfe, type: 2}
   selector: {fileID: 39514033}
+  manager: {fileID: 1320977172}
 --- !u!1 &1986167002
 GameObject:
   m_ObjectHideFlags: 0

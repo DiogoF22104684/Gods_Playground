@@ -1,0 +1,50 @@
+{"mapData":{"position":{"x":18.346172332763673,"y":0.7999655604362488,"z":-6.104994297027588}},
+"enemies":[{
+  "Position": {
+    "x": 21.96,
+    "y": 40.61,
+    "z": 30.29,
+    "normalized": {
+      "x": 0.39770484,
+      "y": 0.7354642,
+      "z": 0.5485647,
+      "magnitude": 1.0,
+      "sqrMagnitude": 0.99999994
+    },
+    "magnitude": 55.2168274,
+    "sqrMagnitude": 3048.898
+  },
+  "States": 0
+},{
+  "Position": {
+    "x": 45.76,
+    "y": 40.61,
+    "z": 36.61,
+    "normalized": {
+      "x": 0.6418109,
+      "y": 0.5695792,
+      "z": 0.5134768,
+      "magnitude": 1.0,
+      "sqrMagnitude": 1.00000012
+    },
+    "magnitude": 71.2982559,
+    "sqrMagnitude": 5083.442
+  },
+  "States": 0
+},{
+  "Position": {
+    "x": 18.19,
+    "y": 40.61,
+    "z": 39.1,
+    "normalized": {
+      "x": 0.307078779,
+      "y": 0.6855673,
+      "z": 0.660075843,
+      "magnitude": 1.0,
+      "sqrMagnitude": 1.0
+    },
+    "magnitude": 59.2356148,
+    "sqrMagnitude": 3508.85815
+  },
+  "States": 0
+}]}

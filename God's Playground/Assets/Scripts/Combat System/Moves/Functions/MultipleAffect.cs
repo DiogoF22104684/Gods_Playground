@@ -21,7 +21,7 @@ public class MultipleAffect : BattleAffects
         //Criar dano para cada cena
 
         //Play animation / Needs to be better
-        attacker.properEntity.PlayAnimation(DefaultAnimations.BasicAttack);
+        attacker.ProperEntity.PlayAnimation(DefaultAnimations.BasicAttack);
 
 
         foreach (BattleEntity en in target)
@@ -37,7 +37,7 @@ public class MultipleAffect : BattleAffects
 
         if (used < numb)
         {
-            attacker.properEntity.PlayAnimation(DefaultAnimations.BasicAttack);
+            attacker.ProperEntity.PlayAnimation(DefaultAnimations.BasicAttack);
 
             AddToEvent(en, attacker);
         }
@@ -49,11 +49,9 @@ public class MultipleAffect : BattleAffects
 
     void AddToEvent(BattleEntity en, BattleEntity attacker)
     {
-        en.properEntity.damageTrigger += (BattleEntity en) =>
+        en.ProperEntity.damageTrigger += (BattleEntity en) =>
         {
-            en.properEntity.damageTrigger = null;
-
-            Debug.Log(used);
+            en.ProperEntity.damageTrigger = null;
 
             affect.Function(attacker, new List<BattleEntity> { en }, roll);
 

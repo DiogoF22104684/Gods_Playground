@@ -88,14 +88,24 @@ public static class UGYST
         }
         return null;
     }
+
     public static string print<T>(this IEnumerable<T> enumerable)
     {
         string returnstring = "";
         foreach(T t in enumerable)
         {
+            if(t == null)
+            {
+                returnstring = "Null";
+                continue;
+            }
             returnstring += t.ToString() + " ";
         }
         Debug.Log(returnstring);
+
+        if (returnstring == "")
+            Debug.Log("Empty List");
+
         return returnstring;
     }
 

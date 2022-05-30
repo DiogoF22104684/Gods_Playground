@@ -15,8 +15,8 @@ MonoBehaviour:
   icon: {fileID: 2800000, guid: 9bf4f93a1a321fb4d817f6e87ad2deee, type: 3}
   config:
     costStat:
-      selected: 0
-    costValue: 0
+      selected: 1
+    costValue: 5
     mode: 0
     type: 0
     mechanic: 0
@@ -39,5 +39,15 @@ MonoBehaviour:
   basicFlat:
     param1:
       selected: 0
-    baseValue: -70
+    baseValue: -5
+  multipleAffect:
+    numb: 0
+    affect:
+      param1:
+        selected: 0
+      param2:
+        selected: 0
+      param3:
+        selected: 0
+      baseValue: 0
   function: 2

@@ -11,21 +11,15 @@ public class EnemyBattleEntityProper : BattleEntityProper
     private ActionPointProper actionPoints;
     public ActionPointProper ActionPoints => actionPoints;
 
-    IEnumerable<BattleEntity> entitiesSelected;
-
-    public override bool StartTurn()
+    public override bool StartTurn(CombatState state)
     {
-        if (!base.StartTurn()) return false;
+        if (!base.StartTurn(state)) return false;
 
-        entitiesSelected = new List<BattleEntity>();
+        currentTargets = new List<BattleEntity>();
 
-        BattleMove mo = (entityData.template as EnemiesTemplate).ResolveAction();
+        BattleMove mo = (entityData.Template as EnemiesTemplate).ResolveAction(entityData, state);
 
-        entitiesSelected = EntitySelector.SelectEntity(entityData,
-            new List<BattleEntity> { EntitySelector.PlayerEntity.entityData }, 
-            mo.Config.Mode, mo.Config.Type);
-
-        mo.Function(entityData, entitiesSelected, Random.Range(1, 7) / 6f);
+        IniciateMove(mo, state);
 
         return true;
     }
@@ -33,13 +27,6 @@ public class EnemyBattleEntityProper : BattleEntityProper
     public override void EndTurn()
     {
         Invoke("OnEndTurn", 1);
-    }
-
-
-
-    public override void AttackTriggerAnimation(DefaultAnimations animType)
-    {     
-        attackTrigger?.Invoke(animType, entitiesSelected);
     }
 
     protected override void ConfingBars()

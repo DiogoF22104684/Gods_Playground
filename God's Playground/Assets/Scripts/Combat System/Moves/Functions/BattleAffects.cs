@@ -6,8 +6,10 @@ using System;
 using System.Linq;
 
 [System.Serializable]
-public abstract class BattleAffects 
+public abstract class BattleAffects
 {
+    public Action ResolveMove { get; set; }
+
     public abstract void Function(BattleEntity attacker,
             IEnumerable<BattleEntity> target, float roll);
 }

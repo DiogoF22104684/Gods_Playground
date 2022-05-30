@@ -176,18 +176,17 @@ public class DialogueDisplayHandler : MonoBehaviour
       
     }
 
-
     /// <summary>
     /// Method responsible for switching to the passed DialogueScript
     /// </summary>
     /// <param name="script">Dialogue Script to inicialize</param>
-    public void StartDialogue(DialogueScript script, DialogueContainer container = null)
-    {
+    public void StartDialogue(DialogueScript script, DialogueContainer container)
+    {        
         currentScript = script;
+        
 
-
-        this.currentContainer = container;
-        this.currentController = container?.Controller;
+        currentContainer = container;
+        currentController = container?.Controller;
 
         content.SetActive(true);
         onStartDialogue?.Invoke(currentScript);
@@ -312,34 +311,34 @@ public class DialogueDisplayHandler : MonoBehaviour
 
        
         //DUMB AND HARCODED
-        if (presetData[dialogueLine.PresetName].EntityName == "Default")
-        {
-            dialogueDisplayTarget.gameObject.transform.localPosition =
-                new Vector3(
-                    0,
-                    dialogueDisplayTarget.gameObject.transform.localPosition.y,
-                    dialogueDisplayTarget.gameObject.transform.localPosition.z);
-            RectTransform rectT = dialogueDisplayTarget.gameObject.GetComponent<RectTransform>();
+        //if (presetData[dialogueLine.PresetName].EntityName == "Default")
+        //{
+        //    dialogueDisplayTarget.gameObject.transform.localPosition =
+        //        new Vector3(
+        //            0,
+        //            dialogueDisplayTarget.gameObject.transform.localPosition.y,
+        //            dialogueDisplayTarget.gameObject.transform.localPosition.z);
+        //    RectTransform rectT = dialogueDisplayTarget.gameObject.GetComponent<RectTransform>();
 
-            rectT.sizeDelta =
-                new Vector2(
-                    5910.446f,
-                    rectT.sizeDelta.y);
-        }
-        else
-        {
-            dialogueDisplayTarget.gameObject.transform.localPosition =
-               new Vector3(
-                   -192.3f,
-                   dialogueDisplayTarget.gameObject.transform.localPosition.y,
-                   dialogueDisplayTarget.gameObject.transform.localPosition.z);
-            RectTransform rectT = dialogueDisplayTarget.gameObject.GetComponent<RectTransform>();
+        //    rectT.sizeDelta =
+        //        new Vector2(
+        //            5910.446f,
+        //            rectT.sizeDelta.y);
+        //}
+        //else
+        //{
+        //    dialogueDisplayTarget.gameObject.transform.localPosition =
+        //       new Vector3(
+        //           -192.3f,
+        //           dialogueDisplayTarget.gameObject.transform.localPosition.y,
+        //           dialogueDisplayTarget.gameObject.transform.localPosition.z);
+        //    RectTransform rectT = dialogueDisplayTarget.gameObject.GetComponent<RectTransform>();
 
-            rectT.sizeDelta =
-                new Vector2(
-                    4628.585f,
-                    rectT.sizeDelta.y);
-        }
+        //    rectT.sizeDelta =
+        //        new Vector2(
+        //            4628.585f,
+        //            rectT.sizeDelta.y);
+        //}
 
         onStartLine?.Invoke(dialogueLine);
         StopCoroutine("TypeWriterEffect");
@@ -357,6 +356,7 @@ public class DialogueDisplayHandler : MonoBehaviour
         ended = false;
         dialogueDisplayTarget.text = "";
         int index = 0;
+
         while (dialogueText.Length > 0)
         {
             yield return effectSpeed;

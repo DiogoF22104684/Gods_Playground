@@ -1,175 +1,61 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
 using CombatSystem;
 using static CombatSystem.SelectorMode;
 using static CombatSystem.SelectorType;
-public class EntitySelector : MonoBehaviour
+
+public class EntitySelector
 {
     public bool PlayerHasAttacked { get; internal set; }
+ 
+    public BattleEntity SelectedEntity { get; set; }
 
-    [SerializeField]
-    private GameObject iconSelector;
-
-    [SerializeField]
-    private BattleInfoPanel infoPanel;
-    public static BattleEntityProper SelectedEntity { get; private set; }
-
-    public List<BattleEntityProper> SelectedEntities { get; private set; }
-
-    public System.Action onSelect;
-
-    private static List<BattleEntityProper> enemiesEntity;
-    private static BattleEntityProper playerEntity;
-    public static BattleEntityProper PlayerEntity => playerEntity;
-
-   
-    // Update is called once per frame
-    void Update()
+    public List<BattleEntity> SelectedEntities { get; private set; }
+ 
+    private CombatState state;
+      
+    public EntitySelector(CombatState state)
     {
-
-        //Select target entity
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (!PlayerHasAttacked)
-            {
-                SelectEntity(x =>
-                {
-                    SelectedEntity = x;
-                    SpawnIcon();
-                    onSelect?.Invoke();
-                });
-            }
-        }
-
-        //Select info entity
-        if (Input.GetMouseButton(1))
-        {
-            SelectEntity(x => {
-                
-                infoPanel.transform.position = 
-                    Camera.main.WorldToScreenPoint(x.transform.position);
-                infoPanel.gameObject.SetActive(true);
-                infoPanel.Display(x);
-            });
-        }
-        else
-        {
-            infoPanel.gameObject.SetActive(false);
-        }
+        this.state = state;
     }
 
 
-    private void SelectEntity(Action<BattleEntityProper> onSelect)
+    private IEnumerable<BattleEntity> GetAllAdjacent()
     {
-        RaycastHit hit = new RaycastHit();
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition),
-            hitInfo: out hit))
-        {
-            BattleEntityProper selectedEntity =
-                hit.collider.gameObject.GetComponent<BattleEntityProper>();
-
-            if (selectedEntity != null && selectedEntity != SelectedEntity)
-            {
-                onSelect?.Invoke(selectedEntity);
-            }
-        }
-    }
-
-    private void SpawnIcon()
-    {
-        if (SelectedEntity == null) return;
-
-        iconSelector.GetComponent<RectTransform>().ScaleWithTarget(
-            SelectedEntity.transform, 0.5f);
-
-        iconSelector.transform.position =
-           Camera.main.WorldToScreenPoint(SelectedEntity.transform.position);
-    }
-
-    public IEnumerable<BattleEntityProper> GetTargets(BattleEntity entity, BattleMove move)
-    {
-        List<BattleEntityProper> returnlist = new List<BattleEntityProper> { };
-
-        
-        switch(move.Config.Type)
-        {
-            case Solo:
-                returnlist = new List<BattleEntityProper> { SelectedEntity };
-                break;
-            case Area:
-                returnlist = GetAllAdjacent().ToList();
-                break;
-            case SelectorType.All:
-                returnlist = enemiesEntity;
-                break;
-
-
-        }
-        SelectedEntities = returnlist;
-        return returnlist;
-    }
-
-    private IEnumerable<BattleEntityProper> GetAllAdjacent()
-    {
-        List<BattleEntityProper> returnlist = new List<BattleEntityProper> { };
-        int index = enemiesEntity.IndexOf(SelectedEntity);
+        List<BattleEntity> returnlist = new List<BattleEntity> { };
+        int index = state.Enemies.IndexOf(SelectedEntity);
         
         returnlist.Add(SelectedEntity);
 
         if (index - 1 >= 0)
         {
-            returnlist.Add(enemiesEntity[index - 1]);
+            returnlist.Add(state.Enemies[index - 1]);
         }
-        if (index + 1 < enemiesEntity.Count)
+        if (index + 1 < state.Enemies.Count)
         {
-            returnlist.Add(enemiesEntity[index + 1]);
+            returnlist.Add(state.Enemies[index + 1]);
         }
 
         
 
         return returnlist;
     }
-    
-    internal void Config(BattleEntityProper playerProper, 
-        List<BattleEntityProper> enemies)
-    {
-
-        playerEntity = playerProper;
-        enemiesEntity = enemies;
-
-        if (SelectedEntity == null || SelectedEntity.entityData.Hp <= 0)
-        {
-            try 
-            {
-                SelectedEntity = enemiesEntity.First(x => x.entityData.Hp > 0);
-            }
-            catch
-            {
-
-            }
-        }
-        
-        SpawnIcon();
-        //onSelect?.Invoke();
-    }
-
+      
     /// <summary>
     /// Get team given an entity 
     /// </summary>
     /// <param name="entity"></param>
     /// <param name="ofTeam"></param>
     /// <returns></returns>
-    private static IEnumerable<BattleEntity> GetTeam(BattleEntity entity, bool ofTeam = false)
+    private IEnumerable<BattleEntity> GetTeam(BattleEntity entity, bool ofTeam = false)
     {
         
-        bool isPlayer = !(entity.IsSameTeam(playerEntity.entityData) ^ ofTeam);
+        bool isPlayer = !(entity.IsSameTeam(state.Players[0]) ^ ofTeam);
         return isPlayer ?
-            new List<BattleEntity> { playerEntity.entityData }
+            state.Players
             : 
-            enemiesEntity.Select(x => x.entityData)
+            state.Enemies
             ;
     }
 
@@ -179,15 +65,76 @@ public class EntitySelector : MonoBehaviour
     /// <param name="entity"></param>
     /// <param name="ofTeam"></param>
     /// <returns></returns>
-    private static BattleEntity GetSelected(BattleEntity entity, bool ofTeam = false)
+    private BattleEntity GetSelected(BattleEntity entity, bool ofTeam = false)
     {
-        bool isPlayer = !(entity.IsSameTeam(playerEntity.entityData) ^ ofTeam);
-        return isPlayer ? playerEntity.entityData: SelectedEntity.entityData;
+        bool isPlayer = !(entity.IsSameTeam(state.Players[0]) ^ ofTeam);
+
+        //lmao
+        return isPlayer ? state.Players[0] != null ? state.Players[0] : GetRandom(Team) :
+            SelectedEntity != null ? SelectedEntity : GetRandom(Adversary);
     }
 
-    public static IEnumerable<BattleEntity> SelectEntity(
-        BattleEntity attacker, IEnumerable<BattleEntity> target, 
-        SelectorMode team, SelectorType type)
+    private BattleEntity GetRandom(SelectorMode team)
+    {
+        IList<BattleEntity> selectedTeamList = 
+            team == Team ? state.Players : state.Enemies;
+
+        int rnd = UnityEngine.Random.Range(0, selectedTeamList.Count);
+
+        return selectedTeamList[rnd];
+    }
+ 
+    public IEnumerable<BattleEntity> SelectEntity(
+        BattleEntity attacker,
+        BattleMove move)
+    {
+        List<BattleEntity> returnlist = new List<BattleEntity> { };
+
+        //Bad dumb and ugly
+        switch (move.Config.Type)
+        {
+            case Solo:
+                switch (move.Config.Mode)
+                {
+                    case SelectorMode.All:
+                        returnlist.Add(GetSelected(attacker));
+                        return returnlist;
+                    case Self:
+                        returnlist.Add(attacker);
+                        return returnlist;
+                    case Adversary:
+                        returnlist.Add(GetSelected(attacker));
+                        return returnlist;
+                    case Team:
+                        returnlist.Add(GetSelected(attacker));
+                        return returnlist;
+                }
+                break;           
+            case SelectorType.All:
+                switch (move.Config.Mode)
+                {
+                    case SelectorMode.All:
+                        returnlist = state.Enemies;
+                        returnlist.AddRange(state.Players);
+                        return returnlist;
+                    case Self:
+                        returnlist.Add(attacker);
+                        return returnlist;
+                    case Adversary:                        
+                        return GetTeam(attacker);
+                    case Team:
+                        return GetTeam(attacker, true);
+                }
+                break;
+        }
+        
+        return returnlist;
+    }
+
+    public IEnumerable<BattleEntity> SelectEntity(
+        BattleEntity attacker,
+        SelectorType type,
+        SelectorMode team)
     {
         List<BattleEntity> returnlist = new List<BattleEntity> { };
 
@@ -210,18 +157,18 @@ public class EntitySelector : MonoBehaviour
                         returnlist.Add(GetSelected(attacker));
                         return returnlist;
                 }
-                break;           
+                break;
             case SelectorType.All:
                 switch (team)
                 {
                     case SelectorMode.All:
-                        returnlist = enemiesEntity.Select(x =>x.entityData).ToList();
-                        returnlist.Add(playerEntity.entityData);
+                        returnlist = state.Enemies;
+                        returnlist.AddRange(state.Players);
                         return returnlist;
                     case Self:
                         returnlist.Add(attacker);
                         return returnlist;
-                    case Adversary:                        
+                    case Adversary:
                         return GetTeam(attacker);
                     case Team:
                         return GetTeam(attacker, true);
@@ -229,16 +176,15 @@ public class EntitySelector : MonoBehaviour
                 break;
         }
 
-        Debug.Log(returnlist.print());
-
         return returnlist;
     }
-    
-    public static IEnumerable<BattleEntity> GetRandomRange(
+
+
+    public IEnumerable<BattleEntity> GetRandomRange(
         BattleEntity attacker, SelectorMode team, int numb, bool canRepeat = true)
     {
-        List<BattleEntity> affectedEntities = enemiesEntity.Select(x => x.entityData).ToList();
-        affectedEntities.Add(playerEntity.entityData);
+        List<BattleEntity> affectedEntities = state.Enemies;
+        affectedEntities.AddRange(state.Players);
 
         if (team == Adversary || team == Team)
         {
@@ -252,7 +198,7 @@ public class EntitySelector : MonoBehaviour
         }
         else if (team == Self)
         {
-            affectedEntities = new List<BattleEntity> { playerEntity.entityData };
+            affectedEntities = state.Players;
         }
 
 
@@ -269,5 +215,52 @@ public class EntitySelector : MonoBehaviour
 
         return returnList;
     }
+
+    //public static IEnumerable<BattleEntity> SelectEntity(
+    //        SelectorType type, SelectorMode team)
+    //{
+    //    List<BattleEntity> returnlist = new List<BattleEntity> { };
+
+    //    //Bad dumb and ugly
+    //    switch (type)
+    //    {
+    //        case Solo:
+    //            switch (team)
+    //            {
+    //                case SelectorMode.All:
+    //                    returnlist.Add(GetSelected(attacker));
+    //                    return returnlist;
+    //                case Self:
+    //                    returnlist.Add(state.Turn);
+    //                    return returnlist;
+    //                case Adversary:
+    //                    returnlist.Add(GetSelected(attacker));
+    //                    return returnlist;
+    //                case Team:
+    //                    returnlist.Add(GetSelected(attacker));
+    //                    return returnlist;
+    //            }
+    //            break;
+    //        case SelectorType.All:
+    //            switch (team)
+    //            {
+    //                case SelectorMode.All:
+    //                    returnlist = enemiesEntity.Select(x => x.entityData).ToList();
+    //                    returnlist.Add(playerEntity.entityData);
+    //                    return returnlist;
+    //                case Self:
+    //                    returnlist.Add(attacker);
+    //                    return returnlist;
+    //                case Adversary:
+    //                    return GetTeam(attacker);
+    //                case Team:
+    //                    return GetTeam(attacker, true);
+    //            }
+    //            break;
+    //    }
+
+    //    return returnlist;
+    //}
+
 
 }
