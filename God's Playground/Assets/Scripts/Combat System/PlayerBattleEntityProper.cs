@@ -17,10 +17,9 @@ public class PlayerBattleEntityProper : BattleEntityProper
 
     public override bool StartTurn(CombatState state)
     {
+      
         if (!base.StartTurn(state)) return false;
-
-        
-            
+       
         battleMenu.gameObject.SetActive(true);
         
         return true;

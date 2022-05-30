@@ -43,9 +43,9 @@ public class CombatMCTSNode : AbstractMCTSNode<BattleMove, BattleEntity>
 
         int playouts = 0;
 
-        //Debug.Log("Begin Playout");
+        ///Debug.Log("Begin Playout");
 
-        Debug.Log("------------------------------------------Begin Playout------------------------------------------");
+        ///Debug.Log("------------------------------------------Begin Playout------------------------------------------");
         // Keep playing using the given strategy until an endgame is reached
         while (!stateCopy.Status().HasValue && playouts < 50)
         {         
@@ -53,11 +53,11 @@ public class CombatMCTSNode : AbstractMCTSNode<BattleMove, BattleEntity>
             BattleMove move = strategy(ValidMoves.ToList());
 
 
-            Debug.Log($"----Being turn {playouts}---- ");
+            ///Debug.Log($"----Being turn {playouts}---- ");
             // Perform move assuming the roll is max
             stateCopy.DoMove(move, 1, state);
 
-            //Debug.Log($"Turn {playouts}" + "Player HP:" + stateCopy.Players[0].Hp + "Enemy HP:" + stateCopy.Enemies[0] + "Move:" + move);
+            ///Debug.Log($"Turn {playouts}" + "Player HP:" + stateCopy.Players[0].Hp + "Enemy HP:" + stateCopy.Enemies[0] + "Move:" + move);
           
             playouts++;
         }
@@ -67,8 +67,8 @@ public class CombatMCTSNode : AbstractMCTSNode<BattleMove, BattleEntity>
         //Scuffed
         SelectorMode? winTeam = stateCopy.Status();
 
-        Debug.Log(winTeam);
-        Debug.Log("------------------------------------------End Playout------------------------------------------");
+        //Debug.Log(winTeam);
+        //Debug.Log("------------------------------------------End Playout------------------------------------------");
 
         BattleEntity winEntity = null;
 
@@ -86,11 +86,11 @@ public class CombatMCTSNode : AbstractMCTSNode<BattleMove, BattleEntity>
     {
         CombatState stateCopy = state.Copy();
 
-        Debug.Log(stateCopy.Turn);
+        //Debug.Log(stateCopy.Turn);
 
-        Debug.Log("------------------------------------------Do Move------------------------------------------");
+        //Debug.Log("------------------------------------------Do Move------------------------------------------");
         stateCopy.DoMove(move, 1, state);
-        Debug.Log("------------------------------------------END DO MOVE------------------------------------------");
+        //Debug.Log("------------------------------------------END DO MOVE------------------------------------------");
         return new CombatMCTSNode(stateCopy, move);
     }
 

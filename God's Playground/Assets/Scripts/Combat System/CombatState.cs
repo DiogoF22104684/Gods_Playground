@@ -50,30 +50,15 @@ public class CombatState
         IEnumerable<BattleEntity> targets =
             selector.SelectEntity(Turn, move);
 
-        //UnityEngine.Debug.Log("Targets");
-        //targets.print();
-        //UnityEngine.Debug.Log($"THE CURRENT ENEMY IS: " + Enemies.First());
-        //UnityEngine.Debug.Log($"THE CURRENT PLAYER IS: " + Players.First());
-        UnityEngine.Debug.Log($"{Turn.Team.GetTeamName()} used {move}!");
-        UnityEngine.Debug.Log($"{targets.First().Team.GetTeamName()} had {targets.First().Hp.Stat} health...");
-
-        //UnityEngine.Debug.Log($"ENTERING BATTLE HASH: {original.Enemies.First().GetHashCode()}");
-
         //Resolve selected battle move
         move.Function(this, targets, roll);
 
-        //UnityEngine.Debug.Log($"LEAVING BATTLE HASH: {original.Enemies.First().GetHashCode()}");
         Turn.turns -= 1;
         foreach (BattleEntity t in targets)
         {
             t.QueuedMove?.Invoke(t);
         }
 
-
-        //UnityEngine.Debug.Log($"{targets.First().Team.GetTeamName()} now has: " + targets.First().Hp.Stat + " health!");
-
-        //UnityEngine.Debug.Log(Players[0].Hp);
-        //UnityEngine.Debug.Log("-----End Turn------");
         //Pass turn
         NextTurn();
     }
@@ -86,9 +71,7 @@ public class CombatState
     private bool PrepareTurnOrder()
     {
         //Ignore if the combat has ended
-        if (Status() != null) return false;
-
-        ///UnityEngine.Debug.Log("Player in Prepare: " + Players[0].Hp);
+        if (Status() != null) return false;       
 
         List<BattleEntity> totalTurnList = new List<BattleEntity>(Enemies);
         totalTurnList.AddRange(Players);
@@ -104,7 +87,6 @@ public class CombatState
             foreach (BattleEntity be in totalTurnList)
             {
                 be.turns.RestorToDefault();
-                
             }
             canMoveList = totalTurnList.
              Where(x => x.turns.Stat > 0).ToList();
@@ -126,38 +108,25 @@ public class CombatState
     }
 
     public void NextTurn()
-    {
-        ///selector.PlayerHasAttacked = false;
-
-        ///UnityEngine.Debug.Log("Player in Next: " + Players[0].Hp);
-
+    {      
         //Update turn order and get current turn's entity
         PrepareTurnOrder();
         TurnNumber++;
-       
-        ///inTurnEntity.ProperEntity.StartTurn();
     }
 
     public CombatState Copy()
     {
         List<BattleEntity> copyList = new List<BattleEntity>();
-
-        //UnityEngine.Debug.Log($"Original Enemy: {Enemies.First()}");
+       
         copyList.AddRange(Players.Select(x => x.Copy()));
         copyList.AddRange(Enemies.Select(x => x.Copy()));
-
-     
 
         CombatState state = new CombatState(copyList);
         state.Enemies.First().Hp.Stat -= 1;
 
-        // UnityEngine.Debug.Log($"Copy Enemy: {state.Enemies.First()}");
-        UnityEngine.Debug.Log($"During Copy Copy HASH: {state.Enemies.First().GetHashCode()}");
-        // UnityEngine.Debug.Log($"Original Enemy: {Enemies.First()} ");
-        UnityEngine.Debug.Log($"During Copy Original HASH: {Enemies.First().GetHashCode()}");
-
+        state.PrepareTurnOrder();
         //Probably need to add something here
-        state.Turn = this.Turn;
+        
         return state;
     }
 

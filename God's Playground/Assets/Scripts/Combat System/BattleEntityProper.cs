@@ -116,6 +116,7 @@ public abstract class BattleEntityProper : MonoBehaviour, IConfigurable
         
         move.Function(state, currentTargets, 1f);
         PlayAnimation(DefaultAnimations.BasicAttack);
+
     }
 
     public void Death()
@@ -142,8 +143,10 @@ public abstract class BattleEntityProper : MonoBehaviour, IConfigurable
     public virtual bool StartTurn(CombatState state)
     { 
         entityData.ResolveStatusEffect();
+        
         if (isDead)
         {
+            
             //onEndTurn?.Invoke();
             return false;
         }
@@ -152,6 +155,7 @@ public abstract class BattleEntityProper : MonoBehaviour, IConfigurable
 
         if (entityData.turns < 1)
         {
+            
             EndTurn();
             return false;
         }

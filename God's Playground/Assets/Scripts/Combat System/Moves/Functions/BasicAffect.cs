@@ -59,7 +59,7 @@ public class BasicAffect : BattleAffects
 
             float valueToChange = stat1 - totalValue;
 
-            Debug.Log($"{be.Team.GetTeamName()} recieved {totalValue} damage. And has now {valueToChange} health!");
+            //Debug.Log($"{be.Team.GetTeamName()} recieved {totalValue} damage. And has now {valueToChange} health!");
            
             be.QueuedMove = (BattleEntity en)=> 
             {

@@ -97,8 +97,8 @@ public class EnemiesTemplate : EntityTemplate
 
             // Update the win/lose count according whose turn it was to play
             // in the previous turn
-            if (result == node.Turn.Team) node.Wins++;
-            else if (result == node.Turn.Team) node.Wins--;
+            if (result == node.Turn.Team) node.Wins--;
+            else if (result == node.Turn.Team) node.Wins++;
         }
     }
 
@@ -116,7 +116,7 @@ public class EnemiesTemplate : EntityTemplate
         BattleMove move = 
             untriedMoves[UnityEngine.Random.Range(0,untriedMoves.Count)];
 
-        Debug.Log("Do Make Move");
+        
         // Make the untried move and return the respective node
         return node.MakeMove(move) as CombatMCTSNode;
     }
