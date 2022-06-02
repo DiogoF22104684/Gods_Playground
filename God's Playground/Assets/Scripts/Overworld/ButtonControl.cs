@@ -5,24 +5,13 @@ using UnityEngine.UI;
 
 public class ButtonControl : MonoBehaviour
 {
-    [SerializeField] private GameObject invButton;
-    [SerializeField] private GameObject profButton;
-    [SerializeField] private GameObject equipButton;
-    [SerializeField] private GameObject revealButton;
-    [SerializeField] private GameObject settingsButton;
+    [SerializeField] private GameObject invButton, profButton, spellsButton, revealButton, settingsButton, invMenu, profMenu, spellsMenu, settingsMenu;
     [SerializeField] private int timeMultiplier = 7;
 
     private bool revealed;
-    private Vector3 initialPos1;
-    private Vector3 initialPos2;
-    private Vector3 initialPos3;
-    private Vector3 initialPos4;
-    private Vector3 transformPos1;
-    private Vector3 transformPos2;
-    private Vector3 transformPos3;
-    private Vector3 transformPos4;
-    private Quaternion initialRot;
-    private Quaternion target;
+    private Vector3 initialPos1, initialPos2, initialPos3, initialPos4;
+    private Vector3 transformPos1, transformPos2, transformPos3, transformPos4;
+    private Quaternion initialRot, target;
 
     // Start is called before the first frame update
     void Start()
@@ -34,7 +23,7 @@ public class ButtonControl : MonoBehaviour
         initialRot = revealButton.transform.rotation;   
 
         initialPos1 = invButton.transform.position;
-        initialPos2 = equipButton.transform.position;
+        initialPos2 = spellsButton.transform.position;
         initialPos3 = profButton.transform.position;
         initialPos4 = settingsButton.transform.position; 
 
@@ -60,9 +49,9 @@ public class ButtonControl : MonoBehaviour
             invButton.transform.position = 
                         Vector3.Lerp(invButton.transform.position, 
                         transformPos1, Time.deltaTime * timeMultiplier);
-            
-            equipButton.transform.position = 
-                        Vector3.Lerp(equipButton.transform.position, 
+
+            spellsButton.transform.position = 
+                        Vector3.Lerp(spellsButton.transform.position, 
                         transformPos2, Time.deltaTime * timeMultiplier);
 
             profButton.transform.position = 
@@ -77,6 +66,8 @@ public class ButtonControl : MonoBehaviour
 
         else
         {
+            DisableMenus();
+
             revealButton.transform.rotation = 
                         Quaternion.Slerp(revealButton.transform.rotation, 
                         initialRot, 
@@ -86,8 +77,8 @@ public class ButtonControl : MonoBehaviour
                         Vector3.Lerp(invButton.transform.position, 
                         revealButton.transform.position, 
                         Time.deltaTime * timeMultiplier);
-            
-            equipButton.transform.position = Vector3.Lerp(equipButton.transform.position, 
+
+            spellsButton.transform.position = Vector3.Lerp(spellsButton.transform.position, 
                         revealButton.transform.position, 
                         Time.deltaTime * timeMultiplier);
 
@@ -98,6 +89,7 @@ public class ButtonControl : MonoBehaviour
             settingsButton.transform.position = Vector3.Lerp(settingsButton.transform.position, 
                         revealButton.transform.position, 
                         Time.deltaTime * timeMultiplier);
+
         }
 
 
@@ -124,4 +116,12 @@ public class ButtonControl : MonoBehaviour
         transformPos4 = transformPos3 - new Vector3 (offset, 0f, 0f);
  
     } 
+
+    private void DisableMenus()
+    {
+        invMenu.SetActive(false);
+        profMenu.SetActive(false);
+        spellsMenu.SetActive(false);
+        settingsMenu.SetActive(false);
+    }
 }
