@@ -85,9 +85,11 @@ public class WorldMap : MonoBehaviour, ISavable, IGraph
                 new Vector2(entity.transform.position.x, entity.transform.position.z)))
             {
                 inView.Add(entity);
-                if(entity.GetComponent<EnemyAgent>()?.IsAlive ?? true)
+                EnemyAgent agent = entity.GetComponent<EnemyAgent>();
+                if(agent?.IsAlive ?? true)
                 {
                     entity.SetActive(true);
+                    agent.CurrentMap = this.gameObject;
                 }               
             }
             else

@@ -122,6 +122,11 @@ public class EnemyAgent : MonoBehaviour, ISavable
  
     #region Load/Save
     public int ID { get => iD; set => iD = value; }
+    public GameObject CurrentMap { get => currentMap; set => currentMap = value; }
+
+    [SerializeField][ReadOnly]
+    private GameObject currentMap;
+    //public GameObject CurrentMap { get; set; }
 
     [Header("Saving Settings")]
     [SerializeField]
