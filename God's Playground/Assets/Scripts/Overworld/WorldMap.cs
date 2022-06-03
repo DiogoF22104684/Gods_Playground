@@ -6,8 +6,9 @@ using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnityEditor;
+using LibGameAI.PathFinding;
 
-public class WorldMap : MonoBehaviour, ISavable
+public class WorldMap : MonoBehaviour, ISavable, IGraph
 {
     [SerializeField]
     private int mapId;
@@ -225,5 +226,9 @@ public class WorldMap : MonoBehaviour, ISavable
         Gizmos.DrawWireCube(new Vector3(rect.center.x, 0, rect.center.y), new Vector3(rect.size.x, 0, rect.size.y));
     }
 
+    public IEnumerable<IConnection> GetConnections(int fromNode)
+    {
+        throw new System.NotImplementedException();
+    }
 }
 
