@@ -26,6 +26,7 @@ MonoBehaviour:
     overrideThis: 0
     coolDown: 0
     team: 0
+    type: 0
   basicFunc:
     param1:
       selected: 0
@@ -44,4 +45,14 @@ MonoBehaviour:
     param1:
       selected: 0
     baseValue: 0
-  function: 0
+  multipleAffect:
+    numb: 6
+    affect:
+      param1:
+        selected: 0
+      param2:
+        selected: 2
+      param3:
+        selected: 3
+      baseValue: 3
+  function: 3

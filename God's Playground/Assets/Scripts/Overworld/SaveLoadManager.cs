@@ -19,6 +19,7 @@ public class SaveLoadManager: MonoBehaviour
     [SerializeField]
     private WorldMap[] maps;
 
+    
     static string DirPath => Application.persistentDataPath + $"/Saves/";
 
 
@@ -40,7 +41,7 @@ public class SaveLoadManager: MonoBehaviour
 
     private void Start()
     {
-        Load();
+        Load((Saves)PlayerPrefs.GetInt("saveType"));
     }
 
     public void Save(Saves saveType = Autosave)
@@ -74,6 +75,10 @@ public class SaveLoadManager: MonoBehaviour
  
     public void Load(Saves saveType = Autosave)
     {
+        if (!Directory.Exists(DirPath + "/" + saveType))
+            return;
+
+
         string maindataString = 
             File.ReadAllText(DirPath + $"{saveType}/Main_{saveType}.json");
         dynamic mainData = JObject.Parse(maindataString);
@@ -92,6 +97,9 @@ public class SaveLoadManager: MonoBehaviour
         currentMap.LoadData(mapDataString);
 
     }
+
+
+
 
     /// <summary>
     /// Return the value inside the save given the specific operation and the 

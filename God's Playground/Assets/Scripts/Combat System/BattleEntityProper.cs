@@ -10,7 +10,7 @@ public abstract class BattleEntityProper : MonoBehaviour, IConfigurable
     private Animator anim;
 
     public Action<DefaultAnimations, IEnumerable<BattleEntity>> attackTrigger;
-    public Action damageTrigger;
+    public Action<BattleEntity> damageTrigger;
     public Action onDeath;
     public Action onEndTurn;
 
@@ -29,6 +29,7 @@ public abstract class BattleEntityProper : MonoBehaviour, IConfigurable
 
     protected bool isDead;
 
+    protected IEnumerable<BattleEntity> currentTargets;
 
     private void Awake()
     {
@@ -36,10 +37,9 @@ public abstract class BattleEntityProper : MonoBehaviour, IConfigurable
         
         
     }
-    private void Start()
+    protected virtual void Start()
     {
-
-        entityData.onStatusEffectUpdate += () =>
+        entityData.OnStatusEffectUpdate += () =>
         {
             statusEffectDisplay.Config(entityData);
         };
@@ -81,11 +81,6 @@ public abstract class BattleEntityProper : MonoBehaviour, IConfigurable
         }
     }
 
-    internal bool skillInCooldown(BattleMove battleMove)
-    {       
-        return entityData.skillCooldowns.Contains(battleMove);
-    }
-
     public void PlayAnimation(DefaultAnimations animation)
     {    
         switch (animation)
@@ -107,7 +102,22 @@ public abstract class BattleEntityProper : MonoBehaviour, IConfigurable
         }
     }
 
-    public abstract void AttackTriggerAnimation(DefaultAnimations animType);
+    public void AttackTriggerAnimation(DefaultAnimations animType)
+    {
+        attackTrigger?.Invoke(animType, currentTargets);
+    }
+
+    protected void IniciateMove(CombatSystem.BattleMove move, CombatState state)
+    {
+        //Start Animation Set inside of move
+
+        currentTargets =
+            state.Selector.SelectEntity(entityData, move);
+        
+        move.Function(state, currentTargets, 1f);
+        PlayAnimation(DefaultAnimations.BasicAttack);
+
+    }
 
     public void Death()
     {
@@ -121,8 +131,8 @@ public abstract class BattleEntityProper : MonoBehaviour, IConfigurable
 
     public void DamageTakenTrigger()
     {
-        damageTrigger?.Invoke();
-        damageTrigger = null;
+        entityData.QueuedMove?.Invoke(entityData);
+        damageTrigger?.Invoke(this.entityData);
     }
 
     private void AnimationStart(string name)
@@ -130,12 +140,13 @@ public abstract class BattleEntityProper : MonoBehaviour, IConfigurable
         anim.Play(name);
     }
 
-    public virtual bool StartTurn()
-    {
+    public virtual bool StartTurn(CombatState state)
+    { 
         entityData.ResolveStatusEffect();
         
         if (isDead)
         {
+            
             //onEndTurn?.Invoke();
             return false;
         }
@@ -144,6 +155,7 @@ public abstract class BattleEntityProper : MonoBehaviour, IConfigurable
 
         if (entityData.turns < 1)
         {
+            
             EndTurn();
             return false;
         }
@@ -152,15 +164,15 @@ public abstract class BattleEntityProper : MonoBehaviour, IConfigurable
         //to specific
 
         
-        entityData.turns.Stat--;
-        entityData.fowardSkillTimer();
+        entityData.turns -= 1;
+        entityData.FowardSkillTimer();
         return true;
     }
 
     public abstract void EndTurn();
 
     protected void OnEndTurn()
-    {
+    {        
         onEndTurn?.Invoke();
     }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using System;
+using TMPro;
 
 public class TileInteractable : Interactable
 {
@@ -40,7 +41,6 @@ public class TileInteractable : Interactable
 
     public override void Interact()
     {
-       
         if (!toggle)
         {
             menu.SetActive(true);
@@ -52,9 +52,8 @@ public class TileInteractable : Interactable
             cam.gameObject.SetActive(true);
             toggle = true;
             dialogue.onEndDialogue += EndInteraction;
-            dialogue.StartDialogue(container.GetDialogueToDisplay());
-        }
-      
+            dialogue.StartDialogue(container.GetDialogueToDisplay(), container);
+        }     
     }
 
    

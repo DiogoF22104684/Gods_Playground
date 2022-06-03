@@ -18,6 +18,6 @@ public struct RangedInt
     public static implicit operator int(RangedInt self)
     {
         return 
-            self.flatten ? Random.Range(self.minV, self.maxV + 1): self.minV;
+            !self.flatten ? Random.Range(self.minV, self.maxV + 1): self.minV;
     }
 }

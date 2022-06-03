@@ -118,7 +118,6 @@ public class WorldMap : MonoBehaviour, ISavable
         }
     }
 
-
     #region Save/Load
     [SerializeField]
     [ReadOnly]
@@ -180,9 +179,8 @@ public class WorldMap : MonoBehaviour, ISavable
 
     public void LoadData(string data)
     {
-
         dynamic a = JObject.Parse(data);
-
+     
         #region Load Map
         string mapData = a.mapData.ToString();
         this.data = JsonUtility.FromJson<Data>(mapData);

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,7 +25,28 @@ public class BattleStat
     {
         return self.Stat;
     }
- 
+
+
+    public static BattleStat operator -(BattleStat a, float b) => 
+        new BattleStat(a.stat - b, a.maxStat, a.flatStat);
+    public static BattleStat operator +(BattleStat a, float b) =>
+       new BattleStat(a.stat + b, a.maxStat, a.flatStat);
+
+
+    public override string ToString()
+    {
+        return $"|Stat: {stat} - MaxStat: {maxStat}|";
+    }
+
+    internal void RestorToDefault()
+    {
+        stat = maxStat;
+    }
+
+    public BattleStat Copy()
+    {
+        return new BattleStat(stat, maxStat, flatStat);
+    }
 }
 
 
