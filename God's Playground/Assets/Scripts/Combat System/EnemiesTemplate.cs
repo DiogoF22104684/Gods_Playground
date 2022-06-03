@@ -14,7 +14,7 @@ public class EnemiesTemplate : EntityTemplate
     public GameObject Prefab => prefab;
 
     // Time I can take to play in seconds
-    private const float timeToThink = 0.5f;
+    private const float timeToThink = 0.3f;
 
     // Balance between exploitation and exploration
     private readonly float k = 2 / Mathf.Sqrt(2);
@@ -35,7 +35,7 @@ public class EnemiesTemplate : EntityTemplate
 
         int it = 0;
         //Run MCTS and keep improving statistics while we have time
-        while (DateTime.Now < deadline && it < 10)
+        while (DateTime.Now < deadline)
         {
             it++;
             MCTS(root);
@@ -45,8 +45,16 @@ public class EnemiesTemplate : EntityTemplate
         // (by setting k = 0)
         selected = SelectMovePolicy(root, 0);
 
-        //return MCTS()
-        Debug.Log("Move: " + selected.Move);
+        Debug.Log("----------------------------------------------Enemy-------------------------------------------");
+        foreach (AbstractMCTSNode<BattleMove, BattleEntity> childNode in root.Children)
+        {
+            Debug.Log("Node Move: " + childNode.Move.name);
+            Debug.Log("Playouts: " + childNode.Wins + "/" + childNode.Playouts);
+        }
+
+
+            //return MCTS()
+            Debug.Log("Move: " + selected.Move);
         return selected.Move;
     }
 
@@ -94,11 +102,15 @@ public class EnemiesTemplate : EntityTemplate
 
             // Increment its number of playouts
             node.Playouts++;
+            Debug.Log("Testing Wins..");
+            Debug.Log(node.Move);
+            Debug.Log(result);
+            
 
             // Update the win/lose count according whose turn it was to play
             // in the previous turn
-            if (result == node.Turn.Team) node.Wins--;
-            else if (result == node.Turn.Team) node.Wins++;
+            if (result != node.Turn.Team) node.Wins++;
+            else if (result == node.Turn.Team) node.Wins--;
         }
     }
 

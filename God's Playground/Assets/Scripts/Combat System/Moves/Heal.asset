@@ -16,7 +16,7 @@ MonoBehaviour:
   config:
     costStat:
       selected: 1
-    costValue: 5
+    costValue: 50
     mode: 0
     type: 0
     mechanic: 0
@@ -39,7 +39,7 @@ MonoBehaviour:
   basicFlat:
     param1:
       selected: 0
-    baseValue: -5
+    baseValue: -30
   multipleAffect:
     numb: 0
     affect:
