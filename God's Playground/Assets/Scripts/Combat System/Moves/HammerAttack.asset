@@ -23,9 +23,10 @@ MonoBehaviour:
     cooldown: 0
   statusEffect:
   - statusEffect: {fileID: 11400000, guid: dbc52e8fdc6d8a84cae36ba0f52bdc86, type: 2}
-    overrideThis: 0
-    coolDown: 0
-    team: 0
+    overrideThis: 1
+    coolDown: 3
+    team: 1
+    type: 0
   basicFunc:
     param1:
       selected: 0
@@ -44,4 +45,14 @@ MonoBehaviour:
     param1:
       selected: 0
     baseValue: 0
+  multipleAffect:
+    numb: 0
+    affect:
+      param1:
+        selected: 0
+      param2:
+        selected: 0
+      param3:
+        selected: 0
+      baseValue: 0
   function: 0

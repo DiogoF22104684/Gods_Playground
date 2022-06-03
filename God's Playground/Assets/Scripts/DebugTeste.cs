@@ -9,7 +9,7 @@ public class DebugTeste : MonoBehaviour
     [SerializeField]
     private BattleConfigData bcd;
 
-    // Start is called before the first frame update
+    // Start is called before the first frame update           
     void Start()
     {
         DontDestroyOnLoad(gameObject);

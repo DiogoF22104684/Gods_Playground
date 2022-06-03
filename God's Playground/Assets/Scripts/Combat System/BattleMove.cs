@@ -71,32 +71,42 @@ namespace CombatSystem
         /// <param name="entityUsingMove">Entity using the move.</param>
         /// <param name="selectedEntity">Target entity selected.</param>
         /// <returns>True if the move can be used.</returns>
-        public bool IsUsable(BattleEntityProper entityUsingMove,
-            BattleEntityProper selectedEntity)
+        public bool IsUsable(BattleEntity entityUsingMove,
+            BattleEntity selectedEntity = null)
         {
             //Get Battle Entities from EntityProper
-            BattleEntity attacker = entityUsingMove.entityData;
-            BattleEntity target = selectedEntity.entityData;
+            BattleEntity attacker = entityUsingMove;
+            BattleEntity target = selectedEntity;
 
-            //Check if the entities are in the same team
-            bool isSameTeam  = attacker.IsSameTeam(target);
+            //if (target != null)
+            //{
+            //    //Check if the entities are in the same team
+            //    bool isSameTeam = attacker.IsSameTeam(target);
 
-            //Compare the target with the skillmode 
-            if (!isSameTeam)
-            {
-                if (config.Mode == SelectorMode.Self || config.Mode == SelectorMode.Team)
-                    return false;
-            }
-            else
-            {
-                if (config.Mode == SelectorMode.Adversary)
-                    return false;
-            }
-            
+            //    //Compare the target with the skillmode 
+            //    if (!isSameTeam)
+            //    {
+            //        if (config.Mode == SelectorMode.Self || config.Mode == SelectorMode.Team)
+            //            return false;
+            //    }
+            //    else
+            //    {
+            //        if (config.Mode == SelectorMode.Adversary)
+            //            return false;
+            //    }
+            //}
+            //else
+            //{
+            //    if (!PossibleUse(attacker))
+            //    {
+            //        return false;
+            //    }
+            //}
+
             BattleStat stat = config.CostStat.GetValue(attacker);
 
             //Check if the skill colldown
-            if (entityUsingMove.skillInCooldown(this))
+            if (entityUsingMove.SkillInCooldown(this))
             {
                 return false;
             }
@@ -109,6 +119,13 @@ namespace CombatSystem
             return true;
         }
 
+        private bool PossibleUse(BattleEntity entityUsingMove, CombatState state)
+        {
+            List<BattleEntity> entities =
+                state.Selector.SelectEntity(entityUsingMove, this).ToList();
+            return entities != null;
+        }
+
     
         /// <summary>
         /// Result of using the battle move.
@@ -116,13 +133,17 @@ namespace CombatSystem
         /// <param name="attacker">User using the move.</param>
         /// <param name="target">Targets of the move.</param>
         /// <param name="roll">Roll value of the dice and quick time events.</param>
-        public void Function(BattleEntity attacker, IEnumerable<BattleEntity> target, float roll)
+        public void Function(CombatState state, IEnumerable<BattleEntity> target, float roll)
         {
+            BattleEntity attacker = state.Turn;
+
             //Check what affect function is selected.
             if(selectedFuncAffect == null)
             {
                 SelectFunc((int)function);
             }
+            
+            
 
             //Calculate the result of the move and apply it to the targets.
             selectedFuncAffect.Function(attacker, target, roll);
@@ -131,18 +152,20 @@ namespace CombatSystem
             foreach (StatusEffecOverrider d in StatusEffects)
             {
                 StatusEffectHelper statusEffectHelper = d.GetValues();
-                IEnumerable<BattleEntity> affectedEntities =
-                         EntitySelector.SelectEntity(attacker, target,
-                             statusEffectHelper.Team, statusEffectHelper.Type);
 
+                IEnumerable<BattleEntity> affectedEntities =
+                         state.Selector.SelectEntity(attacker,
+                             statusEffectHelper.Type, statusEffectHelper.Team);
+                
                 foreach (BattleEntity be in affectedEntities)
                 {
                     be.AddStatusEffect(statusEffectHelper);
-                }
+                }          
             }
            
             //If aplicable remove the cost value from the user stats 
             BattleStat stat = config.CostStat.GetValue(attacker);
+
             //Apply modified cost value to the user
             BattleStat newStat = 
                 new BattleStat(stat.Stat - Config.CostValue, stat.MaxStat, stat.FlatStat);

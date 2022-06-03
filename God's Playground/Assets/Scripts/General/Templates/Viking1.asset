@@ -15,9 +15,9 @@ MonoBehaviour:
   hp:
     minV: 50
     maxV: 50
-    flatten: 1
+    flatten: 0
   mp:
-    minV: 1
+    minV: 50
     maxV: 100
     flatten: 0
   dex:
@@ -44,6 +44,9 @@ MonoBehaviour:
     minV: 1
     maxV: 10
     flatten: 0
-  moves:
+  skills:
+  - {fileID: 11400000, guid: 13b803da1c92525418e4dfb33a10a5b8, type: 2}
+  - {fileID: 11400000, guid: 8378c2fbe53844048b1d5c22a67c9a7f, type: 2}
   - {fileID: 11400000, guid: 07dc17537f6d64e46869f2f972d3d5a1, type: 2}
+  - {fileID: 11400000, guid: ff70ac7f0acdfcc4ba2536b030dbd3ee, type: 2}
   prefab: {fileID: 3250357001580299096, guid: b322c39904fd07745a95540963087e74, type: 3}

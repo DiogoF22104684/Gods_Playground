@@ -50,7 +50,7 @@ public class BattleOrderDisplay : MonoBehaviour
                     Quaternion.identity, transform);
 
             //Isto vai ser ligeiramente diferente mas por agora da
-            if (be.properEntity is PlayerBattleEntityProper)
+            if (be.ProperEntity is PlayerBattleEntityProper)
             {
                 newIcon.GetComponent<Image>().color = Color.green;
             }

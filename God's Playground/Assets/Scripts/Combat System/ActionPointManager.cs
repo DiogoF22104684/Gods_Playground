@@ -36,7 +36,6 @@ public class ActionPointManager : MonoBehaviour
     public void Config(BattleEntityProper targetEntity, int rollResult,
         System.Action<float> completionFunc)
     {
-
         
         if(!(targetEntity is EnemyBattleEntityProper))
         {

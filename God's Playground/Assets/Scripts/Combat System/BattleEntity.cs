@@ -3,15 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using CombatSystem;
+using UnityEngine.UI;
 
 [System.Serializable]
-public class BattleEntity 
+public class BattleEntity
 {
 
-    private BattleStat hp;
-
     [MoveAffecter]
-    public BattleStat Hp 
+    public BattleStat Hp
     {
         get
         {
@@ -20,23 +19,22 @@ public class BattleEntity
         set
         {
             hp = value;
-            
-            if(value.Stat <= 0)
+
+            if (value.Stat <= 0)
             {
-                properEntity.PlayAnimation(DefaultAnimations.Death);
+                ProperEntity?.PlayAnimation(DefaultAnimations.Death);
                 IsDead = true;
                 value.Stat = 0;
             }
-            if(value.Stat > value.MaxStat)
+            if (value.Stat > value.MaxStat)
             {
                 value.Stat = value.MaxStat;
             }
-            properEntity.ChangeValue("hp", hp.Stat);
-        } 
+            ProperEntity?.ChangeValue("hp", hp.Stat);
+        }
     }
+    private BattleStat hp;
 
-
-    private BattleStat mp;
 
     [MoveAffecter]
     public BattleStat Mp
@@ -50,14 +48,15 @@ public class BattleEntity
             mp = value;
 
             if (value.Stat <= 0)
-            {               
+            {
                 value.Stat = 0;
             }
-            properEntity.ChangeValue("mp", mp.Stat);
+            ProperEntity?.ChangeValue("mp", mp.Stat);
         }
     }
+    private BattleStat mp;
 
-   
+
     [MoveAffecter]
     public BattleStat str { get; set; }
 
@@ -70,30 +69,37 @@ public class BattleEntity
     [MoveAffecter]
     public BattleStat turns { get; set; }
 
+
     public List<TurnTimer<StatusEffectHelper>> statusEffects { get; private set; }
     public List<TurnTimer<BattleMove>> skillCooldowns { get; private set; }
 
-    public EntityTemplate template { get; }
 
-    public BattleEntityProper properEntity { get; }
+    public EntityTemplate Template { get; }
 
-    public System.Action onStatusEffectUpdate;
+    public BattleEntityProper ProperEntity { get; }
+    
+    public System.Action OnStatusEffectUpdate { get; set; }
 
+    public bool IsDead { get; private set; }
+
+    /// <summary>
+    /// Battle move beeing acted on the entity next
+    /// </summary>
+    public Action<BattleEntity> QueuedMove { get; set; }
 
     public BattleEntity(BattleEntityProper proper, EntityTemplate template)
     {
-        properEntity = proper;
+        ProperEntity = proper;
         int hpValue = template.HP;
         this.hp = new BattleStat(hpValue, hpValue, 0);
 
-        properEntity = proper;
         int mpValue = template.Mp;
         this.mp = new BattleStat(mpValue, mpValue, 0);
 
-        turns = new BattleStat(1,1,0);
+        turns = new BattleStat(1, 1, 0);
 
         float strTemp = (template.Str * 2) / 100f;
-        str = new BattleStat (strTemp, strTemp, 0);
+        str = new BattleStat(strTemp, strTemp, 0);
 
         float defTemp = (template.Def * 2) / 100f;
         def = new BattleStat(defTemp, defTemp, 0);
@@ -101,17 +107,44 @@ public class BattleEntity
         float dextemp = (template.Dex * 2) / 100f;
         dex = new BattleStat(template.Dex, template.Dex, 0);
 
-        this.template = template;
+        this.Template = template;
         statusEffects = new List<TurnTimer<StatusEffectHelper>> { };
         skillCooldowns = new List<TurnTimer<BattleMove>> { };
     }
+    
+  
+    private BattleEntity(BattleEntity entity)
+    {
+        this.QueuedMove = null;
+        this.hp = entity.Hp.Copy();
+        this.mp = entity.Mp.Copy();
+        this.str = entity.str.Copy();
+        this.def = entity.def.Copy();
+        this.dex = entity.dex.Copy();
+        this.turns = entity.turns.Copy();
+        this.statusEffects = new List<TurnTimer<StatusEffectHelper>> { };
+        this.statusEffects.AddRange(entity.statusEffects);
+        this.skillCooldowns = entity.skillCooldowns;
+        this.Template = entity.Template;
+    }
 
+
+  
 
     public void EndTurn()
     {
-        properEntity.EndTurn();
+        ProperEntity?.EndTurn();
     }
 
+    public BattleEntity Copy()
+    {
+        return new BattleEntity(this);
+    }
+
+    public bool SkillInCooldown(BattleMove battleMove)
+    {       
+        return skillCooldowns.Contains(battleMove);
+    }
 
     /// <summary>
     /// Check if the entity is in the same team as the given entity.
@@ -121,22 +154,26 @@ public class BattleEntity
     public bool IsSameTeam(BattleEntity target)
     {
         //Pretty ugly
-        bool isPlayer = (template is PlayerTemplate);
-        bool otherisPlayer = (target.template is PlayerTemplate);
+        bool isPlayer = (Template is PlayerTemplate);
+        bool otherisPlayer = (target.Template is PlayerTemplate);
         return isPlayer == otherisPlayer;
     }
 
-    public bool IsDead { get; private set; }
+    public SelectorMode Team => (Template is PlayerTemplate) ? 
+        SelectorMode.Team : SelectorMode.Adversary;
+
+  
 
     public override string ToString()
     {
-        return $"Hp: {hp.Stat} \nAtk: {str.Stat} \nDef:{def.Stat}";
+        string teamString = Team == SelectorMode.Team ? "Player" : "Enemy";
+        return $"{teamString} \n Hp: {hp.Stat} \nAtk: {str.Stat} \nDef:{def.Stat}";
     }
 
     public void AddStatusEffect(StatusEffectHelper statusEft)
-    { 
+    {
         statusEffects.Add(new TurnTimer<StatusEffectHelper>(statusEft));
-        onStatusEffectUpdate?.Invoke();
+        OnStatusEffectUpdate?.Invoke();
     }
 
     public void AddSkillCooldown(BattleMove move)
@@ -144,12 +181,10 @@ public class BattleEntity
         skillCooldowns.Add(new TurnTimer<BattleMove> (move));
     }
 
-
     internal void ResolveStatusEffect()
     {
         for (int i = statusEffects.Count - 1; i >= 0; i--)
-        {
-           
+        {           
             TurnTimer<StatusEffectHelper> d = statusEffects[i];
 
             StatusEffectHelper effect = d.Effect;
@@ -169,7 +204,7 @@ public class BattleEntity
     }
 
     //there's probably a better way for this
-    internal void fowardSkillTimer()
+    internal void FowardSkillTimer()
     {
         for (int i = skillCooldowns.Count - 1; i >= 0; i--)
         {

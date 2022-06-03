@@ -5,8 +5,7 @@ using UnityEngine.UI;
 
 public class BattleSkillSlot : MonoBehaviour
 {
-    [SerializeField]
-    private BattleManager manager;
+    private BattleSkillMenu skillMenu;
     public bool isLocked;
     private Button button;
     private CombatSystem.BattleMove move;
@@ -20,10 +19,10 @@ public class BattleSkillSlot : MonoBehaviour
         button.onClick.AddListener(ActivateAttack);
     }
 
-    public void ConfigSkill(CombatSystem.BattleMove move)
+    public void ConfigSkill(CombatSystem.BattleMove move, BattleSkillMenu battleSkillMenu)
     {
         this.move = move;
-
+        skillMenu = battleSkillMenu;
         GetComponent<Image>().sprite = move.Icon;
     }    
 
@@ -31,7 +30,7 @@ public class BattleSkillSlot : MonoBehaviour
     {
         if (!isLocked)
         {
-            manager.ResolvePlayerAttack(move);
+            skillMenu.InvokeMove(move);
         }
     }
 

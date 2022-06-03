@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class DialogueContainer : MonoBehaviour
 {
@@ -20,14 +21,24 @@ public class DialogueContainer : MonoBehaviour
     
     private int dialogueToDisplay => controller.startScriptNum;
 
+
+    public string Debig()
+    {
+        return controller.Scripts[dialogueToDisplay].name + "";
+    }
+
     public void Interact()
     {
         //This is bad
-        GameObject DialogueSystem = GameObject.Find("DDisplay");
+        DialogueDisplayHandler DialogueSystem =
+            FindObjectOfType<DialogueDisplayHandler>();
+
+        
+
         if (UseSoloScript == false)
-            DialogueSystem.GetComponent<DialogueDisplayHandler>().StartDialogue(controller.Scripts[dialogueToDisplay], this);
+            DialogueSystem.StartDialogue(controller.Scripts[dialogueToDisplay], this);
         if (UseSoloScript == true)
-            DialogueSystem.GetComponent<DialogueDisplayHandler>().StartDialogue(Script, this);
+            DialogueSystem.StartDialogue(Script, this);
     }
 
     public DialogueScript GetDialogueToDisplay()

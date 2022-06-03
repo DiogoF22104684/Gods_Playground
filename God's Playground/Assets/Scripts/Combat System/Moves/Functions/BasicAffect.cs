@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using CombatSystem;
 
 /// <summary>
 /// Function to be used when using a specific attack. This iteration uses 
@@ -9,8 +9,7 @@ using UnityEngine;
 /// </summary>
 [System.Serializable]
 public class BasicAffect : BattleAffects
-{
-    
+{ 
     //First parameter of the move.
     [SerializeField]
     private BattlePropertyInfo param1;
@@ -46,9 +45,6 @@ public class BasicAffect : BattleAffects
         float firstComp =(baseValue + 
             (baseValue * stat2)) * roll;
 
-        //Play animation / Needs to be better
-        attacker.properEntity.PlayAnimation(DefaultAnimations.BasicAttack);
-
         //Apply stat being used by the targets
         foreach (BattleEntity be in target)
         {
@@ -63,16 +59,18 @@ public class BasicAffect : BattleAffects
 
             float valueToChange = stat1 - totalValue;
 
-            be.properEntity.damageTrigger += (BattleEntity en)=> 
+            //Debug.Log($"{be.Team.GetTeamName()} recieved {totalValue} damage. And has now {valueToChange} health!");
+           
+            be.QueuedMove = (BattleEntity en)=> 
             {
-                //Animation response aqui??
-
                 BattleStat value = 
                        new BattleStat(valueToChange, stat.MaxStat, stat.FlatStat);
                
                 param1.param.SetValue(be, value);
 
                 attacker.EndTurn();
+
+                be.QueuedMove = null;
             };
 
         }

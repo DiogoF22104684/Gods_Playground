@@ -27,10 +27,6 @@ public class BasicIgnoreDef : BattleAffects
 
         float firstAndRoll = firstComp * roll;
 
-
-
-        attacker.properEntity.PlayAnimation(DefaultAnimations.BasicAttack);
-
         foreach (BattleEntity be in target)
         {
             BattleStat stat = param1.GetValue(be);
@@ -40,13 +36,13 @@ public class BasicIgnoreDef : BattleAffects
 
             float valueToChange = stat1 - totalValue;
 
-            be.properEntity.damageTrigger += (BattleEntity en) =>
+            be.QueuedMove += (BattleEntity en) =>
             {
                 BattleStat value =
                        new BattleStat(valueToChange, stat.MaxStat, stat.FlatStat);
                 param1.param.SetValue(be, value);
 
-                en.properEntity.damageTrigger = null;
+                en.ProperEntity.damageTrigger = null;
 
                 attacker.EndTurn();
             };

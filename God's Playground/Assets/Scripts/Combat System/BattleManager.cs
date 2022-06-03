@@ -7,10 +7,12 @@ using UnityEngine.SceneManagement;
 
 public class BattleManager : MonoBehaviour
 {
+
+    private CombatState combatState;
+
     private BattleMove move;
 
-    [SerializeField]
-    EntitySelector selector;
+    //EntitySelector selector;
     [SerializeField]
     BattleOrderDisplay orderDisplay;
 
@@ -32,7 +34,7 @@ public class BattleManager : MonoBehaviour
     private BattleConfigData battleConfig;
 
 
-    private BattleEntity playerData;
+    //private BattleEntity playerData;
 
     [SerializeField]
     private Transform[] enemiesSlots;
@@ -51,11 +53,13 @@ public class BattleManager : MonoBehaviour
     [SerializeField]
     private GameObject dubsMenu;
 
+    public CombatState CombatState { get => combatState; set => combatState = value; }
+
     private void Awake()
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-
+        
 
         InitializeBattle();
     }
@@ -75,9 +79,10 @@ public class BattleManager : MonoBehaviour
         SceneManager.LoadScene($"CombatBackground_{mapId}", LoadSceneMode.Additive);
         #endregion
 
-        #region Initialize Player
-        //Create player Battle Entity
-        playerData = new BattleEntity(playerProper, battleConfig.PlayerTemplate);
+        List<BattleEntity> totalEntityList = new List<BattleEntity> { };
+
+        #region Initialize 
+        BattleEntity playerData = new BattleEntity(playerProper, battleConfig.PlayerTemplate);
         playerProper.Config(playerData);
         playerProper.onEndTurn += NextTurn;
         //Create functionality for when the player loses
@@ -87,13 +92,15 @@ public class BattleManager : MonoBehaviour
             //Activate Death Panel
             deathPanel.SetActive(true);
         };
+
+        totalEntityList.Add(playerData);
         #endregion
 
         #region Initialize Enemies
         //Empty enemy List
         enemies = new List<BattleEntity> { };
        
-        //Iterate through the enemy list and inicializes each one
+        //Iterate through the enemy list and initializes each one
         int index = 0;
         foreach (EnemiesTemplate enTemp in battleConfig.Enemies)
         {
@@ -121,9 +128,15 @@ public class BattleManager : MonoBehaviour
 
             };
             enemyProper.attackTrigger += AnimationResponse;
-
+            
+            totalEntityList.Add(enemyData);
             index++;
         }
+        #endregion
+
+        #region Combat State Test
+        //Create player Battle Entity
+        combatState = new CombatState(totalEntityList);
         #endregion
     }
 
@@ -131,80 +144,90 @@ public class BattleManager : MonoBehaviour
     {
         for (int i = enemies.Count - 1; i >= 0; i--)
         {
-            if (enemies[i].properEntity == null)
+            if (enemies[i].ProperEntity == null)
                 enemies.RemoveAt(i);
         }
     }
 
-    private void PrepareTurnOrder()
-    {
-        //Ignore if player is dead
-        if (playerDead) return;
+    //private void PrepareTurnOrder()
+    //{
+    //    //Ignore if player is dead
+    //    if (playerDead) return;
         
-        //
-        CleanEntityList();
-        List<BattleEntity> turnEnt = new List<BattleEntity>(enemies);
-        if (!turnEnt.Any(x => !x.IsDead))
-        {
-            //Debug.Log("Ws all around");
-            dubsMenu.SetActive(true);
-        }
-        turnEnt.Add(playerData);
+    //    //
+    //    CleanEntityList();
+    //    List<BattleEntity> turnEnt = new List<BattleEntity>(enemies);
+    //    if (!turnEnt.Any(x => !x.IsDead))
+    //    {
+    //        //Debug.Log("Ws all around");
+    //        dubsMenu.SetActive(true);
+    //    }
+    //    turnEnt.Add(playerData);
 
 
 
-        bool endOfTurn = turnEnt.TrueForAll(x => x.turns.Stat < 1);
+    //    bool endOfTurn = turnEnt.TrueForAll(x => x.turns.Stat < 1);
 
-        if (endOfTurn)
-        {
-            foreach (BattleEntity be in turnEnt)
-            {
-                be.turns.Stat = be.turns.MaxStat;
-            }
-            //TurnOrderUpdate
-        }
+    //    if (endOfTurn)
+    //    {
+    //        foreach (BattleEntity be in turnEnt)
+    //        {
+    //            be.turns.Stat = be.turns.MaxStat;
+    //        }
+    //        //TurnOrderUpdate
+    //    }
 
-        turnEnt = turnEnt.
-            Where(x => x.turns.Stat > 0).
-            OrderBy(x => -x.dex.Stat).ToList();
+    //    turnEnt = turnEnt.
+    //        Where(x => x.turns.Stat > 0).
+    //        OrderBy(x => -x.dex.Stat).ToList();
 
-       // foreach (BattleEntity be in turnEnt)
+    //   // foreach (BattleEntity be in turnEnt)
  
-        orderDisplay.UpdateDisplay(turnEnt);
+    //    orderDisplay.UpdateDisplay(turnEnt);
 
-        if (turnEnt.Count > 0)
-        {
-            inTurnEntity = turnEnt[0];
-        }
+    //    if (turnEnt.Count > 0)
+    //    {
+    //        inTurnEntity = turnEnt[0];
+    //    }
 
         
-        selector.Config(playerProper, enemies.Select(x => x.properEntity).ToList());
-    }
+    //    selector.Config(playerProper, enemies.Select(x => x.ProperEntity).ToList());
+    //}
 
     private void NextTurn()
     {
-        selector.PlayerHasAttacked = false;
-        if (playerDead) return;
-        PrepareTurnOrder();
+        combatState.NextTurn();
+        combatState.Selector.PlayerHasAttacked = false;
+        if (combatState.Status() != null) return;
+
+        CleanEntityList();
+        orderDisplay.UpdateDisplay(combatState.EntityOrder);
+        
+        //selector.Config(combatState.Players[0].ProperEntity, 
+        //    combatState.Enemies.Select(x => x.ProperEntity).ToList());
+
+        ///PrepareTurnOrder();
         turnnumb++;
-        //print(inTurnEntity);
-        inTurnEntity.properEntity.StartTurn();
+        ///print(inTurnEntity);
+        combatState.Turn.ProperEntity.StartTurn(combatState);
     }
 
     private void Start()
     {
-        PrepareTurnOrder();
-       
+        //PrepareTurnOrder();
+        NextTurn();
         playerProper.attackTrigger += AnimationResponse;
         cameraManager = GetComponent<BattleCameraManager>();
-        inTurnEntity.properEntity.StartTurn();      
+
+        //combatState.Turn.ProperEntity.StartTurn();      
     }
    
     private void AnimationResponse(DefaultAnimations anim, IEnumerable<BattleEntity> targets = null)
     {
         if (targets == null)
         {
-            foreach (BattleEntityProper bep in selector.SelectedEntities)
+            foreach (BattleEntityProper bep in 
+                combatState.Selector.SelectedEntities.Select(x => x.ProperEntity))
             {
                 bep.PlayAnimation(anim);
             }
@@ -212,43 +235,42 @@ public class BattleManager : MonoBehaviour
         else
         {
             foreach(BattleEntity be in targets)
-                be.properEntity.PlayAnimation(anim);
+                be.ProperEntity.PlayAnimation(anim);
         }
 
         //Kinda scuffed very scuffed
         //inTurnEntity.properEntity.EndTurn();
     }
 
-    public void ResolvePlayerAttack(BattleMove move)
+    //public void ResolvePlayerAttack(BattleMove move)
+    //{
+    //    selector.PlayerHasAttacked = true;
+    //    this.move = move;
+    //    Roll();
+    //}
+
+    //private void Roll()
+    //{
+    //    rollResult = Random.Range(1,7);
+    //    GameObject diceTemp = 
+    //        Instantiate(dice, transform.position, Quaternion.identity);
+
+    //    DiceScript diceS = diceTemp.GetComponent<DiceScript>();
+
+    //    if (move.Config.Mechanic == MechanicType.ActionPoints)
+    //    {
+    //        diceS.onResult -= SwitchCamera;
+    //        diceS.onResult += SwitchCamera;
+    //    }
+    //    else
+    //    {
+    //        Attack(rollResult / 6f);
+    //    }
+    //}
+
+    private void SetupActionPoints()
     {
-        selector.PlayerHasAttacked = true;
-        this.move = move;
-        Roll();
-    }
-
-    private void Roll()
-    {
-        rollResult = Random.Range(1,7);
-        GameObject diceTemp = 
-            Instantiate(dice, transform.position, Quaternion.identity);
-
-        DiceScript diceS = diceTemp.GetComponent<DiceScript>();
-
-        if (move.Config.Mechanic == MechanicType.ActionPoints)
-        {
-            diceS.onResult -= SwitchCamera;
-            diceS.onResult += SwitchCamera;
-        }
-        else
-        {
-            Attack(rollResult / 6f);
-        }
-    }
-
-    private void SwitchCamera()
-    {
-
-        cameraManager.SwitchCameras(EntitySelector.SelectedEntity.gameObject);  
+        cameraManager.SwitchCameras(combatState.Selector.SelectedEntity.ProperEntity.gameObject);  
         
         GameObject acTimer = 
             Instantiate(actionTimer,transform.position, 
@@ -257,11 +279,10 @@ public class BattleManager : MonoBehaviour
         ActionPointManager acPointManager = 
             acTimer.GetComponent<ActionPointManager>();
        
-        acPointManager.Config(EntitySelector.SelectedEntity, rollResult, Attack);
+        acPointManager.Config(combatState.Selector.SelectedEntity.ProperEntity, rollResult, Attack);
         
         //Spawn points
         //Add AttackFunction to spawnPoints event
-
     }
 
     public void Attack(float roll)
@@ -274,14 +295,13 @@ public class BattleManager : MonoBehaviour
                 break;
         }
 
-        enemiesSelected = selector.GetTargets(playerData, move).Select(x => x.entityData);
+        //enemiesSelected = selector.GetTargets(playerData, move).Select(x => x.entityData);
 
         //KindaDumbMasPorAgora
         
-
-        move.Function(playerProper.entityData, enemiesSelected, roll);
+        move.Function(combatState, enemiesSelected, roll);
         
-        if (move.Config.Cooldown > 0)
-            playerData.AddSkillCooldown(move);
+        //if (move.Config.Cooldown > 0)
+        //    playerData.AddSkillCooldown(move);
     }
 }

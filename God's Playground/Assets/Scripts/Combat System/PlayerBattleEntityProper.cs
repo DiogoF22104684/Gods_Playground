@@ -7,36 +7,28 @@ public class PlayerBattleEntityProper : BattleEntityProper
 
     //private PlayerBattleMenu battleMenu;
     [SerializeField]
-    private GameObject battleMenu;
-
-
-    // Start is called before the first frame update
-    //void Start()
-    //{
-    //    //Instance slider aqui vv
-
-    //    //just for testing         
-    //}
-
-    public override void AttackTriggerAnimation(DefaultAnimations animType)
+    private BattleSkillMenu battleMenu;   
+    
+    protected override void Start()
     {
-        attackTrigger?.Invoke(animType, null);
+        base.Start();
+        battleMenu.onSelectedMove += IniciateMove;  
     }
 
-    public override bool StartTurn()
+    public override bool StartTurn(CombatState state)
     {
-        if (!base.StartTurn()) return false;
+      
+        if (!base.StartTurn(state)) return false;
+       
+        battleMenu.gameObject.SetActive(true);
         
-
-        battleMenu.SetActive(true);
         return true;
         //Invoke("EndTurn", 1);
     }
 
     public override void EndTurn()
     {
-       
-        battleMenu.SetActive(false);
+        battleMenu.gameObject.SetActive(false);
         Invoke("OnEndTurn", 2);
         //battleMenu.Deactivate();
     }
