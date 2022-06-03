@@ -13,6 +13,7 @@ public class OptionsMenu : MonoBehaviour
     private void Start()
     {
         ResolutionSetup();   
+        Screen.fullScreen = true;
     }
  
     private void ResolutionSetup()
