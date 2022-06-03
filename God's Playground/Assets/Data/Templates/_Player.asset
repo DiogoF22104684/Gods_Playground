@@ -46,11 +46,14 @@ MonoBehaviour:
     flatten: 1
   skills:
   - {fileID: 11400000, guid: 8378c2fbe53844048b1d5c22a67c9a7f, type: 2}
-  - {fileID: 11400000, guid: 07dc17537f6d64e46869f2f972d3d5a1, type: 2}
+  - {fileID: 11400000, guid: a6e2bee665ef1894e826f52da8b0479c, type: 2}
   - {fileID: 11400000, guid: 9a0d6840c4606364bbed53fc2b09c169, type: 2}
   - {fileID: 11400000, guid: 9adaf4c224318a94fa23bb4726a643d3, type: 2}
   inventory:
-    equipment: []
+    equipment:
+    - {fileID: 11400000, guid: e48826aa0d93ee8488b5d33d5b158ce2, type: 2}
+    - {fileID: 11400000, guid: 61b0e4f8154591342bf403e69cbc3a4f, type: 2}
+    - {fileID: 11400000, guid: 7c159a24e24abcd4ab0cf8020c186f3f, type: 2}
     skills:
     - {fileID: 11400000, guid: a6e2bee665ef1894e826f52da8b0479c, type: 2}
     - {fileID: 11400000, guid: 9a0d6840c4606364bbed53fc2b09c169, type: 2}
@@ -58,3 +61,9 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 8378c2fbe53844048b1d5c22a67c9a7f, type: 2}
     - {fileID: 11400000, guid: 9adaf4c224318a94fa23bb4726a643d3, type: 2}
     - {fileID: 11400000, guid: 0426c237e535d124ebef1916234b9158, type: 2}
+  equipedItems:
+    head: {fileID: 11400000, guid: e48826aa0d93ee8488b5d33d5b158ce2, type: 2}
+    chest: {fileID: 0}
+    legs: {fileID: 11400000, guid: 61b0e4f8154591342bf403e69cbc3a4f, type: 2}
+    asse1: {fileID: 0}
+    asse2: {fileID: 0}

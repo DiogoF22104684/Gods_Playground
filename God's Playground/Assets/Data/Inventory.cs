@@ -17,10 +17,3 @@ public class Inventory
 
 }
 
-[CreateAssetMenu(menuName = "Scriptables/Equipment")]
-public class Equipment : ScriptableObject, IInventoryItem
-{
-    public Sprite Icon => throw new System.NotImplementedException();
-
-}
-
