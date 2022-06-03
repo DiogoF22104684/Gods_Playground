@@ -11,4 +11,10 @@ public class PlayerTemplate : EntityTemplate
     private Inventory inventory;
     public Inventory Inventory => inventory;
 
+ 
+
+    [SerializeField]
+    private EquipmentBoard equipedItems;
+    public EquipmentBoard EquipedItems => equipedItems;
+
 }

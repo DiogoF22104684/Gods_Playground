@@ -19,7 +19,7 @@ public class InventoryDisplay : MonoBehaviour
     private List<InventorySlot> slots;
 
     public Action<BattleMove> eventSkill;
-
+    public Action<Equipment> eventEquip;
 
     // Start is called before the first frame update
     void Start()
@@ -46,6 +46,10 @@ public class InventoryDisplay : MonoBehaviour
                     if (type == Type.Spells)
                     {
                         eventSkill?.Invoke(player.Inventory.Skills[o]);
+                    }
+                    else 
+                    {
+                        eventEquip?.Invoke(player.Inventory.Equipment[o]);
                     }
                 };
             }
