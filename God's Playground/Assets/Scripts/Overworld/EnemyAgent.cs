@@ -15,6 +15,7 @@ public class EnemyAgent : MonoBehaviour, ISavable
     private Player_Control player;
     private StateMachine stateMachine;
     private Vector3 dest = Vector3.zero;
+    private NavMeshAgent agent;
 
     public Spawn_Area_script PatrolZone { get => patrolZone; set => patrolZone = value; }
 
@@ -23,6 +24,7 @@ public class EnemyAgent : MonoBehaviour, ISavable
     // Start is called before the first frame update
     void Start()
     {
+        agent = GetComponent<NavMeshAgent>();
         player = FindObjectOfType<Player_Control>();
         
     // ---------------------State Machine States---------------------
@@ -81,15 +83,15 @@ public class EnemyAgent : MonoBehaviour, ISavable
     {
         data.Position = transform.localPosition;
         if (player == null) return;
-       // Action actions = stateMachine.Update();
-        //actions?.Invoke();
+        Action actions = stateMachine.Update();
+        actions?.Invoke();
     }
 
     #region State Machine Behaviors
    
     private void IdleBehaviour()
     {
-        //if(agent.remainingDistance >= 0.1f ) return;
+        if(agent.remainingDistance >= 0.1f ) return;
 
         do{
             float rotationValue  = UnityEngine.Random.Range(0, 359);
@@ -98,22 +100,22 @@ public class EnemyAgent : MonoBehaviour, ISavable
                 gameObject.transform.localEulerAngles.y(rotationValue);
             Vector3 direction = gameObject.transform.forward.normalized;
             dest = transform.position + direction * rangeValue;
-        }while(!PatrolZone.InArea(dest));
+        }while(!PatrolZone.InArea(dest) && PatrolZone.InArea(this.gameObject.transform.position));
         
 
-        //agent.SetDestination(dest);
+        agent.SetDestination(dest);
     }
 
     private void ChasingPlayer()
     {
         //agent.transform.LookAt(player.gameObject.transform.position);
-        //agent.SetDestination(player.gameObject.transform.position);
+        agent.SetDestination(player.gameObject.transform.position);
     }
   
     private void ReturningToSpawn()
     {
         //agent.transform.LookAt(PatrolZone.gameObject.transform.position);
-        //agent.SetDestination(PatrolZone.gameObject.transform.position);
+        agent.SetDestination(PatrolZone.gameObject.transform.position);
     }
 
     #endregion
