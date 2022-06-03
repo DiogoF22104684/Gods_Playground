@@ -105,9 +105,7 @@ public class ButtonControl : MonoBehaviour
         float width = Screen.width;
 
         float screenRatio = (float)Screen.width * 0.01f;
-        
-        print(width);
-
+               
         float offset = width * 0.065f;
 
         transformPos1 = revealButton.transform.position - new Vector3 (offset, 0f, 0f);
