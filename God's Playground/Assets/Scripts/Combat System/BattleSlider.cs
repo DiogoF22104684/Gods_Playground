@@ -9,7 +9,7 @@ public class BattleSlider : MonoBehaviour, IConfigurable
 
     private Slider slider;
     private bool inValueChange;
-    private float valueToChange;
+    public float valueToChange;
     [SerializeField]
     private float amountOfChange;
 

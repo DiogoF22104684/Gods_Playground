@@ -14,8 +14,12 @@ public class EnemyAgent : MonoBehaviour, ISavable
 
     private Player_Control player;
     private StateMachine stateMachine;
-    private Vector3 dest = Vector3.zero;
     private NavMeshAgent agent;
+    private Vector3 dest = Vector3.zero;
+    
+    [SerializeField]
+    private GameObject destObject;
+    private GameObject o;
 
     public Spawn_Area_script PatrolZone { get => patrolZone; set => patrolZone = value; }
 
@@ -91,8 +95,17 @@ public class EnemyAgent : MonoBehaviour, ISavable
    
     private void IdleBehaviour()
     {
-        if(agent.remainingDistance >= 0.1f ) return;
+        if(o != null)
+            agent.SetDestination(o.transform.position);
+        
+        if (agent.remainingDistance >= 0.1f) return;
+        
+        else
+        {
+            if (o != null)
+                Destroy(o);
 
+            print("hi");
         do{
             float rotationValue  = UnityEngine.Random.Range(0, 359);
             float rangeValue  = UnityEngine.Random.Range(2f, 5f);
@@ -100,21 +113,24 @@ public class EnemyAgent : MonoBehaviour, ISavable
                 gameObject.transform.localEulerAngles.y(rotationValue);
             Vector3 direction = gameObject.transform.forward.normalized;
             dest = transform.position + direction * rangeValue;
-        }while(!PatrolZone.InArea(dest) && PatrolZone.InArea(this.gameObject.transform.position));
-        
 
-        agent.SetDestination(dest);
+
+        }while(!PatrolZone.InArea(dest) && PatrolZone.InArea(gameObject.transform.position));
+        
+        o = Instantiate(destObject, dest, destObject.transform.rotation, currentMap.transform);
+        
+        }
     }
 
     private void ChasingPlayer()
     {
-        //agent.transform.LookAt(player.gameObject.transform.position);
+        agent.transform.LookAt(player.gameObject.transform.position);
         agent.SetDestination(player.gameObject.transform.position);
     }
   
     private void ReturningToSpawn()
     {
-        //agent.transform.LookAt(PatrolZone.gameObject.transform.position);
+        agent.transform.LookAt(PatrolZone.gameObject.transform.position);
         agent.SetDestination(PatrolZone.gameObject.transform.position);
     }
 
