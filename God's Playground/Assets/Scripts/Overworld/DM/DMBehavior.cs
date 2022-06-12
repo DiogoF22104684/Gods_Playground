@@ -226,18 +226,20 @@ public class DMBehavior : MonoBehaviour
         happyMask.SetActive(false);
         sadMask.SetActive(true);
 
-        animator.Play("DM_Slam");
 
         while (slammed == false)
         {
+
+            animator.Play("DM_Slam");
+            
             /* something.ChangeValue("hp", hpSlamLoss); */
             /* something.Hp -= hpSlamLoss; */
 
            /*  something.hpBattleSlider.initStats(something.entityData.Hp); */
 
-            something.ChangeValue(hpSlamLoss);
+           /*  something.ChangeValue(hpSlamLoss);
 
-            print("after:" + something.valueToChange);
+            print("after:" + something.valueToChange); */
 
             /* statsObject.HP = statsObject.HP - hpSlamLoss; */
 

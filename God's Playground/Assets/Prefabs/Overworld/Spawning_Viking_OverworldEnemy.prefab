@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4905962025815042797}
   - component: {fileID: 7583839034978603793}
   m_Layer: 0
-  m_Name: Viking_OverworldEnemy
+  m_Name: Spawning_Viking_OverworldEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,7 +75,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bce3fac4580b754fbf4e47523a72ad4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minDistanceToPlayer: 10
+  minDistanceToPlayer: 50
   patrolZone: {fileID: 0}
   destObject: {fileID: 0}
   currentMap: {fileID: 0}
@@ -138,7 +138,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f512048db64c373499fc73a8f30ed3e4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.78
+      value: 0.02
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f512048db64c373499fc73a8f30ed3e4, type: 3}
       propertyPath: m_LocalPosition.z
